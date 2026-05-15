@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Encarte Quinzenal — A4 Índio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  width:794px; /* A4 96dpi */
+  min-height:1123px;
+  font-family:'Barlow Condensed', sans-serif;
+  background:white;
+  color:#111;
+}
+
+/* HEADER */
+header {
+  background:#0066CC;
+  padding:18px 30px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+
+.header-logo { display:flex; align-items:center; gap:14px; }
+.logo-circle {
+  width:56px; height:56px; border-radius:50%;
+  background:white;
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px; font-weight:900; color:#0066CC;
+}
+.logo-text .sup  { font-size:10px; letter-spacing:2px; color:rgba(255,255,255,0.7); text-transform:uppercase; }
+.logo-text .nome { font-size:20px; font-weight:800; color:white; line-height:1; }
+
+.header-direito { text-align:right; }
+.encarte-titulo { font-size:11px; color:rgba(255,255,255,0.7); letter-spacing:3px; text-transform:uppercase; }
+.encarte-numero { font-size:28px; font-weight:900; color:white; line-height:1; }
+.encarte-data   { font-size:12px; color:rgba(255,255,255,0.8); margin-top:2px; }
+
+/* FAIXA VALIDADE */
+.faixa-validade {
+  background:#FF6B00;
+  text-align:center; padding:8px;
+  font-size:13px; font-weight:700; color:white;
+  letter-spacing:1px;
+}
+
+/* DESTAQUE PRINCIPAL */
+.destaque {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  padding:30px; margin:20px;
+  border-radius:12px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:relative; overflow:hidden;
+}
+.destaque::after {
+  content:'OFERTA'; position:absolute;
+  top:-10px; right:20px;
+  font-size:80px; font-weight:900; color:rgba(255,255,255,0.04);
+  letter-spacing:-4px;
+}
+
+.destaque-texto .label { font-size:11px; color:rgba(255,100,0,0.9); letter-spacing:3px; text-transform:uppercase; margin-bottom:4px; }
+.destaque-texto .nome  { font-size:38px; font-weight:900; color:white; line-height:1; text-transform:uppercase; }
+.destaque-texto .desc  { font-size:14px; color:rgba(255,255,255,0.6); margin-top:6px; }
+
+.destaque-preco {
+  text-align:center;
+  background:rgba(255,107,0,0.15);
+  border:2px solid rgba(255,107,0,0.4);
+  border-radius:10px; padding:16px 24px;
+}
+.destaque-preco .de     { font-size:13px; color:rgba(255,255,255,0.4); text-decoration:line-through; }
+.destaque-preco .rs     { font-size:16px; color:#FF6B00; font-weight:700; }
+.destaque-preco .valor  { font-size:56px; font-weight:900; color:white; line-height:1; }
+.destaque-preco .unid   { font-size:13px; color:rgba(255,255,255,0.6); }
+
+/* SEÇÕES */
+.secao { padding:0 20px 16px; }
+.secao-titulo {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 14px;
+  border-radius:6px 6px 0 0;
+  margin-bottom:10px;
+}
+.secao-titulo.azul   { background:#0066CC; }
+.secao-titulo.verde  { background:#2E7D1F; }
+.secao-titulo.laranja{ background:#E65100; }
+.secao-titulo.roxo   { background:#4A148C; }
+
+.secao-titulo .icon  { font-size:22px; }
+.secao-titulo .txt   { font-size:18px; font-weight:800; color:white; text-transform:uppercase; letter-spacing:1px; }
+
+/* GRID DE PRODUTOS */
+.produtos-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:10px;
+}
+
+.produto-card {
+  border:1.5px solid #e5e7eb;
+  border-radius:8px; padding:14px 10px;
+  text-align:center; background:white;
+  transition:all 0.2s;
+}
+.produto-card .emoji { font-size:28px; }
+.produto-card .nome  { font-size:14px; font-weight:700; color:#111; margin:4px 0 2px; text-transform:uppercase; line-height:1.1; }
+.produto-card .obs   { font-size:11px; color:#888; margin-bottom:8px; }
+.produto-card .preco-wrap { display:flex; align-items:flex-start; justify-content:center; gap:1px; }
+.produto-card .rs    { font-size:14px; font-weight:700; color:#0066CC; margin-top:5px; }
+.produto-card .valor { font-size:36px; font-weight:900; color:#0066CC; line-height:1; }
+.produto-card .cents { font-size:16px; font-weight:700; color:#0066CC; margin-top:5px; }
+.produto-card .de    { font-size:11px; color:#ccc; text-decoration:line-through; margin-bottom:2px; }
+
+/* FAIXA CLUBE MAIS */
+.clube-mais {
+  background:linear-gradient(135deg, #FF6B00, #e65100);
+  margin:0 20px 16px; border-radius:8px;
+  padding:16px 24px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.clube-mais .texto .titulo { font-size:20px; font-weight:900; color:white; text-transform:uppercase; }
+.clube-mais .texto .sub    { font-size:12px; color:rgba(255,255,255,0.8); margin-top:2px; }
+.clube-mais .badge { background:white; border-radius:50px; padding:6px 18px; font-size:13px; font-weight:800; color:#FF6B00; }
+
+/* RODAPÉ */
+footer {
+  background:#0066CC;
+  padding:14px 30px;
+  display:flex; align-items:center; justify-content:space-between;
+  margin-top:auto;
+}
+footer .item { font-size:12px; color:rgba(255,255,255,0.8); }
+footer .item b { color:white; }
+footer .instagram { font-size:13px; color:rgba(255,255,255,0.9); font-weight:600; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo">
+    <div class="logo-circle">Í</div>
+    <div class="logo-text">
+      <div class="sup">Supermercados</div>
+      <div class="nome">Índio</div>
+    </div>
+  </div>
+  <div class="header-direito">
+    <div class="encarte-titulo">Encarte Quinzenal</div>
+    <div class="encarte-numero">#22</div>
+    <div class="encarte-data">01 a 15 de Maio de 2026</div>
+  </div>
+</header>
+
+<div class="faixa-validade">⏰ OFERTA VÁLIDA DE 01/05 A 15/05/2026 — ENQUANTO DURAR O ESTOQUE</div>
+
+<!-- DESTAQUE DA QUINZENA -->
+<div class="destaque">
+  <div class="destaque-texto">
+    <div class="label">🏆 Destaque da Quinzena</div>
+    <div class="nome">Fraldão<br>Bovino</div>
+    <div class="desc">Peça inteira • Produto selecionado</div>
+  </div>
+  <div class="destaque-preco">
+    <div class="de">De R$ 39,90</div>
+    <div>
+      <span class="rs">R$</span>
+      <span class="valor">29</span>
+      <span class="rs">,90</span>
+    </div>
+    <div class="unid">por KG</div>
+  </div>
+</div>
+
+<!-- SEÇÃO AÇOUGUE -->
+<div class="secao">
+  <div class="secao-titulo azul">
+    <span class="icon">🥩</span>
+    <span class="txt">Açougue & Carnes</span>
+  </div>
+  <div class="produtos-grid">
+    <div class="produto-card">
+      <div class="emoji">🥩</div>
+      <div class="nome">Alcatra Bovina</div>
+      <div class="obs">Peça — KG</div>
+      <div class="preco-wrap">
+        <span class="rs">R$</span><span class="valor">29</span><span class="cents">,90</span>
+      </div>
+    </div>
+    <div class="produto-card">
+      <div class="emoji">🍗</div>
+      <div class="nome">Frango Inteiro</div>
+      <div class="obs">Congelado — KG</div>
+      <div class="preco-wrap">
+        <span class="rs">R$</span><span class="valor">12</span><span class="cents">,90</span>
+      </div>
+    </div>
+    <div class="produto-card">
+      <div class="emoji">🥓</div>
+      <div class="nome">Costela Bovina</div>
+      <div class="obs">Janela — KG</div>
+      <div class="preco-wrap">
+        <span class="rs">R$</span><span class="valor">24</span><span class="cents">,90</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEÇÃO FLV -->
+<div class="secao">
+  <div class="secao-titulo verde">
+    <span class="icon">🥦</span>
+    <span class="txt">Hortifruti</span>
+  </div>
+  <div class="produtos-grid">
+    <div class="produto-card">
+      <div class="emoji">🍅</div>
+      <div class="nome">Tomate Salada</div>
+      <div class="obs">KG</div>
+      <div class="preco-wrap">
+        <span class="rs">R$</span><span class="valor">4</span><span class="cents">,99</span>
+      </div>
+    </div>
+    <div class="produto-card">
+      <div class="emoji">🍋</div>
+      <div class="nome">Limão Tahiti</div>
+      <div class="obs">KG</div>
+      <div class="preco-wrap">
+        <span class="rs">R$</span><span class="valor">3</span><span class="cents">,99</span>
+      </div>
+    </div>
+    <div class="produto-card">
+      <div class="emoji">🥕</div>
+      <div class="nome">Cenoura</div>
+      <div class="obs">Bdja 1kg</div>
+      <div class="preco-wrap">
+        <span class="rs">R$</span><span class="valor">5</span><span class="cents">,99</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEÇÃO MERCEARIA -->
+<div class="secao">
+  <div class="secao-titulo laranja">
+    <span class="icon">🛒</span>
+    <span class="txt">Mercearia & Bebidas</span>
+  </div>
+  <div class="produtos-grid">
+    <div class="produto-card">
+      <div class="emoji">🫙</div>
+      <div class="nome">Arroz Tipo 1</div>
+      <div class="obs">5kg</div>
+      <div class="preco-wrap">
+        <span class="rs">R$</span><span class="valor">22</span><span class="cents">,90</span>
+      </div>
+    </div>
+    <div class="produto-card">
+      <div class="emoji">🫘</div>
+      <div class="nome">Feijão Preto</div>
+      <div class="obs">1kg</div>
+      <div class="preco-wrap">
+        <span class="rs">R$</span><span class="valor">7</span><span class="cents">,99</span>
+      </div>
+    </div>
+    <div class="produto-card">
+      <div class="emoji">🥛</div>
+      <div class="nome">Leite Integral</div>
+      <div class="obs">Caixa 1L — UN</div>
+      <div class="preco-wrap">
+        <span class="rs">R$</span><span class="valor">4</span><span class="cents">,29</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLUBE MAIS -->
+<div class="clube-mais">
+  <div class="texto">
+    <div class="titulo">⭐ Clube Mais — Descontos Exclusivos</div>
+    <div class="sub">Cadastre-se gratuitamente no app e economize ainda mais em todas as compras</div>
+  </div>
+  <div class="badge">Baixe o App</div>
+</div>
+
+<!-- RODAPÉ -->
+<footer>
+  <div class="item"><b>10 lojas</b> no RS</div>
+  <div class="item">Guaíba • Charqueadas • Eldorado do Sul • São Jerônimo • Arroio dos Ratos</div>
+  <div class="instagram">@supermercadosindio</div>
+</footer>
+
+</body>
+</html>

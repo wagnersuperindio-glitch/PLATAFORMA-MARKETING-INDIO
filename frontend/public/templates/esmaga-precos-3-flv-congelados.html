@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Esmaga Preços — FLV, Congelados & Frios</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1080px; height:1080px;
+  font-family:'Barlow Condensed', sans-serif;
+  background:#001A0A;
+  overflow:hidden; position:relative;
+}
+.bg-grad {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 70% 10%, rgba(255,107,0,0.2) 0%, transparent 45%),
+    radial-gradient(ellipse at 10% 90%, rgba(0,100,0,0.35) 0%, transparent 50%),
+    #001A0A;
+}
+
+.topo {
+  position:relative; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:26px 50px 0;
+}
+.logo-area img { height:70px; object-fit:contain; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.5)); }
+.tag-campanha {
+  background:linear-gradient(135deg,#FF6B00,#cc4400);
+  color:white; font-size:13px; font-weight:800;
+  padding:8px 22px; border-radius:100px;
+  letter-spacing:2px; text-transform:uppercase;
+  box-shadow:0 4px 15px rgba(255,107,0,0.4);
+}
+
+.headline-area {
+  position:relative; z-index:10;
+  padding:6px 50px 0;
+  display:flex; align-items:flex-end; gap:16px;
+}
+.mascote { height:140px; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,0.6)); margin-bottom:-6px; }
+.headline-sub { font-size:14px; color:rgba(255,200,0,0.9); letter-spacing:4px; text-transform:uppercase; font-weight:700; }
+.headline-titulo {
+  font-size:85px; font-weight:900; line-height:0.88; text-transform:uppercase; color:white;
+  text-shadow:0 4px 0 rgba(0,0,0,0.4);
+}
+.headline-titulo span { color:#FF6B00; }
+.pag-label { font-size:13px; color:rgba(255,255,255,0.4); letter-spacing:3px; text-transform:uppercase; margin-top:6px; }
+
+.linha { height:3px; background:linear-gradient(90deg,#FF6B00,#00AA44,transparent); margin:7px 50px; border-radius:2px; }
+
+.secao { padding:0 50px; margin-bottom:7px; }
+.secao-titulo { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.secao-titulo .icone { font-size:17px; }
+.secao-titulo .nome { font-size:15px; font-weight:800; color:rgba(255,255,255,0.5); letter-spacing:3px; text-transform:uppercase; }
+.secao-titulo .linha-s { flex:1; height:1px; background:rgba(255,255,255,0.1); }
+
+.produtos-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+.produtos-grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+
+.produto-card {
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+  border-radius:9px; padding:8px 10px;
+  display:flex; align-items:center; justify-content:space-between; gap:6px;
+}
+.prod-nome { font-size:12px; font-weight:700; color:white; text-transform:uppercase; line-height:1.15; flex:1; }
+.prod-preco { text-align:right; flex-shrink:0; }
+.prod-preco .rs { font-size:10px; font-weight:700; color:#FF6B00; display:block; line-height:1; }
+.prod-preco .valor {
+  font-size:24px; font-weight:900; color:#FFD700; line-height:1;
+  border-bottom:2px dashed rgba(255,215,0,0.4);
+  min-width:60px; display:inline-block; text-align:center;
+}
+.prod-preco .unid { font-size:9px; color:rgba(255,255,255,0.4); letter-spacing:1px; display:block; }
+
+/* Badge Frango Assado */
+.produto-card.especial { border-color:rgba(255,107,0,0.4); background:rgba(255,107,0,0.1); }
+
+.rodape {
+  position:absolute; bottom:0; left:0; right:0;
+  background:rgba(0,0,0,0.5); padding:10px 50px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.rodape .validade { font-size:11px; color:rgba(255,255,255,0.4); letter-spacing:1px; }
+.rodape .ig { font-size:13px; color:rgba(255,150,50,0.9); font-weight:600; }
+.rodape .pag { font-size:11px; color:rgba(255,255,255,0.3); }
+.slogan { font-size:10px; color:rgba(255,255,255,0.25); letter-spacing:2px; }
+</style>
+</head>
+<body>
+<div class="bg-grad"></div>
+
+<!-- TOPO -->
+<div class="topo">
+  <div class="logo-area"><img src="/logo-indio.png" alt="Índio Supermercados"></div>
+  <div class="tag-campanha">🥦 FLV & Congelados</div>
+</div>
+
+<!-- HEADLINE -->
+<div class="headline-area">
+  <img src="/mascote-indio.png" alt="Mascote" class="mascote">
+  <div>
+    <div class="headline-sub">Campanha</div>
+    <div class="headline-titulo">Esmaga<br><span>Preços</span></div>
+    <div class="pag-label">Pág 3 de 3 — FLV, Congelados & Frios</div>
+  </div>
+</div>
+
+<div class="linha"></div>
+
+<!-- FLV -->
+<div class="secao">
+  <div class="secao-titulo">
+    <span class="icone">🥦</span>
+    <span class="nome">Hortifruti</span>
+    <div class="linha-s"></div>
+  </div>
+  <div class="produtos-grid">
+
+    <div class="produto-card">
+      <div class="prod-nome">Banana Caturra<br>KG</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Bergamota<br>Ponkan KG</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Batata Doce<br>Rosa KG</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Aipim c/Casca<br>KG</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Moranga<br>Cabotia</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Pinhão KG</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Ovos Nutreggs<br>c/20 Brancos</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">CX</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONGELADOS & FRIOS -->
+<div class="secao">
+  <div class="secao-titulo">
+    <span class="icone">❄️</span>
+    <span class="nome">Congelados & Frios</span>
+    <div class="linha-s"></div>
+  </div>
+  <div class="produtos-grid">
+
+    <div class="produto-card">
+      <div class="prod-nome">Batata Palito<br>UAI 2kg Cong</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">PCT</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Hambúrguer<br>Lebon 56g Misto</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Lasanha Forno<br>Minas 600g</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Pizza Lebon<br>400g Calabresa</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Torta Nestlé<br>Galak/Negresco</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Chapinha<br>(Sabores)</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Queijo Muçarela<br>Lanche Fatiado</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card especial">
+      <div class="prod-nome">🍗 Frango Assado<br>Inteiro</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RODAPÉ -->
+<div class="rodape">
+  <span class="validade">Válido sexta, sábado e domingo • Enquanto durar o estoque</span>
+  <span class="pag">3 / 3</span>
+  <span class="ig">@supermercadosindio</span>
+</div>
+
+</body>
+</html>

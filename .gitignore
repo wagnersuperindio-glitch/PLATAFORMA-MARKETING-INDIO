@@ -1,0 +1,28 @@
+# Node
+node_modules/
+.npm
+
+# Next.js
+frontend/.next/
+frontend/out/
+frontend/.env.local
+
+# Backend
+backend/dist/
+backend/dev.db
+backend/dev.db-journal
+backend/.env
+
+# PM2
+ecosystem.config.js
+INICIAR_SILENCIOSO.vbs
+INICIAR_SERVIDORES.bat
+start.js
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Esmaga Preços — Açougue & Bebidas</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1080px; height:1080px;
+  font-family:'Barlow Condensed', sans-serif;
+  background:#1A0005;
+  overflow:hidden; position:relative;
+}
+.bg-grad {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(180,0,0,0.35) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(0,50,150,0.3) 0%, transparent 50%),
+    #1A0005;
+}
+
+/* TOPO */
+.topo {
+  position:relative; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:28px 50px 0;
+}
+.logo-area img { height:72px; object-fit:contain; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.5)); }
+.tag-campanha {
+  background:linear-gradient(135deg,#CC0000,#880000);
+  color:white; font-size:13px; font-weight:800;
+  padding:8px 22px; border-radius:100px;
+  letter-spacing:2px; text-transform:uppercase;
+  box-shadow:0 4px 15px rgba(200,0,0,0.5);
+}
+
+/* HEADLINE */
+.headline-area {
+  position:relative; z-index:10;
+  padding:8px 50px 0;
+  display:flex; align-items:flex-end; gap:16px;
+}
+.mascote { height:150px; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,0.6)); margin-bottom:-8px; }
+.headline-sub { font-size:14px; color:rgba(255,200,0,0.9); letter-spacing:4px; text-transform:uppercase; font-weight:700; }
+.headline-titulo {
+  font-size:88px; font-weight:900; line-height:0.88; text-transform:uppercase; color:white;
+  text-shadow:0 4px 0 rgba(0,0,0,0.5), 0 0 40px rgba(200,0,0,0.4);
+}
+.headline-titulo span { color:#FF3333; }
+.pag-label { font-size:13px; color:rgba(255,255,255,0.4); letter-spacing:3px; text-transform:uppercase; margin-top:6px; }
+
+.linha { height:3px; background:linear-gradient(90deg,#CC0000,#0066CC,transparent); margin:8px 50px; border-radius:2px; }
+
+.secao { padding:0 50px; margin-bottom:8px; }
+.secao-titulo { display:flex; align-items:center; gap:10px; margin-bottom:7px; }
+.secao-titulo .icone { font-size:18px; }
+.secao-titulo .nome { font-size:15px; font-weight:800; color:rgba(255,255,255,0.5); letter-spacing:3px; text-transform:uppercase; }
+.secao-titulo .linha-s { flex:1; height:1px; background:rgba(255,255,255,0.1); }
+
+.produtos-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; }
+.produto-card {
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px; padding:9px 12px;
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+}
+.prod-nome { font-size:12.5px; font-weight:700; color:white; text-transform:uppercase; line-height:1.15; flex:1; }
+.prod-preco { text-align:right; flex-shrink:0; }
+.prod-preco .rs { font-size:10px; font-weight:700; color:#FF6B00; display:block; line-height:1; }
+.prod-preco .valor {
+  font-size:26px; font-weight:900; color:#FFD700; line-height:1;
+  border-bottom:2px dashed rgba(255,215,0,0.4);
+  min-width:68px; display:inline-block; text-align:center;
+}
+.prod-preco .unid { font-size:9px; color:rgba(255,255,255,0.4); letter-spacing:1px; display:block; }
+
+/* Açougue destaque */
+.acougue-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; }
+.produto-card.destaque { border-color:rgba(204,0,0,0.4); background:rgba(150,0,0,0.15); }
+
+.rodape {
+  position:absolute; bottom:0; left:0; right:0;
+  background:rgba(0,0,0,0.5); padding:10px 50px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.rodape .validade { font-size:11px; color:rgba(255,255,255,0.4); letter-spacing:1px; }
+.rodape .ig { font-size:13px; color:rgba(255,100,50,0.9); font-weight:600; }
+.rodape .pag { font-size:11px; color:rgba(255,255,255,0.3); }
+</style>
+</head>
+<body>
+<div class="bg-grad"></div>
+
+<!-- TOPO -->
+<div class="topo">
+  <div class="logo-area"><img src="/logo-indio.png" alt="Índio Supermercados"></div>
+  <div class="tag-campanha">🥩 Açougue & Bebidas</div>
+</div>
+
+<!-- HEADLINE -->
+<div class="headline-area">
+  <img src="/mascote-indio.png" alt="Mascote" class="mascote">
+  <div>
+    <div class="headline-sub">Campanha</div>
+    <div class="headline-titulo">Esmaga<br><span>Preços</span></div>
+    <div class="pag-label">Pág 2 de 3 — Açougue & Bebidas</div>
+  </div>
+</div>
+
+<div class="linha"></div>
+
+<!-- AÇOUGUE -->
+<div class="secao">
+  <div class="secao-titulo">
+    <span class="icone">🥩</span>
+    <span class="nome">Açougue</span>
+    <div class="linha-s"></div>
+  </div>
+  <div class="acougue-grid">
+
+    <div class="produto-card destaque">
+      <div class="prod-nome">Patinho<br>Pedaços</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card destaque">
+      <div class="prod-nome">Picanha Inteira<br>Pull Cong</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card destaque">
+      <div class="prod-nome">Fralda Bovina<br>Resfriada</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Bacon Manta<br>Sadia/Perdigão</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Coxão Fora<br>Pedaços</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Tatu (Lagarto)<br>Pedaços</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Carne Moída<br>Primeira</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Coxa/Sobrecoxa<br>Carrer Dorsal Temp</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Coxinha da Asa Cong<br>Costela Janela Friboi</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">KG</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BEBIDAS -->
+<div class="secao">
+  <div class="secao-titulo">
+    <span class="icone">🍺</span>
+    <span class="nome">Bebidas</span>
+    <div class="linha-s"></div>
+  </div>
+  <div class="produtos-grid">
+
+    <div class="produto-card">
+      <div class="prod-nome">Charrua 3L</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Suco Aurora<br>TP 1,5L</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Schin 473ml</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Heineken 330ml<br>Long Neck</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">M. James 750ml</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="prod-nome">Água Valle Vita<br>500ml c/gás s/gás</div>
+      <div class="prod-preco">
+        <span class="rs">R$</span><span class="valor">____</span><span class="unid">UN</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RODAPÉ -->
+<div class="rodape">
+  <span class="validade">Válido sexta, sábado e domingo • Enquanto durar o estoque</span>
+  <span class="pag">2 / 3</span>
+  <span class="ig">@supermercadosindio</span>
+</div>
+
+</body>
+</html>

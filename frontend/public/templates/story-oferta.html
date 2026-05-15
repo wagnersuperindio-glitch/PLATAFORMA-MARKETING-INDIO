@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Story Oferta — 1080x1920</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1080px; height:1920px;
+  font-family:'Barlow Condensed', sans-serif;
+  background:#0A0A1A;
+  overflow:hidden; display:flex; flex-direction:column;
+}
+
+.bg {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 50% 30%, #001a66 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 70%, #660010 0%, transparent 50%),
+    #0A0A1A;
+}
+
+/* TOPO SEGURO (safe zone story) */
+.topo-safe {
+  position:relative; z-index:10;
+  padding:220px 60px 0;
+  display:flex; align-items:center; gap:16px;
+}
+.logo-circle {
+  width:72px; height:72px; border-radius:50%;
+  background:#0066CC; border:3px solid rgba(255,255,255,0.3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:30px; font-weight:900; color:white;
+}
+.logo-text .sup  { font-size:12px; letter-spacing:3px; color:rgba(255,255,255,0.5); text-transform:uppercase; }
+.logo-text .nome { font-size:24px; font-weight:800; color:white; line-height:1; }
+
+/* TAG URGÊNCIA */
+.urgencia {
+  position:relative; z-index:10;
+  padding:60px 60px 0;
+}
+.urgencia-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(255,30,30,0.15);
+  border:1.5px solid rgba(255,30,30,0.5);
+  border-radius:100px; padding:10px 24px;
+  font-size:16px; color:#ff6060; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+}
+.dot-piscante {
+  width:8px; height:8px; border-radius:50%;
+  background:#ff4444;
+  box-shadow:0 0 8px #ff4444;
+}
+
+/* PRODUTO DESTAQUE */
+.produto-area {
+  position:relative; z-index:10;
+  padding:40px 60px 0;
+  flex:1; display:flex; flex-direction:column; justify-content:center;
+}
+
+.produto-emoji { font-size:120px; margin-bottom:20px; text-align:center; }
+.produto-nome {
+  font-size:72px; font-weight:900; color:white; text-transform:uppercase;
+  line-height:0.9; text-align:center;
+  text-shadow:0 4px 30px rgba(0,102,204,0.5);
+}
+.produto-desc { font-size:24px; color:rgba(255,255,255,0.5); text-align:center; margin-top:12px; letter-spacing:2px; }
+
+/* PREÇO */
+.preco-area {
+  position:relative; z-index:10;
+  padding:50px 60px;
+  text-align:center;
+}
+.preco-de { font-size:20px; color:rgba(255,255,255,0.3); text-decoration:line-through; margin-bottom:8px; }
+.preco-wrap {
+  display:inline-flex; align-items:flex-start; gap:4px;
+  background:linear-gradient(135deg, rgba(0,102,204,0.3), rgba(0,50,150,0.2));
+  border:2px solid rgba(0,102,204,0.5);
+  border-radius:20px; padding:24px 40px;
+}
+.rs     { font-size:36px; font-weight:700; color:#66aaff; margin-top:14px; }
+.valor  { font-size:140px; font-weight:900; color:white; line-height:1; }
+.cents  { font-size:48px; font-weight:700; color:white; margin-top:14px; }
+.unid   { font-size:18px; color:rgba(255,255,255,0.5); margin-top:6px; letter-spacing:2px; }
+
+/* VALIDADE */
+.validade-area {
+  position:relative; z-index:10;
+  padding:0 60px 40px;
+  text-align:center;
+}
+.validade-box {
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px; padding:16px 30px;
+  display:inline-block;
+}
+.validade-titulo { font-size:13px; color:rgba(255,255,255,0.4); letter-spacing:3px; text-transform:uppercase; }
+.validade-data   { font-size:22px; font-weight:700; color:rgba(255,255,255,0.8); margin-top:4px; }
+
+/* CTA */
+.cta {
+  position:relative; z-index:10;
+  padding:0 60px 40px; text-align:center;
+}
+.cta-btn {
+  display:inline-block;
+  background:#0066CC;
+  color:white; font-size:22px; font-weight:800;
+  padding:20px 60px; border-radius:100px;
+  letter-spacing:2px; text-transform:uppercase;
+}
+
+/* RODAPÉ SEGURO */
+.rodape-safe {
+  position:relative; z-index:10;
+  padding:0 60px 160px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.rodape-safe .validade-small { font-size:14px; color:rgba(255,255,255,0.3); }
+.rodape-safe .ig             { font-size:18px; color:rgba(255,255,255,0.5); }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="topo-safe">
+  <div class="logo-circle">Í</div>
+  <div class="logo-text">
+    <div class="sup">Supermercados</div>
+    <div class="nome">Índio</div>
+  </div>
+</div>
+
+<div class="urgencia">
+  <div class="urgencia-tag">
+    <div class="dot-piscante"></div>
+    Oferta por tempo limitado
+  </div>
+</div>
+
+<div class="produto-area">
+  <div class="produto-emoji">🥩</div>
+  <div class="produto-nome">Fraldão<br>Bovino</div>
+  <div class="produto-desc">PEÇA INTEIRA • PRODUTO SELECIONADO</div>
+</div>
+
+<div class="preco-area">
+  <div class="preco-de">De R$ 39,90/kg</div>
+  <div class="preco-wrap">
+    <span class="rs">R$</span>
+    <span class="valor">29</span>
+    <span class="cents">,90</span>
+  </div>
+  <div class="unid">POR QUILO</div>
+</div>
+
+<div class="validade-area">
+  <div class="validade-box">
+    <div class="validade-titulo">Oferta válida</div>
+    <div class="validade-data">Sexta-feira • 09/05/2026</div>
+  </div>
+</div>
+
+<div class="cta">
+  <div class="cta-btn">👆 Arrasta pra saber mais</div>
+</div>
+
+<div class="rodape-safe">
+  <span class="validade-small">Enquanto durar o estoque</span>
+  <span class="ig">@supermercadosindio</span>
+</div>
+
+</body>
+</html>

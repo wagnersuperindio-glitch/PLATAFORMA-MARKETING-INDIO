@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sexta das Carnes — Feed 1080x1080</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  width:1080px; height:1080px;
+  background:#0A0A0A;
+  font-family:'Barlow Condensed', sans-serif;
+  overflow:hidden;
+  display:flex; flex-direction:column;
+}
+
+/* Fundo gradiente */
+.bg {
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at 20% 50%, #8B0000 0%, #2d0000 40%, #0A0A0A 70%);
+}
+
+/* Textura de chama no canto */
+.chama {
+  position:absolute;
+  right:-50px; top:-50px;
+  width:600px; height:600px;
+  background: radial-gradient(circle at 70% 30%, rgba(255,100,0,0.3) 0%, transparent 60%);
+}
+
+/* Topo */
+.topo {
+  position:relative; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:32px 50px 0;
+}
+
+.logo-area {
+  display:flex; align-items:center; gap:14px;
+}
+
+.logo-circle {
+  width:64px; height:64px;
+  background:#0066CC;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px; font-weight:900; color:white;
+  font-family:'Barlow Condensed', sans-serif;
+  border:3px solid rgba(255,255,255,0.3);
+}
+
+.logo-text { color:white; }
+.logo-text .sup  { font-size:11px; letter-spacing:3px; color:rgba(255,255,255,0.6); text-transform:uppercase; }
+.logo-text .nome { font-size:22px; font-weight:700; letter-spacing:1px; line-height:1; }
+
+.tag-dia {
+  background:#CC0000;
+  color:white;
+  padding:8px 20px;
+  border-radius:4px;
+  font-size:14px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+}
+
+/* Título */
+.titulo-area {
+  position:relative; z-index:10;
+  padding:30px 50px 0;
+}
+
+.subtitulo {
+  font-size:18px; color:rgba(255,150,0,0.9);
+  letter-spacing:4px; text-transform:uppercase;
+  font-weight:600; margin-bottom:4px;
+}
+
+.titulo {
+  font-size:98px; font-weight:900;
+  color:white; line-height:0.9;
+  text-transform:uppercase;
+  text-shadow: 0 4px 20px rgba(200,0,0,0.5);
+}
+
+.titulo span { color:#FF6B00; }
+
+.linha-fogo {
+  width:120px; height:4px;
+  background: linear-gradient(90deg, #FF6B00, #CC0000);
+  margin-top:12px; border-radius:2px;
+}
+
+/* Produtos */
+.produtos {
+  position:relative; z-index:10;
+  flex:1; display:flex; align-items:center;
+  padding:20px 50px;
+  gap:20px;
+}
+
+.produto {
+  flex:1;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:12px;
+  padding:22px 18px;
+  display:flex; flex-direction:column;
+  align-items:center; text-align:center;
+  backdrop-filter:blur(4px);
+  position:relative;
+  overflow:hidden;
+}
+
+.produto::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background: linear-gradient(90deg, #FF6B00, #CC0000);
+}
+
+.produto-emoji { font-size:42px; margin-bottom:8px; }
+.produto-nome { font-size:18px; font-weight:700; color:rgba(255,255,255,0.9); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; line-height:1.1; }
+.produto-kg   { font-size:13px; color:rgba(255,255,255,0.45); letter-spacing:1px; margin-bottom:10px; }
+
+.produto-preco {
+  display:flex; align-items:flex-start; justify-content:center; gap:2px;
+  margin-top:auto;
+}
+.preco-rs    { font-size:22px; font-weight:700; color:#FF6B00; margin-top:8px; }
+.preco-valor { font-size:56px; font-weight:900; color:white; line-height:1; }
+.preco-cents { font-size:26px; font-weight:700; color:white; margin-top:8px; }
+
+/* Rodapé */
+.rodape {
+  position:relative; z-index:10;
+  padding:0 50px 28px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+
+.validade { font-size:13px; color:rgba(255,255,255,0.4); letter-spacing:1px; }
+.slogan   { font-size:14px; font-weight:700; color:rgba(255,255,255,0.6); letter-spacing:2px; text-transform:uppercase; }
+.instagram{ font-size:14px; color:rgba(255,150,0,0.7); }
+
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="chama"></div>
+
+<!-- TOPO -->
+<div class="topo">
+  <div class="logo-area">
+    <div class="logo-circle">Í</div>
+    <div class="logo-text">
+      <div class="sup">Supermercados</div>
+      <div class="nome">Índio</div>
+    </div>
+  </div>
+  <div class="tag-dia">🔥 Toda Sexta</div>
+</div>
+
+<!-- TÍTULO -->
+<div class="titulo-area">
+  <div class="subtitulo">Promoção Especial</div>
+  <div class="titulo">Sexta<br><span>das Carnes</span></div>
+  <div class="linha-fogo"></div>
+</div>
+
+<!-- PRODUTOS (editar aqui) -->
+<div class="produtos">
+
+  <div class="produto">
+    <div class="produto-emoji">🥩</div>
+    <div class="produto-nome">Alcatra Bovina</div>
+    <div class="produto-kg">Peça — KG</div>
+    <div class="produto-preco">
+      <span class="preco-rs">R$</span>
+      <span class="preco-valor">29</span>
+      <span class="preco-cents">,90</span>
+    </div>
+  </div>
+
+  <div class="produto">
+    <div class="produto-emoji">🍗</div>
+    <div class="produto-nome">Frango Inteiro</div>
+    <div class="produto-kg">Congelado — KG</div>
+    <div class="produto-preco">
+      <span class="preco-rs">R$</span>
+      <span class="preco-valor">12</span>
+      <span class="preco-cents">,90</span>
+    </div>
+  </div>
+
+  <div class="produto">
+    <div class="produto-emoji">🥓</div>
+    <div class="produto-nome">Costela Bovina</div>
+    <div class="produto-kg">Janela — KG</div>
+    <div class="produto-preco">
+      <span class="preco-rs">R$</span>
+      <span class="preco-valor">24</span>
+      <span class="preco-cents">,90</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- RODAPÉ -->
+<div class="rodape">
+  <span class="validade">Válido somente nas sextas-feiras • Enquanto durar o estoque</span>
+  <span class="instagram">@supermercadosindio</span>
+</div>
+
+</body>
+</html>
