@@ -31,6 +31,13 @@ const CONCORRENTES = [
 async function main() {
   console.log('🌱 Iniciando seed do banco de dados...\n')
 
+  // Verificar se já foi seedado
+  const jaExiste = await prisma.user.findUnique({ where: { email: 'wagner@supermercadoindio.com.br' } })
+  if (jaExiste) {
+    console.log('⏭️  Seed já executado anteriormente. Pulando...')
+    return
+  }
+
   // Limpar tabelas (em dev)
   if (process.env.NODE_ENV !== 'production') {
     await prisma.whatsappBroadcast.deleteMany()

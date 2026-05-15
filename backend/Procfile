@@ -1,1 +1,1 @@
-web: npx prisma generate && npx prisma db push && node dist/server.js
+web: npx prisma generate && npx prisma db push && npx ts-node --transpile-only prisma/seed.ts || true && node dist/server.js
