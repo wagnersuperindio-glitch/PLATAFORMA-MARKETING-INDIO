@@ -21,14 +21,26 @@ const prisma = new PrismaClient()
 
 app.use(helmet())
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://54.232.189.113:3000',
-    'http://10.1.1.92:3000',
-    process.env.FRONTEND_URL || '',
-    process.env.CORS_ORIGIN || '',
-    'https://plataforma-marketing-indio.vercel.app',
-  ].filter(Boolean),
+  origin: (origin, callback) => {
+    // Sem origin = curl / Postman / mobile / SSR
+    if (!origin) return callback(null, true)
+    const allowed = [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'http://54.232.189.113:3000',
+      'http://10.1.1.92:3000',
+      'https://plataforma-marketing-indio.vercel.app',
+      process.env.FRONTEND_URL,
+      process.env.CORS_ORIGIN,
+    ].filter(Boolean) as string[]
+    // Aceita qualquer subdomínio *.vercel.app (previews e aliases)
+    if (allowed.includes(origin) || /\.vercel\.app$/.test(origin)) {
+      return callback(null, true)
+    }
+    // Em dev aceita tudo
+    if (process.env.NODE_ENV !== 'production') return callback(null, true)
+    return callback(new Error(`CORS bloqueado: ${origin}`))
+  },
   credentials: true,
 }))
 app.use(express.json({ limit: '10mb' }))
