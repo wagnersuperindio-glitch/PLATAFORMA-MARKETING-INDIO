@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
+import { API_URL } from '@/lib/api'
 
 const STATUS_LABEL: Record<string, { label: string; color: string }> = {
   PENDENTE:           { label: 'Pendente',        color: 'bg-yellow-100 text-yellow-700' },
@@ -53,7 +54,7 @@ function CopyPanel({ requestId, status }: { requestId: string; status: string })
     try {
       const token = localStorage.getItem('token')
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/requests/${requestId}/copy`,
+        `${API_URL}/api/requests/${requestId}/copy`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
       const data = await res.json()
@@ -163,7 +164,7 @@ function RequestCard({
     setActionLoading(endpoint)
     try {
       const token = localStorage.getItem('token')
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/requests/${req.id}/${endpoint}`, {
+      await fetch(`${API_URL}/api/requests/${req.id}/${endpoint}`, {
         method,
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: body ? JSON.stringify(body) : undefined,
@@ -177,7 +178,7 @@ function RequestCard({
     setGenerating(true)
     try {
       const token = localStorage.getItem('token')
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/requests/${req.id}/generate`, {
+      await fetch(`${API_URL}/api/requests/${req.id}/generate`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -186,7 +187,7 @@ function RequestCard({
       const interval = setInterval(async () => {
         attempts++
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/requests/${req.id}`,
+          `${API_URL}/api/requests/${req.id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         )
         const data = await res.json()
@@ -297,7 +298,7 @@ export default function PedidosPage() {
   const fetchRequests = useCallback(async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/requests`, {
+      const res = await fetch(`${API_URL}/api/requests`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (res.ok) setRequests(await res.json())

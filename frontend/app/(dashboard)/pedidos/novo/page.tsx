@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { API_URL } from '@/lib/api'
 
 type Product = { name: string; price: string }
 
@@ -79,7 +80,7 @@ export default function NovoPedidoPage() {
         scheduledFor: dataPublicacao || undefined,
       }
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/requests`, {
+      const res = await fetch(`${API_URL}/api/requests`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
