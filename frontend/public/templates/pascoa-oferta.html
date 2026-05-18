@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Páscoa — Feed 1080x1080</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { width:1080px; height:1080px; font-family:'Barlow Condensed',sans-serif; overflow:hidden; display:flex; flex-direction:column; }
+.bg { position:absolute; inset:0; background:linear-gradient(135deg, #3a0a6e 0%, #5c1a8c 30%, #2a0a5e 70%, #1a0a3e 100%); }
+.glow1 { position:absolute; top:-100px; right:-100px; width:600px; height:600px; background:radial-gradient(circle, rgba(255,180,0,0.15) 0%, transparent 65%); }
+.glow2 { position:absolute; bottom:-100px; left:-100px; width:500px; height:500px; background:radial-gradient(circle, rgba(255,100,180,0.12) 0%, transparent 65%); }
+.stripe { position:absolute; left:0; top:0; bottom:0; width:10px; background:linear-gradient(180deg,#FF69B4,#FFD700,#9B59B6); }
+.topo { position:relative; z-index:10; display:flex; align-items:center; justify-content:space-between; padding:32px 56px 0 66px; }
+.logo-wrap img { height:52px; filter:brightness(0) invert(1); }
+.tag { background:linear-gradient(135deg,#FF69B4,#9B59B6); color:white; padding:10px 22px; border-radius:6px; font-size:15px; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+.titulo-area { position:relative; z-index:10; padding:18px 56px 0 66px; }
+.sub { font-size:18px; color:rgba(255,215,0,0.9); letter-spacing:5px; text-transform:uppercase; font-weight:700; margin-bottom:4px; }
+.titulo { font-size:96px; font-weight:900; color:white; line-height:0.88; text-transform:uppercase; }
+.titulo span { color:#FFD700; }
+.linha { width:120px; height:5px; background:linear-gradient(90deg,#FFD700,#FF69B4); margin-top:10px; border-radius:2px; }
+.produtos { position:relative; z-index:10; flex:1; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; padding:16px 56px 10px 66px; align-items:center; }
+.produto { background:rgba(255,255,255,0.07); border:1px solid rgba(255,215,0,0.2); border-radius:12px; padding:16px 12px; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; overflow:hidden; }
+.produto::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#FFD700,#FF69B4); }
+.prod-emoji { font-size:34px; margin-bottom:6px; }
+.prod-nome { font-size:14px; font-weight:800; color:white; text-transform:uppercase; line-height:1.1; margin-bottom:3px; }
+.prod-un { font-size:10px; color:rgba(255,255,255,0.4); margin-bottom:8px; }
+.prod-preco { display:flex; align-items:flex-start; gap:1px; }
+.p-rs { font-size:14px; font-weight:700; color:#FFD700; margin-top:5px; }
+.p-val { font-size:38px; font-weight:900; color:white; line-height:1; }
+.p-cts { font-size:16px; font-weight:700; color:rgba(255,255,255,0.7); margin-top:5px; }
+.rodape { position:relative; z-index:10; padding:0 56px 26px 66px; display:flex; align-items:center; justify-content:space-between; }
+.validade { font-size:12px; color:rgba(255,255,255,0.3); }
+.wpp { background:rgba(37,211,102,0.15); border:1px solid rgba(37,211,102,0.3); border-radius:6px; padding:5px 14px; font-size:13px; font-weight:700; color:#25D366; }
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="glow1"></div><div class="glow2"></div><div class="stripe"></div>
+<div class="topo">
+  <div class="logo-wrap"><img src="/radio-assets/logotipo.png" alt="Índio"></div>
+  <div class="tag">🐣 Páscoa Índio</div>
+</div>
+<div class="titulo-area">
+  <div class="sub">Semana Santa</div>
+  <div class="titulo">Páscoa<br><span>em Oferta</span></div>
+  <div class="linha"></div>
+</div>
+<div class="produtos">
+  <div class="produto">
+    <div class="prod-emoji">🍫</div>
+    <div class="prod-nome">Ovo de Páscoa</div>
+    <div class="prod-un">200g</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">18</span><span class="p-cts">,90</span></div>
+  </div>
+  <div class="produto">
+    <div class="prod-emoji">🐟</div>
+    <div class="prod-nome">Bacalhau</div>
+    <div class="prod-un">KG</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">49</span><span class="p-cts">,90</span></div>
+  </div>
+  <div class="produto">
+    <div class="prod-emoji">🐠</div>
+    <div class="prod-nome">Salmão</div>
+    <div class="prod-un">KG</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">39</span><span class="p-cts">,90</span></div>
+  </div>
+  <div class="produto">
+    <div class="prod-emoji">🥚</div>
+    <div class="prod-nome">Ovos Brancos</div>
+    <div class="prod-un">Dúzia</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">7</span><span class="p-cts">,99</span></div>
+  </div>
+</div>
+<div class="rodape">
+  <span class="validade">Válido na Semana Santa • Enquanto durar o estoque</span>
+  <span class="wpp">📲 (51) 9XXXX-XXXX</span>
+</div>
+</body></html>

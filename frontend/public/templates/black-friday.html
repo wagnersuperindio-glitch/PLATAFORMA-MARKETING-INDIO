@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Black Friday — Feed 1080x1080</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { width:1080px; height:1080px; font-family:'Barlow Condensed',sans-serif; overflow:hidden; display:flex; flex-direction:column; background:#000; }
+.bg { position:absolute; inset:0; background:radial-gradient(ellipse at 15% 40%, #1a0000 0%, #050000 60%, #000 100%); }
+.glow-r { position:absolute; right:-80px; top:-80px; width:700px; height:700px; background:radial-gradient(circle, rgba(255,30,0,0.18) 0%, transparent 60%); }
+.stripe { position:absolute; left:0; top:0; bottom:0; width:10px; background:linear-gradient(180deg,#FF0000,#CC0000,#FF0000); }
+.topo { position:relative; z-index:10; display:flex; align-items:center; justify-content:space-between; padding:32px 56px 0 66px; }
+.logo-wrap img { height:52px; filter:brightness(0) invert(1); }
+.tag { background:#FF0000; color:white; padding:10px 22px; border-radius:6px; font-size:15px; font-weight:700; letter-spacing:2px; text-transform:uppercase; animation:blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.7} }
+.titulo-area { position:relative; z-index:10; padding:14px 56px 0 66px; }
+.sub { font-size:18px; color:rgba(255,50,50,0.9); letter-spacing:5px; text-transform:uppercase; font-weight:700; margin-bottom:4px; }
+.titulo { font-size:110px; font-weight:900; color:white; line-height:0.82; text-transform:uppercase; text-shadow:0 0 40px rgba(255,0,0,0.5); }
+.titulo span { color:#FF0000; }
+.linha { width:130px; height:5px; background:linear-gradient(90deg,#FF0000,#880000); margin-top:10px; border-radius:2px; }
+.produtos { position:relative; z-index:10; flex:1; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding:14px 56px 10px 66px; align-items:center; }
+.produto { background:rgba(255,255,255,0.04); border:1px solid rgba(255,0,0,0.2); border-radius:14px; padding:20px 16px; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; overflow:hidden; }
+.produto::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#FF0000,#880000); }
+.badge-off { position:absolute; top:10px; right:10px; background:#FF0000; color:white; font-size:12px; font-weight:900; padding:3px 8px; border-radius:4px; }
+.prod-emoji { font-size:40px; margin-bottom:8px; }
+.prod-nome { font-size:17px; font-weight:800; color:white; text-transform:uppercase; line-height:1.1; margin-bottom:2px; }
+.prod-de { font-size:13px; color:rgba(255,255,255,0.35); text-decoration:line-through; margin-bottom:4px; }
+.prod-preco { display:flex; align-items:flex-start; gap:1px; }
+.p-rs { font-size:20px; font-weight:700; color:#FF0000; margin-top:8px; }
+.p-val { font-size:60px; font-weight:900; color:white; line-height:1; }
+.p-cts { font-size:26px; font-weight:700; color:rgba(255,255,255,0.7); margin-top:8px; }
+.rodape { position:relative; z-index:10; padding:0 56px 26px 66px; display:flex; align-items:center; justify-content:space-between; }
+.validade { font-size:12px; color:rgba(255,255,255,0.25); }
+.wpp { background:rgba(37,211,102,0.15); border:1px solid rgba(37,211,102,0.3); border-radius:6px; padding:5px 14px; font-size:13px; font-weight:700; color:#25D366; }
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="glow-r"></div><div class="stripe"></div>
+<div class="topo">
+  <div class="logo-wrap"><img src="/radio-assets/logotipo.png" alt="Índio"></div>
+  <div class="tag">🔥 Só Hoje!</div>
+</div>
+<div class="titulo-area">
+  <div class="sub">Supermercados Índio</div>
+  <div class="titulo">Black<br><span>Friday</span></div>
+  <div class="linha"></div>
+</div>
+<div class="produtos">
+  <div class="produto">
+    <div class="badge-off">30% OFF</div>
+    <div class="prod-emoji">🥩</div>
+    <div class="prod-nome">Picanha Bovina</div>
+    <div class="prod-de">De R$79,90</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">54</span><span class="p-cts">,90</span></div>
+  </div>
+  <div class="produto">
+    <div class="badge-off">25% OFF</div>
+    <div class="prod-emoji">🍺</div>
+    <div class="prod-nome">Cerveja Pack</div>
+    <div class="prod-de">De R$49,90</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">37</span><span class="p-cts">,90</span></div>
+  </div>
+  <div class="produto">
+    <div class="badge-off">40% OFF</div>
+    <div class="prod-emoji">🛢️</div>
+    <div class="prod-nome">Azeite Extra</div>
+    <div class="prod-de">De R$34,90</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">20</span><span class="p-cts">,90</span></div>
+  </div>
+</div>
+<div class="rodape">
+  <span class="validade">Válido somente na Black Friday • Enquanto durar o estoque</span>
+  <span class="wpp">📲 (51) 9XXXX-XXXX</span>
+</div>
+</body></html>

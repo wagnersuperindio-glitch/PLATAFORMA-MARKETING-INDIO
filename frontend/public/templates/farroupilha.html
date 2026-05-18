@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Semana Farroupilha — Feed 1080x1080</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { width:1080px; height:1080px; font-family:'Barlow Condensed',sans-serif; overflow:hidden; display:flex; flex-direction:column; }
+.bg { position:absolute; inset:0; background:radial-gradient(ellipse at 20% 40%, #1a0a00 0%, #0f0500 50%, #050200 80%); }
+.bandeira-rs { position:absolute; top:0; right:0; width:300px; height:200px; opacity:0.15; background:linear-gradient(135deg, #009c3b 0%, #009c3b 33%, #ffdf00 33%, #ffdf00 66%, #cc0000 66%, #cc0000 100%); }
+.stripe { position:absolute; left:0; top:0; bottom:0; width:10px; background:linear-gradient(180deg,#CC0000,#FFDF00,#009C3B,#FFDF00,#CC0000); }
+.topo { position:relative; z-index:10; display:flex; align-items:center; justify-content:space-between; padding:32px 56px 0 66px; }
+.logo-wrap img { height:52px; filter:brightness(0) invert(1); }
+.tag { background:#CC0000; color:white; padding:10px 22px; border-radius:6px; font-size:14px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; }
+.titulo-area { position:relative; z-index:10; padding:14px 56px 0 66px; }
+.sub { font-size:17px; color:rgba(255,220,0,0.9); letter-spacing:4px; text-transform:uppercase; font-weight:700; margin-bottom:4px; }
+.titulo { font-size:88px; font-weight:900; color:white; line-height:0.88; text-transform:uppercase; }
+.titulo span { color:#FFDF00; }
+.linha { width:120px; height:5px; background:linear-gradient(90deg,#FFDF00,#CC0000); margin-top:10px; border-radius:2px; }
+.produtos { position:relative; z-index:10; flex:1; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; padding:14px 56px 10px 66px; align-items:center; }
+.produto { background:rgba(255,255,255,0.05); border:1px solid rgba(255,220,0,0.2); border-radius:12px; padding:16px 12px; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; overflow:hidden; }
+.produto::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#FFDF00,#CC0000); }
+.prod-emoji { font-size:34px; margin-bottom:6px; }
+.prod-nome { font-size:14px; font-weight:800; color:white; text-transform:uppercase; line-height:1.1; margin-bottom:3px; }
+.prod-un { font-size:10px; color:rgba(255,255,255,0.4); margin-bottom:8px; }
+.prod-preco { display:flex; align-items:flex-start; gap:1px; }
+.p-rs { font-size:14px; font-weight:700; color:#FFDF00; margin-top:5px; }
+.p-val { font-size:38px; font-weight:900; color:white; line-height:1; }
+.p-cts { font-size:16px; font-weight:700; color:rgba(255,255,255,0.7); margin-top:5px; }
+.slogan { position:relative; z-index:10; text-align:center; padding:0 66px 4px; font-size:16px; font-weight:700; color:rgba(255,220,0,0.6); letter-spacing:3px; text-transform:uppercase; }
+.rodape { position:relative; z-index:10; padding:0 56px 22px 66px; display:flex; align-items:center; justify-content:space-between; }
+.validade { font-size:12px; color:rgba(255,255,255,0.3); }
+.wpp { background:rgba(37,211,102,0.15); border:1px solid rgba(37,211,102,0.3); border-radius:6px; padding:5px 14px; font-size:13px; font-weight:700; color:#25D366; }
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="bandeira-rs"></div><div class="stripe"></div>
+<div class="topo">
+  <div class="logo-wrap"><img src="/radio-assets/logotipo.png" alt="Índio"></div>
+  <div class="tag">🐎 20 de Setembro · RS</div>
+</div>
+<div class="titulo-area">
+  <div class="sub">Gaúcho de coração</div>
+  <div class="titulo">Semana<br><span>Farroupilha</span></div>
+  <div class="linha"></div>
+</div>
+<div class="produtos">
+  <div class="produto">
+    <div class="prod-emoji">🥩</div>
+    <div class="prod-nome">Costela Gaúcha</div>
+    <div class="prod-un">KG</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">22</span><span class="p-cts">,90</span></div>
+  </div>
+  <div class="produto">
+    <div class="prod-emoji">🍺</div>
+    <div class="prod-nome">Cerveja</div>
+    <div class="prod-un">Lata 350ml</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">3</span><span class="p-cts">,49</span></div>
+  </div>
+  <div class="produto">
+    <div class="prod-emoji">🫙</div>
+    <div class="prod-nome">Chimarrão</div>
+    <div class="prod-un">500g</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">18</span><span class="p-cts">,90</span></div>
+  </div>
+  <div class="produto">
+    <div class="prod-emoji">🧈</div>
+    <div class="prod-nome">Linguiça</div>
+    <div class="prod-un">KG</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">19</span><span class="p-cts">,90</span></div>
+  </div>
+</div>
+<div class="slogan">Gaúcho não abre mão de qualidade! O Índio é de casa! 🤠</div>
+<div class="rodape">
+  <span class="validade">Semana Farroupilha · 15 a 20 de Setembro · RS</span>
+  <span class="wpp">📲 (51) 9XXXX-XXXX</span>
+</div>
+</body></html>

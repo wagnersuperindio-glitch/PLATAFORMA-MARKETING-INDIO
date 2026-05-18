@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Natal da Economia — Feed 1080x1080</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { width:1080px; height:1080px; font-family:'Barlow Condensed',sans-serif; overflow:hidden; display:flex; flex-direction:column; background:#0a1f0a; }
+.bg { position:absolute; inset:0; background:radial-gradient(ellipse at 20% 30%, #1a4a1a 0%, #0a2a0a 50%, #050e05 80%); }
+.estrelas { position:absolute; inset:0; background-image:radial-gradient(1px 1px at 10% 15%, rgba(255,220,100,0.8) 0%, transparent 100%), radial-gradient(1px 1px at 30% 45%, rgba(255,220,100,0.6) 0%, transparent 100%), radial-gradient(1px 1px at 70% 20%, rgba(255,220,100,0.7) 0%, transparent 100%), radial-gradient(1px 1px at 85% 60%, rgba(255,220,100,0.5) 0%, transparent 100%), radial-gradient(2px 2px at 50% 10%, rgba(255,220,100,0.9) 0%, transparent 100%); }
+.snow { position:absolute; inset:0; background-image:radial-gradient(2px 2px at 15% 80%, rgba(255,255,255,0.6) 0%, transparent 100%), radial-gradient(2px 2px at 40% 90%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(3px 3px at 60% 85%, rgba(255,255,255,0.5) 0%, transparent 100%), radial-gradient(2px 2px at 80% 92%, rgba(255,255,255,0.6) 0%, transparent 100%); }
+.stripe { position:absolute; left:0; top:0; bottom:0; width:10px; background:linear-gradient(180deg,#CC0000,#FF6B00,#CC0000); }
+.topo { position:relative; z-index:10; display:flex; align-items:center; justify-content:space-between; padding:32px 56px 0 66px; }
+.logo-wrap img { height:52px; filter:brightness(0) invert(1); }
+.tag { background:#CC0000; color:white; padding:10px 22px; border-radius:6px; font-size:15px; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+.titulo-area { position:relative; z-index:10; padding:18px 56px 0 66px; }
+.sub { font-size:18px; color:rgba(255,200,80,0.9); letter-spacing:5px; text-transform:uppercase; font-weight:700; margin-bottom:4px; }
+.titulo { font-size:92px; font-weight:900; color:white; line-height:0.88; text-transform:uppercase; text-shadow:0 4px 24px rgba(200,0,0,0.5); }
+.titulo span { color:#FFD700; }
+.linha { width:120px; height:5px; background:linear-gradient(90deg,#FFD700,#CC0000); margin-top:10px; border-radius:2px; }
+.produtos { position:relative; z-index:10; flex:1; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding:16px 56px 10px 66px; align-items:center; }
+.produto { background:rgba(255,255,255,0.06); border:1px solid rgba(255,215,0,0.2); border-radius:14px; padding:20px 16px; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; overflow:hidden; }
+.produto::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#FFD700,#CC0000); }
+.prod-emoji { font-size:40px; margin-bottom:8px; line-height:1; }
+.prod-nome { font-size:17px; font-weight:800; color:white; text-transform:uppercase; line-height:1.1; margin-bottom:3px; }
+.prod-un { font-size:12px; color:rgba(255,255,255,0.4); margin-bottom:10px; }
+.prod-preco { display:flex; align-items:flex-start; gap:1px; }
+.p-rs { font-size:20px; font-weight:700; color:#FFD700; margin-top:8px; }
+.p-val { font-size:54px; font-weight:900; color:white; line-height:1; }
+.p-cts { font-size:24px; font-weight:700; color:rgba(255,255,255,0.7); margin-top:8px; }
+.rodape { position:relative; z-index:10; padding:0 56px 26px 66px; display:flex; align-items:center; justify-content:space-between; }
+.validade { font-size:12px; color:rgba(255,255,255,0.3); }
+.wpp { background:rgba(37,211,102,0.15); border:1px solid rgba(37,211,102,0.3); border-radius:6px; padding:5px 14px; font-size:13px; font-weight:700; color:#25D366; }
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="estrelas"></div><div class="snow"></div><div class="stripe"></div>
+<div class="topo">
+  <div class="logo-wrap"><img src="/radio-assets/logotipo.png" alt="Índio"></div>
+  <div class="tag">🎄 Natal da Economia</div>
+</div>
+<div class="titulo-area">
+  <div class="sub">Ofertas Especiais</div>
+  <div class="titulo">Natal<br><span>do Índio</span></div>
+  <div class="linha"></div>
+</div>
+<div class="produtos">
+  <div class="produto">
+    <div class="prod-emoji">🍗</div>
+    <div class="prod-nome">Peru Congelado</div>
+    <div class="prod-un">KG</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">19</span><span class="p-cts">,90</span></div>
+  </div>
+  <div class="produto">
+    <div class="prod-emoji">🥂</div>
+    <div class="prod-nome">Espumante</div>
+    <div class="prod-un">750ml</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">24</span><span class="p-cts">,90</span></div>
+  </div>
+  <div class="produto">
+    <div class="prod-emoji">🍫</div>
+    <div class="prod-nome">Panetone</div>
+    <div class="prod-un">500g</div>
+    <div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">12</span><span class="p-cts">,90</span></div>
+  </div>
+</div>
+<div class="rodape">
+  <span class="validade">Válido até 25/12 • Sujeito a disponibilidade de estoque</span>
+  <span class="wpp">📲 (51) 9XXXX-XXXX</span>
+</div>
+</body></html>

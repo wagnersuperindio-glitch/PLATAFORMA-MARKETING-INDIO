@@ -11,6 +11,7 @@ const navGroups = [
       { href: '/videos',     label: 'Vídeos & Avatares',   icon: '🎬' },
       { href: '/audio',      label: 'Áudio & Carro de Som',icon: '🎙️' },
       { href: '/templates',  label: 'Templates',           icon: '🗂️' },
+      { href: '/conteudo',   label: 'Conteúdo Digital',    icon: '📱' },
     ],
   },
   {

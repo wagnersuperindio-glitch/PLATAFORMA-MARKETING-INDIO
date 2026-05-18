@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Dia das Mães — Feed 1080x1080</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { width:1080px; height:1080px; font-family:'Barlow Condensed',sans-serif; overflow:hidden; display:flex; flex-direction:column; }
+.bg { position:absolute; inset:0; background:radial-gradient(ellipse at 20% 30%, #5c0a30 0%, #3a0820 50%, #1a040e 80%); }
+.glow { position:absolute; right:-80px; top:-80px; width:650px; height:650px; background:radial-gradient(circle, rgba(255,105,180,0.2) 0%, transparent 60%); }
+.stripe { position:absolute; left:0; top:0; bottom:0; width:10px; background:linear-gradient(180deg,#FF69B4,#C71585,#FF69B4); }
+.topo { position:relative; z-index:10; display:flex; align-items:center; justify-content:space-between; padding:32px 56px 0 66px; }
+.logo-wrap img { height:52px; filter:brightness(0) invert(1); }
+.tag { background:#C71585; color:white; padding:10px 22px; border-radius:6px; font-size:15px; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+.titulo-area { position:relative; z-index:10; padding:18px 56px 0 66px; }
+.sub { font-size:18px; color:rgba(255,182,193,0.9); letter-spacing:5px; text-transform:uppercase; font-weight:700; margin-bottom:4px; }
+.titulo { font-size:92px; font-weight:900; color:white; line-height:0.88; text-transform:uppercase; }
+.titulo span { color:#FF69B4; }
+.linha { width:120px; height:5px; background:linear-gradient(90deg,#FF69B4,#C71585); margin-top:10px; border-radius:2px; }
+.destaque { position:relative; z-index:10; margin:16px 66px 0; background:rgba(255,105,180,0.12); border:1px solid rgba(255,105,180,0.3); border-radius:16px; padding:20px 24px; display:flex; align-items:center; gap:20px; }
+.dest-emoji { font-size:64px; }
+.dest-info { flex:1; }
+.dest-tag { font-size:13px; color:rgba(255,182,193,0.7); letter-spacing:3px; text-transform:uppercase; margin-bottom:4px; }
+.dest-nome { font-size:32px; font-weight:900; color:white; text-transform:uppercase; line-height:1; }
+.dest-preco { display:flex; align-items:flex-start; gap:2px; margin-top:8px; }
+.dp-rs { font-size:22px; font-weight:700; color:#FF69B4; margin-top:6px; }
+.dp-val { font-size:68px; font-weight:900; color:white; line-height:1; }
+.dp-cts { font-size:30px; font-weight:700; color:rgba(255,255,255,0.7); margin-top:6px; }
+.sub-produtos { position:relative; z-index:10; flex:1; display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding:12px 56px 10px 66px; align-items:center; }
+.produto { background:rgba(255,255,255,0.05); border:1px solid rgba(255,105,180,0.15); border-radius:10px; padding:14px 12px; display:flex; flex-direction:column; align-items:center; text-align:center; }
+.prod-emoji { font-size:30px; margin-bottom:6px; }
+.prod-nome { font-size:13px; font-weight:800; color:white; text-transform:uppercase; margin-bottom:8px; line-height:1.1; }
+.prod-preco { display:flex; align-items:flex-start; gap:1px; }
+.p-rs { font-size:13px; font-weight:700; color:#FF69B4; margin-top:4px; }
+.p-val { font-size:32px; font-weight:900; color:white; line-height:1; }
+.p-cts { font-size:14px; font-weight:700; color:rgba(255,255,255,0.6); margin-top:4px; }
+.rodape { position:relative; z-index:10; padding:0 56px 26px 66px; display:flex; align-items:center; justify-content:space-between; }
+.validade { font-size:12px; color:rgba(255,255,255,0.3); }
+.wpp { background:rgba(37,211,102,0.15); border:1px solid rgba(37,211,102,0.3); border-radius:6px; padding:5px 14px; font-size:13px; font-weight:700; color:#25D366; }
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="glow"></div><div class="stripe"></div>
+<div class="topo">
+  <div class="logo-wrap"><img src="/radio-assets/logotipo.png" alt="Índio"></div>
+  <div class="tag">💐 Dia das Mães</div>
+</div>
+<div class="titulo-area">
+  <div class="sub">Para quem você ama</div>
+  <div class="titulo">Homenagem<br><span>às Mães</span></div>
+  <div class="linha"></div>
+</div>
+<div class="destaque">
+  <div class="dest-emoji">🍰</div>
+  <div class="dest-info">
+    <div class="dest-tag">Destaque do Dia</div>
+    <div class="dest-nome">Torta Especial</div>
+    <div class="dest-preco">
+      <span class="dp-rs">R$</span><span class="dp-val">34</span><span class="dp-cts">,90</span>
+    </div>
+  </div>
+</div>
+<div class="sub-produtos">
+  <div class="produto"><div class="prod-emoji">🍷</div><div class="prod-nome">Vinho Rosé</div><div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">28</span><span class="p-cts">,90</span></div></div>
+  <div class="produto"><div class="prod-emoji">🍓</div><div class="prod-nome">Morango</div><div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">6</span><span class="p-cts">,99</span></div></div>
+  <div class="produto"><div class="prod-emoji">🍫</div><div class="prod-nome">Chocolate</div><div class="prod-preco"><span class="p-rs">R$</span><span class="p-val">9</span><span class="p-cts">,90</span></div></div>
+</div>
+<div class="rodape">
+  <span class="validade">Feliz Dia das Mães! • Válido até 11/05 • Sujeito a estoque</span>
+  <span class="wpp">📲 (51) 9XXXX-XXXX</span>
+</div>
+</body></html>
