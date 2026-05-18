@@ -63,15 +63,14 @@ const APIS = [
     icon: '📲',
     nome: 'Meta API — Instagram + Facebook',
     desc: 'Publicação direta · Posts · Stories · Insights',
-    status: 'Token expirado',
-    statusCor: 'red',
+    status: 'Ativo',
+    statusCor: 'green',
     campos: [
-      { label: 'Token', valor: 'META_ACCESS_TOKEN (RENOVAR — expirado)' },
+      { label: 'Token', valor: 'META_ACCESS_TOKEN — renovado 17/05/2026' },
       { label: 'Instagram ID', valor: '17841408006597613' },
       { label: 'Page ID', valor: '1598780677003934' },
     ],
-    cor: 'bg-red-50',
-    alerta: 'Token expirado. Renovar em: developers.facebook.com → Ferramentas → Explorador de API',
+    cor: 'bg-blue-50',
   },
   {
     id: 'whatsapp',
@@ -200,12 +199,11 @@ export default function ApisPage() {
         </div>
       </div>
 
-      {/* Alerta token Meta */}
-      <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
-        <span className="text-xl">🔴</span>
+      <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-start gap-3">
+        <span className="text-xl">✅</span>
         <div>
-          <p className="font-bold text-red-800 text-sm">Token Meta API expirado</p>
-          <p className="text-xs text-red-600 mt-1">O token do Instagram/Facebook precisa ser renovado para publicação direta. Acesse: <strong>developers.facebook.com → Ferramentas → Explorador de API → Gerar token</strong></p>
+          <p className="font-bold text-green-800 text-sm">Meta API ativa</p>
+          <p className="text-xs text-green-600 mt-1">Token renovado em 17/05/2026 — Instagram + Facebook funcionando. Próxima renovação: ~60 dias.</p>
         </div>
       </div>
 

@@ -21,7 +21,7 @@ const FERRAMENTAS = [
   { nome: 'Rádio Super Índio',   icon: '📻', desc: 'Player PWA · Grade · Trade',           href: '/radio',    status: 'Protótipo',cor: 'yellow' },
   { nome: 'WhatsApp Business',   icon: '💬', desc: 'Disparos · Campanhas · Listas',        href: '/whatsapp', status: 'Dev Mode', cor: 'yellow' },
   { nome: 'Publicar Redes',      icon: '📲', desc: 'Instagram · Facebook · WhatsApp',     href: '/publicar', status: 'Pronto',   cor: 'green' },
-  { nome: 'Meta API',            icon: '📸', desc: 'Token expirado — renovar',             href: '/apis',     status: 'Atenção',  cor: 'red' },
+  { nome: 'Meta API',            icon: '📸', desc: 'Instagram · Facebook · Publicação',    href: '/publicar', status: 'Ativo',    cor: 'green' },
 ]
 
 const COR: Record<string, string> = {
@@ -175,15 +175,15 @@ export default function DashboardPage() {
         </div>
       )}
 
-      <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center justify-between">
+      <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="text-xl">⚠️</span>
+          <span className="text-xl">✅</span>
           <div>
-            <p className="font-semibold text-red-800 text-sm">Token Meta API expirado</p>
-            <p className="text-xs text-red-600">Publicação automática no Instagram/Facebook parada</p>
+            <p className="font-semibold text-green-800 text-sm">Meta API conectada</p>
+            <p className="text-xs text-green-600">Token ativo (renovado 17/05/2026) — Instagram + Facebook funcionando</p>
           </div>
         </div>
-        <Link href="/apis" className="px-3 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-lg hover:bg-red-700">Renovar →</Link>
+        <Link href="/publicar" className="px-3 py-1.5 bg-green-600 text-white text-xs font-semibold rounded-lg hover:bg-green-700">Publicar →</Link>
       </div>
     </div>
   )
