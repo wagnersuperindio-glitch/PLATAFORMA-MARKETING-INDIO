@@ -3,223 +3,141 @@
 <head>
 <meta charset="UTF-8">
 <title>Quarta do Horti — Feed 1080x1080</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-
 body {
   width:1080px; height:1080px;
+  background:#0D1F0D;
   font-family:'Barlow Condensed', sans-serif;
   overflow:hidden;
-  background:#0D1F0A;
   display:flex; flex-direction:column;
 }
-
 .bg {
   position:absolute; inset:0;
-  background: radial-gradient(ellipse at 30% 60%, #1a4d0a 0%, #0D1F0A 60%);
+  background: radial-gradient(ellipse at 20% 40%, #1a5c1a 0%, #0a2e0a 50%, #060e06 80%);
 }
-
-.detalhe-circulo {
-  position:absolute;
-  right:-120px; bottom:-120px;
-  width:500px; height:500px;
-  border-radius:50%;
-  border:80px solid rgba(80,200,40,0.08);
+.glow { position:absolute; right:-60px; bottom:-60px; width:650px; height:650px;
+  background: radial-gradient(circle, rgba(80,200,80,0.12) 0%, transparent 65%); }
+.stripe-accent {
+  position:absolute; left:0; top:0; bottom:0; width:10px;
+  background: linear-gradient(180deg, #4CAF50, #1B5E20);
 }
-
-/* TOPO */
 .topo {
   position:relative; z-index:10;
   display:flex; align-items:center; justify-content:space-between;
-  padding:32px 50px 0;
+  padding:32px 56px 0 66px;
 }
-
-.logo-area { display:flex; align-items:center; gap:14px; }
-.logo-circle {
-  width:64px; height:64px;
-  background:#0066CC; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:28px; font-weight:900; color:white;
-  border:3px solid rgba(255,255,255,0.25);
-}
-.logo-text .sup  { font-size:11px; letter-spacing:3px; color:rgba(255,255,255,0.55); text-transform:uppercase; }
-.logo-text .nome { font-size:22px; font-weight:700; color:white; letter-spacing:1px; line-height:1; }
-
+.logo-wrap img { height:52px; filter:brightness(0) invert(1); }
 .tag-dia {
-  background:#2E7D1F; color:white;
-  padding:8px 20px; border-radius:4px;
-  font-size:14px; font-weight:700;
+  background:#2E7D32; color:white; padding:10px 26px;
+  border-radius:6px; font-size:16px; font-weight:700;
   letter-spacing:2px; text-transform:uppercase;
 }
-
-/* TÍTULO */
-.titulo-area {
-  position:relative; z-index:10;
-  padding:24px 50px 0;
+.titulo-area { position:relative; z-index:10; padding:20px 56px 0 66px; }
+.subtitulo { font-size:18px; color:rgba(144,238,144,0.85); letter-spacing:5px; text-transform:uppercase; font-weight:700; margin-bottom:4px; }
+.titulo { font-size:96px; font-weight:900; color:white; line-height:0.88; text-transform:uppercase; }
+.titulo span { color:#4CAF50; }
+.linha { width:120px; height:5px; background:linear-gradient(90deg,#4CAF50,#1B5E20); margin-top:10px; border-radius:2px; }
+.produtos-grid {
+  position:relative; z-index:10; flex:1;
+  display:grid; grid-template-columns: repeat(4, 1fr);
+  gap:14px; padding:16px 56px 12px 66px; align-items:center;
 }
-.subtitulo { font-size:17px; color:rgba(100,220,60,0.85); letter-spacing:4px; text-transform:uppercase; font-weight:600; margin-bottom:4px; }
-.titulo { font-size:104px; font-weight:900; color:white; line-height:0.88; text-transform:uppercase; }
-.titulo span { color:#6EE03E; }
-.linha { width:100px; height:4px; background:linear-gradient(90deg,#6EE03E,#2E7D1F); margin-top:12px; border-radius:2px; }
-
-/* GRID DE PRODUTOS */
-.produtos {
-  position:relative; z-index:10;
-  flex:1; display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap:14px; padding:18px 50px;
-  align-content:center;
-}
-
 .produto {
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(110,224,62,0.2);
-  border-radius:10px; padding:16px 12px;
-  display:flex; flex-direction:column; align-items:center; text-align:center;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(76,175,80,0.2);
+  border-radius:12px; padding:16px 12px;
+  display:flex; flex-direction:column;
+  align-items:center; text-align:center;
   position:relative; overflow:hidden;
 }
 .produto::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:2px;
-  background:linear-gradient(90deg,#6EE03E,#2E7D1F);
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,#4CAF50,#8BC34A);
 }
-
-.produto-emoji { font-size:32px; margin-bottom:6px; }
-.produto-nome  { font-size:15px; font-weight:700; color:rgba(255,255,255,0.9); text-transform:uppercase; letter-spacing:0.3px; line-height:1.1; margin-bottom:3px; }
-.produto-obs   { font-size:11px; color:rgba(255,255,255,0.4); margin-bottom:8px; }
-.produto-preco { display:flex; align-items:flex-start; justify-content:center; gap:1px; }
-.preco-rs      { font-size:16px; font-weight:700; color:#6EE03E; margin-top:6px; }
-.preco-valor   { font-size:40px; font-weight:900; color:white; line-height:1; }
-.preco-cents   { font-size:18px; font-weight:700; color:white; margin-top:6px; }
-
-/* RODAPÉ */
+.produto-emoji { font-size:34px; margin-bottom:6px; line-height:1; }
+.produto-nome { font-size:15px; font-weight:800; color:white; text-transform:uppercase; line-height:1.1; margin-bottom:3px; }
+.produto-un { font-size:11px; color:rgba(255,255,255,0.4); margin-bottom:8px; }
+.produto-preco { display:flex; align-items:flex-start; gap:1px; }
+.preco-rs { font-size:16px; font-weight:700; color:#4CAF50; margin-top:5px; }
+.preco-valor { font-size:40px; font-weight:900; color:white; line-height:1; }
+.preco-cents { font-size:18px; font-weight:700; color:rgba(255,255,255,0.7); margin-top:5px; }
 .rodape {
   position:relative; z-index:10;
-  padding:0 50px 26px;
-  display:flex; justify-content:space-between; align-items:center;
+  padding:0 56px 28px 66px;
+  display:flex; align-items:center; justify-content:space-between;
 }
-.validade { font-size:12px; color:rgba(255,255,255,0.35); letter-spacing:1px; }
-.instagram{ font-size:14px; color:rgba(110,224,62,0.7); }
+.validade { font-size:13px; color:rgba(255,255,255,0.35); }
+.wpp { background:rgba(37,211,102,0.15); border:1px solid rgba(37,211,102,0.3); border-radius:6px; padding:6px 14px; font-size:13px; font-weight:700; color:#25D366; }
 </style>
 </head>
 <body>
-
 <div class="bg"></div>
-<div class="detalhe-circulo"></div>
-
+<div class="glow"></div>
+<div class="stripe-accent"></div>
 <div class="topo">
-  <div class="logo-area">
-    <div class="logo-circle">Í</div>
-    <div class="logo-text">
-      <div class="sup">Supermercados</div>
-      <div class="nome">Índio</div>
-    </div>
-  </div>
+  <div class="logo-wrap"><img src="/radio-assets/logotipo.png" alt="Índio Supermercados"></div>
   <div class="tag-dia">🥦 Toda Quarta</div>
 </div>
-
 <div class="titulo-area">
-  <div class="subtitulo">FLV — Frescor do Campo</div>
+  <div class="subtitulo">Promoção Especial</div>
   <div class="titulo">Quarta<br><span>do Horti</span></div>
   <div class="linha"></div>
 </div>
-
-<div class="produtos">
-
+<div class="produtos-grid">
   <div class="produto">
     <div class="produto-emoji">🍅</div>
-    <div class="produto-nome">Tomate</div>
-    <div class="produto-obs">Salada — KG</div>
-    <div class="produto-preco">
-      <span class="preco-rs">R$</span>
-      <span class="preco-valor">4</span>
-      <span class="preco-cents">,99</span>
-    </div>
+    <div class="produto-nome">Tomate Italiano</div>
+    <div class="produto-un">KG</div>
+    <div class="produto-preco"><span class="preco-rs">R$</span><span class="preco-valor">3</span><span class="preco-cents">,99</span></div>
   </div>
-
   <div class="produto">
     <div class="produto-emoji">🥦</div>
     <div class="produto-nome">Brócolis</div>
-    <div class="produto-obs">Maço — UN</div>
-    <div class="produto-preco">
-      <span class="preco-rs">R$</span>
-      <span class="preco-valor">3</span>
-      <span class="preco-cents">,49</span>
-    </div>
+    <div class="produto-un">Maço</div>
+    <div class="produto-preco"><span class="preco-rs">R$</span><span class="preco-valor">2</span><span class="preco-cents">,49</span></div>
   </div>
-
   <div class="produto">
     <div class="produto-emoji">🥕</div>
     <div class="produto-nome">Cenoura</div>
-    <div class="produto-obs">Bandeja 1kg</div>
-    <div class="produto-preco">
-      <span class="preco-rs">R$</span>
-      <span class="preco-valor">5</span>
-      <span class="preco-cents">,99</span>
-    </div>
+    <div class="produto-un">KG</div>
+    <div class="produto-preco"><span class="preco-rs">R$</span><span class="preco-valor">2</span><span class="preco-cents">,99</span></div>
   </div>
-
-  <div class="produto">
-    <div class="produto-emoji">🍋</div>
-    <div class="produto-nome">Limão Tahiti</div>
-    <div class="produto-obs">KG</div>
-    <div class="produto-preco">
-      <span class="preco-rs">R$</span>
-      <span class="preco-valor">3</span>
-      <span class="preco-cents">,99</span>
-    </div>
-  </div>
-
-  <div class="produto">
-    <div class="produto-emoji">🫑</div>
-    <div class="produto-nome">Pimentão</div>
-    <div class="produto-obs">Mix — KG</div>
-    <div class="produto-preco">
-      <span class="preco-rs">R$</span>
-      <span class="preco-valor">7</span>
-      <span class="preco-cents">,99</span>
-    </div>
-  </div>
-
   <div class="produto">
     <div class="produto-emoji">🧅</div>
     <div class="produto-nome">Cebola</div>
-    <div class="produto-obs">Rede 1kg</div>
-    <div class="produto-preco">
-      <span class="preco-rs">R$</span>
-      <span class="preco-valor">4</span>
-      <span class="preco-cents">,49</span>
-    </div>
+    <div class="produto-un">KG</div>
+    <div class="produto-preco"><span class="preco-rs">R$</span><span class="preco-valor">3</span><span class="preco-cents">,49</span></div>
   </div>
-
   <div class="produto">
-    <div class="produto-emoji">🍇</div>
-    <div class="produto-nome">Uva Itália</div>
-    <div class="produto-obs">KG</div>
-    <div class="produto-preco">
-      <span class="preco-rs">R$</span>
-      <span class="preco-valor">9</span>
-      <span class="preco-cents">,99</span>
-    </div>
+    <div class="produto-emoji">🍋</div>
+    <div class="produto-nome">Limão Tahiti</div>
+    <div class="produto-un">KG</div>
+    <div class="produto-preco"><span class="preco-rs">R$</span><span class="preco-valor">2</span><span class="preco-cents">,79</span></div>
   </div>
-
   <div class="produto">
     <div class="produto-emoji">🥬</div>
     <div class="produto-nome">Alface</div>
-    <div class="produto-obs">Crespa — UN</div>
-    <div class="produto-preco">
-      <span class="preco-rs">R$</span>
-      <span class="preco-valor">2</span>
-      <span class="preco-cents">,49</span>
-    </div>
+    <div class="produto-un">Unidade</div>
+    <div class="produto-preco"><span class="preco-rs">R$</span><span class="preco-valor">1</span><span class="preco-cents">,99</span></div>
   </div>
-
+  <div class="produto">
+    <div class="produto-emoji">🍌</div>
+    <div class="produto-nome">Banana Caturra</div>
+    <div class="produto-un">KG</div>
+    <div class="produto-preco"><span class="preco-rs">R$</span><span class="preco-valor">3</span><span class="preco-cents">,29</span></div>
+  </div>
+  <div class="produto">
+    <div class="produto-emoji">🍎</div>
+    <div class="produto-nome">Maçã Fuji</div>
+    <div class="produto-un">KG</div>
+    <div class="produto-preco"><span class="preco-rs">R$</span><span class="preco-valor">4</span><span class="preco-cents">,99</span></div>
+  </div>
 </div>
-
 <div class="rodape">
-  <span class="validade">Válido somente nas quartas-feiras • Enquanto durar o estoque</span>
-  <span class="instagram">@supermercadosindio</span>
+  <span class="validade">Válido somente nas quartas-feiras • Sujeito a disponibilidade de estoque</span>
+  <span class="wpp">📲 (51) 9XXXX-XXXX</span>
 </div>
-
 </body>
 </html>

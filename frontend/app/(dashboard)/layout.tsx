@@ -3,18 +3,43 @@ import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 
-const navItems = [
-  { href: '/dashboard',       label: 'Dashboard',         icon: '📊' },
-  { href: '/pedidos',         label: 'Pedidos de Arte',   icon: '🎨' },
-  { href: '/campanhas',       label: 'Campanhas',         icon: '📣' },
-  { href: '/radio',           label: 'Rádio Indoor',      icon: '📻' },
-  { href: '/concorrentes',    label: 'Concorrentes',      icon: '👁️' },
-  { href: '/calendario',      label: 'Calendário',        icon: '📅' },
-  { href: '/whatsapp',        label: 'WhatsApp',          icon: '💬' },
-  { href: '/analytics',       label: 'Analytics',         icon: '📈' },
-  { href: '/templates',       label: 'Templates',         icon: '🗂️' },
-  { href: '/ajuda',           label: 'Guia da Equipe',    icon: '📖' },
-  { href: '/configuracoes',   label: 'Configurações',     icon: '⚙️' },
+const navGroups = [
+  {
+    label: 'CRIAÇÃO',
+    items: [
+      { href: '/fabrica',    label: 'Fábrica de Conteúdo', icon: '🏭' },
+      { href: '/videos',     label: 'Vídeos & Avatares',   icon: '🎬' },
+      { href: '/audio',      label: 'Áudio & Carro de Som',icon: '🎙️' },
+      { href: '/templates',  label: 'Templates',           icon: '🗂️' },
+    ],
+  },
+  {
+    label: 'CANAIS',
+    items: [
+      { href: '/publicar',   label: 'Publicar',            icon: '📲' },
+      { href: '/whatsapp',   label: 'WhatsApp',            icon: '💬' },
+      { href: '/radio',      label: 'Rádio Indoor',        icon: '📻' },
+    ],
+  },
+  {
+    label: 'GESTÃO',
+    items: [
+      { href: '/dashboard',    label: 'Dashboard',         icon: '📊' },
+      { href: '/pedidos',      label: 'Pedidos de Arte',   icon: '🎨' },
+      { href: '/campanhas',    label: 'Campanhas',         icon: '📣' },
+      { href: '/calendario',   label: 'Calendário',        icon: '📅' },
+      { href: '/concorrentes', label: 'Concorrentes',      icon: '👁️' },
+      { href: '/analytics',    label: 'Analytics',         icon: '📈' },
+    ],
+  },
+  {
+    label: 'SISTEMA',
+    items: [
+      { href: '/apis',         label: 'Conexões & APIs',   icon: '🔑' },
+      { href: '/ajuda',        label: 'Guia da Equipe',    icon: '📖' },
+      { href: '/configuracoes',label: 'Configurações',     icon: '⚙️' },
+    ],
+  },
 ]
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -56,25 +81,32 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-          {navItems.map(item => {
-            const active = pathname === item.href || pathname.startsWith(item.href + '/')
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  active
-                    ? 'bg-white text-[#0066CC]'
-                    : 'text-blue-100 hover:bg-[#0052A3] hover:text-white'
-                }`}
-              >
-                <span>{item.icon}</span>
-                {item.label}
-              </Link>
-            )
-          })}
+        <nav className="flex-1 px-3 py-3 space-y-4 overflow-y-auto">
+          {navGroups.map(group => (
+            <div key={group.label}>
+              <p className="px-4 mb-1 text-[10px] font-bold tracking-widest text-blue-300 uppercase">{group.label}</p>
+              <div className="space-y-0.5">
+                {group.items.map(item => {
+                  const active = pathname === item.href || pathname.startsWith(item.href + '/')
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setSidebarOpen(false)}
+                      className={`flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        active
+                          ? 'bg-white text-[#0066CC]'
+                          : 'text-blue-100 hover:bg-[#0052A3] hover:text-white'
+                      }`}
+                    >
+                      <span className="text-base">{item.icon}</span>
+                      {item.label}
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
 
         {/* User */}
