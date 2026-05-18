@@ -7,6 +7,7 @@ const navItems = [
   { href: '/dashboard',       label: 'Dashboard',         icon: '📊' },
   { href: '/pedidos',         label: 'Pedidos de Arte',   icon: '🎨' },
   { href: '/campanhas',       label: 'Campanhas',         icon: '📣' },
+  { href: '/radio',           label: 'Rádio Indoor',      icon: '📻' },
   { href: '/concorrentes',    label: 'Concorrentes',      icon: '👁️' },
   { href: '/calendario',      label: 'Calendário',        icon: '📅' },
   { href: '/whatsapp',        label: 'WhatsApp',          icon: '💬' },

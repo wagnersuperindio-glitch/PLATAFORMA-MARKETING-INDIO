@@ -1,0 +1,69 @@
+{
+  "version": "demo-local-v1",
+  "legalStatus": "Prototype-only. Generated locally for technical validation, not final in-store music policy.",
+  "tracks": [
+    {
+      "id": "ambiente-manha",
+      "type": "music",
+      "title": "Ambiente Manha - Demo Local",
+      "mood": "leve",
+      "period": "manha",
+      "license": "Criada localmente para prototipo tecnico",
+      "url": "media/ambiente-manha.wav"
+    },
+    {
+      "id": "ambiente-pico",
+      "type": "music",
+      "title": "Ambiente Pico - Demo Local",
+      "mood": "energia moderada",
+      "period": "pico",
+      "license": "Criada localmente para prototipo tecnico",
+      "url": "media/ambiente-pico.wav"
+    },
+    {
+      "id": "ambiente-tarde",
+      "type": "music",
+      "title": "Ambiente Tarde - Demo Local",
+      "mood": "calma",
+      "period": "tarde",
+      "license": "Criada localmente para prototipo tecnico",
+      "url": "media/ambiente-tarde.wav"
+    },
+    {
+      "id": "vinheta-radio-indio",
+      "type": "vinheta",
+      "title": "Vinheta Radio Indio - Demo Local",
+      "mood": "assinatura",
+      "period": "todos",
+      "license": "Criada localmente para prototipo tecnico",
+      "url": "media/vinheta-radio-indio.wav"
+    },
+    {
+      "id": "teste-locutor-indio",
+      "type": "spot",
+      "title": "Teste Locutor Indio",
+      "mood": "locucao",
+      "period": "todos",
+      "license": "Arquivo reaproveitado do Agente Marketing Claude",
+      "url": "media/teste-locutor-indio.mp3"
+    },
+    {
+      "id": "jingle-no-indio-a-gente",
+      "type": "jingle",
+      "title": "No Indio a Gente",
+      "mood": "jingle marca",
+      "period": "todos",
+      "license": "Arquivo reaproveitado do Agente Marketing Claude",
+      "url": "media/jingle-no-indio-a-gente.mp3"
+    },
+    {
+      "id": "jingle-tribo-super-indio",
+      "type": "jingle",
+      "title": "Tribo Super Indio",
+      "mood": "jingle marca",
+      "period": "todos",
+      "license": "Arquivo reaproveitado do Agente Marketing Claude",
+      "url": "media/jingle-tribo-super-indio.mp3"
+    }
+  ]
+}
