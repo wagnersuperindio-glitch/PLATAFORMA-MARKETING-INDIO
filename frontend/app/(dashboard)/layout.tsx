@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
+import AssistantChat from '@/components/AssistantChat'
 
 const navGroups = [
   {
@@ -36,6 +37,7 @@ const navGroups = [
   {
     label: 'SISTEMA',
     items: [
+      { href: '/assistente',   label: 'Assistentes IA',   icon: '🤖' },
       { href: '/apis',         label: 'Conexões & APIs',   icon: '🔑' },
       { href: '/ajuda',        label: 'Guia da Equipe',    icon: '📖' },
       { href: '/configuracoes',label: 'Configurações',     icon: '⚙️' },
@@ -159,6 +161,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {children}
         </main>
       </div>
+
+      {/* Assistente IA flutuante — disponível em toda a plataforma */}
+      <AssistantChat />
     </div>
   )
 }

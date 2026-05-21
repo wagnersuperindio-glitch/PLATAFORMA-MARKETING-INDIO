@@ -12,6 +12,7 @@ import campaignsRoutes from './routes/campaigns'
 import analyticsRoutes from './routes/analytics'
 import competitorsRoutes from './routes/competitors'
 import whatsappRoutes from './routes/whatsapp'
+import assistantRoutes from './routes/assistant'
 
 dotenv.config()
 
@@ -99,6 +100,7 @@ app.use('/api/campaigns',   campaignsRoutes)
 app.use('/api/analytics',   analyticsRoutes)
 app.use('/api/competitors', competitorsRoutes)
 app.use('/api/whatsapp',    whatsappRoutes)
+app.use('/api/assistant',  assistantRoutes)
 
 app.listen(PORT, () => {
   console.log(`\n🚀 Índio Marketing API rodando em http://localhost:${PORT}`)
