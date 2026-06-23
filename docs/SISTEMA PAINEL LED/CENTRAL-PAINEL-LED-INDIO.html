@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central LED Índio — Gestão de Painéis</title>
+<style>
+.conn-bar{display:flex;align-items:center;gap:8px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;color:var(--red);}
+.conn-bar.ok{background:rgba(0,201,122,0.1);border-color:rgba(0,201,122,0.3);color:var(--green);}
+.conn-bar.warn{background:rgba(240,165,0,0.1);border-color:rgba(240,165,0,0.3);color:var(--accent);}
+.conn-dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0;}
+.vnnox-btn{padding:5px 12px;border-radius:6px;border:1px solid rgba(59,130,246,0.4);background:rgba(59,130,246,0.1);color:var(--blue);font-size:11px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+.vnnox-btn:hover{background:rgba(59,130,246,0.2);}
+.cfg-section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
+.cfg-title{font-size:13px;font-weight:800;color:#fff;margin-bottom:12px;}
+.action-row{display:flex;gap:8px;flex-wrap:wrap;}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+:root {
+  --bg: #08090d;
+  --surface: #0f1117;
+  --card: #141720;
+  --card2: #1a1f2e;
+  --border: #1f2535;
+  --accent: #f0a500;
+  --accent2: #e05c00;
+  --blue: #3b82f6;
+  --green: #00c97a;
+  --red: #ef4444;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --mono: 'JetBrains Mono', monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;overflow-x:hidden;}
+
+/* TOPBAR */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:20px;height:56px;position:sticky;top:0;z-index:100;}
+.topbar-logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:16px;color:#fff;white-space:nowrap;}
+.topbar-logo .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+.topbar-nav{display:flex;gap:2px;margin-left:8px;}
+.nav-btn{padding:6px 14px;border-radius:6px;border:none;background:none;color:var(--muted);cursor:pointer;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;transition:all 0.15s;}
+.nav-btn:hover{color:var(--text);background:var(--card);}
+.nav-btn.active{background:var(--accent);color:#000;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px;}
+.status-pill{display:flex;align-items:center;gap:6px;background:rgba(0,201,122,0.1);border:1px solid rgba(0,201,122,0.3);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--green);}
+.status-pill .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
+.time-display{font-family:var(--mono);font-size:13px;color:var(--muted);}
+.btn{padding:7px 16px;border-radius:7px;border:none;cursor:pointer;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;transition:all 0.15s;}
+.btn-accent{background:var(--accent);color:#000;}
+.btn-accent:hover{background:#e09600;}
+.btn-ghost{background:var(--card2);color:var(--text);border:1px solid var(--border);}
+.btn-ghost:hover{background:var(--card);}
+.btn-green{background:rgba(0,201,122,0.15);color:var(--green);border:1px solid rgba(0,201,122,0.3);}
+.btn-green:hover{background:rgba(0,201,122,0.25);}
+.btn-red{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3);}
+.btn-purple{background:rgba(139,92,246,0.15);color:var(--purple);border:1px solid rgba(139,92,246,0.3);}
+.btn-blue{background:rgba(59,130,246,0.15);color:var(--blue);border:1px solid rgba(59,130,246,0.3);}
+
+/* LAYOUT */
+.page{display:none;padding:24px;}
+.page.active{display:block;}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:24px;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;}
+.kpi-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.kpi-value{font-size:28px;font-weight:900;font-family:var(--mono);}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px;}
+.kpi.green .kpi-value{color:var(--green);}
+.kpi.accent .kpi-value{color:var(--accent);}
+.kpi.blue .kpi-value{color:var(--blue);}
+.kpi.red .kpi-value{color:var(--red);}
+.kpi.purple .kpi-value{color:var(--purple);}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.grid-auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.card-title{font-size:13px;font-weight:800;color:#fff;}
+.card-muted{font-size:12px;color:var(--muted);}
+
+/* STORE CARDS */
+.store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px;}
+.store-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;transition:border-color 0.2s;cursor:pointer;}
+.store-card:hover{border-color:var(--accent);}
+.store-card.online{border-left:4px solid var(--green);}
+.store-card.offline{border-left:4px solid var(--red);}
+.store-card.warning{border-left:4px solid var(--accent);}
+.store-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.store-name{font-weight:800;font-size:14px;color:#fff;}
+.store-city{font-size:11px;color:var(--muted);margin-top:2px;}
+.badge{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;text-transform:uppercase;}
+.badge-green{background:rgba(0,201,122,0.15);color:var(--green);border:1px solid rgba(0,201,122,0.3);}
+.badge-red{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3);}
+.badge-accent{background:rgba(240,165,0,0.15);color:var(--accent);border:1px solid rgba(240,165,0,0.3);}
+.badge-blue{background:rgba(59,130,246,0.15);color:var(--blue);border:1px solid rgba(59,130,246,0.3);}
+.badge-purple{background:rgba(139,92,246,0.15);color:var(--purple);border:1px solid rgba(139,92,246,0.3);}
+.badge-muted{background:rgba(100,116,139,0.15);color:var(--muted);border:1px solid rgba(100,116,139,0.3);}
+.store-now-playing{background:var(--surface);border-radius:8px;padding:10px 12px;font-size:12px;margin-bottom:10px;}
+.store-np-label{color:var(--muted);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+.store-np-title{color:var(--text);font-weight:600;}
+.store-stats{display:flex;gap:8px;}
+.store-stat{flex:1;background:var(--surface);border-radius:7px;padding:8px 10px;text-align:center;}
+.store-stat .n{font-size:16px;font-weight:900;font-family:var(--mono);color:var(--accent);}
+.store-stat .l{font-size:10px;color:var(--muted);}
+.store-actions{display:flex;gap:6px;margin-top:10px;}
+
+/* PROGRESS BAR */
+.progress{height:6px;background:var(--surface);border-radius:3px;overflow:hidden;margin:4px 0;}
+.progress-fill{height:100%;border-radius:3px;transition:width 0.3s;}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;}
+th{background:var(--surface);color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left;}
+td{padding:11px 14px;border-top:1px solid var(--border);font-size:13px;vertical-align:middle;}
+tr:hover td{background:rgba(255,255,255,0.01);}
+.td-mono{font-family:var(--mono);color:var(--accent);font-weight:700;}
+.td-muted{color:var(--muted);}
+
+/* SCHEDULE GRID */
+.sched-wrap{overflow-x:auto;}
+.sched-grid{display:grid;min-width:900px;}
+.sched-header{display:grid;grid-template-columns:140px repeat(15,1fr);gap:2px;margin-bottom:4px;}
+.sched-col-label{font-size:10px;color:var(--muted);text-align:center;font-weight:700;}
+.sched-row{display:grid;grid-template-columns:140px repeat(15,1fr);gap:2px;margin-bottom:2px;}
+.sched-store-label{font-size:12px;font-weight:700;color:var(--text);display:flex;align-items:center;padding-right:8px;}
+.sched-slot{height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;cursor:pointer;transition:opacity 0.15s;}
+.sched-slot:hover{opacity:0.8;}
+.slot-promo{background:rgba(240,165,0,0.35);color:var(--accent);}
+.slot-supplier{background:rgba(139,92,246,0.35);color:var(--purple);}
+.slot-inst{background:rgba(59,130,246,0.25);color:var(--blue);}
+.slot-acougue{background:rgba(239,68,68,0.25);color:var(--red);}
+.slot-empty{background:var(--surface);color:var(--muted);}
+
+/* CONTENT LIBRARY */
+.content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+.content-item{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color 0.2s;}
+.content-item:hover{border-color:var(--accent);}
+.content-thumb{width:100%;aspect-ratio:3/2;background:linear-gradient(135deg,#0d1520,#0d2040);display:flex;align-items:center;justify-content:center;font-size:32px;position:relative;}
+.content-thumb .dim{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,0.7);border-radius:4px;padding:2px 6px;font-size:10px;font-family:var(--mono);color:var(--accent);}
+.content-info{padding:12px;}
+.content-name{font-weight:700;font-size:13px;margin-bottom:4px;}
+.content-meta{font-size:11px;color:var(--muted);}
+.content-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;}
+.tag{background:var(--surface);border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;color:var(--muted);}
+
+/* CONTRACT CARD */
+.contract-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;position:relative;}
+.contract-card.active-contract{border-color:rgba(139,92,246,0.4);}
+.contract-brand{font-size:11px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.contract-name{font-size:15px;font-weight:800;color:#fff;margin-bottom:8px;}
+.contract-value{font-size:22px;font-weight:900;font-family:var(--mono);color:var(--green);margin-bottom:4px;}
+.contract-details{font-size:12px;color:var(--muted);line-height:1.7;}
+.contract-bar{margin-top:10px;}
+.contract-bar-label{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:4px;}
+.contract-stores{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px;}
+.store-chip{background:var(--surface);border-radius:4px;padding:2px 8px;font-size:10px;color:var(--muted);font-weight:700;}
+
+/* AI PANEL */
+.ai-input-area{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;}
+.ai-input-area textarea{width:100%;background:none;border:none;color:var(--text);font-size:13px;font-family:'Inter',sans-serif;resize:none;outline:none;min-height:80px;}
+.ai-options{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.ai-opt{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
+.ai-opt:hover,.ai-opt.sel{background:rgba(240,165,0,0.15);border-color:var(--accent);color:var(--accent);}
+.ai-result{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:16px;display:none;}
+.ai-result.show{display:block;}
+.ai-preview{width:100%;aspect-ratio:3/2;background:linear-gradient(135deg,#0a0e14,#1a0d2e);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--muted);margin-bottom:12px;position:relative;overflow:hidden;}
+.ai-preview-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;}
+.modal-title{font-size:18px;font-weight:900;color:#fff;margin-bottom:4px;}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.form-group{margin-bottom:14px;}
+.form-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:block;}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.15s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent);}
+.form-textarea{resize:vertical;min-height:80px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:8px;}
+.checkbox-item{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 12px;cursor:pointer;transition:all 0.15s;}
+.checkbox-item.checked{background:rgba(139,92,246,0.15);border-color:var(--purple);}
+.checkbox-item input{accent-color:var(--purple);}
+.checkbox-item span{font-size:12px;font-weight:600;}
+
+/* REVENUE */
+.rev-card{background:linear-gradient(135deg,#0d1a10,#0a2015);border:1px solid rgba(0,201,122,0.2);border-radius:12px;padding:20px;}
+.rev-label{font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.rev-value{font-size:32px;font-weight:900;font-family:var(--mono);color:var(--green);}
+.rev-sub{font-size:12px;color:var(--muted);margin-top:4px;}
+.rev-list{margin-top:12px;}
+.rev-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.rev-item:last-child{border:none;}
+.rev-item-label{font-size:13px;color:var(--text);}
+.rev-item-value{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--green);}
+
+/* NOTIFICATION */
+.notif{position:fixed;bottom:24px;right:24px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:13px;z-index:300;display:none;animation:slideIn 0.3s ease;}
+.notif.show{display:block;}
+@keyframes slideIn{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--surface);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* TOGGLE */
+.toggle{position:relative;width:40px;height:22px;}
+.toggle input{display:none;}
+.toggle-slider{position:absolute;inset:0;background:var(--border);border-radius:11px;cursor:pointer;transition:0.2s;}
+.toggle-slider:before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:0.2s;}
+.toggle input:checked + .toggle-slider{background:var(--green);}
+.toggle input:checked + .toggle-slider:before{transform:translateX(18px);}
+
+/* SECTION TITLE */
+.section-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px;}
+.section-sub{font-size:12px;color:var(--muted);margin-bottom:20px;}
+
+/* TABS INNER */
+.inner-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface);border-radius:8px;padding:4px;width:fit-content;}
+.inner-tab{padding:6px 16px;border-radius:6px;border:none;background:none;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
+.inner-tab.active{background:var(--card2);color:var(--text);}
+
+/* MEDIA KIT PREVIEW */
+.media-kit-preview{background:linear-gradient(135deg,#0a0e14 0%,#0d1e35 100%);border:2px solid var(--accent);border-radius:16px;padding:28px;text-align:center;position:relative;overflow:hidden;}
+.media-kit-preview::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(240,165,0,0.1) 0%,transparent 70%);}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <div class="dot"></div>
+    LED ÍNDIO CENTRAL
+  </div>
+  <nav class="topbar-nav">
+    <button class="nav-btn active" onclick="showPage('monitor')">📡 Monitor</button>
+    <button class="nav-btn" onclick="showPage('programacao')">📅 Programação</button>
+    <button class="nav-btn" onclick="showPage('conteudo')">🎬 Conteúdo</button>
+    <button class="nav-btn" onclick="showPage('anunciantes')">💼 Anunciantes</button>
+    <button class="nav-btn" onclick="showPage('receita')">💰 Receita</button>
+    <button class="nav-btn" onclick="showPage('agente')">🤖 Agente IA</button>
+    <button class="nav-btn" onclick="showConfigPage()">⚙ Config</button>
+  </nav>
+  <div class="topbar-right">
+    <div id="conn-bar" class="conn-bar"><div class="conn-dot"></div><span id="conn-text">Conectando...</span><button class="vnnox-btn" onclick="showConfigPage()">⚙ Config</button></div>
+    <div class="time-display" id="clock">--:--:--</div>
+    <button class="btn btn-accent" onclick="openModal('modal-publish')">⚡ Publicar Agora</button>
+  </div>
+</div>
+
+<!-- ============================================================
+  PAGE: MONITOR
+============================================================ -->
+<div class="page active" id="page-monitor">
+  <div class="kpi-strip">
+    <div class="kpi green"><div class="kpi-label">Painéis Online</div><div class="kpi-value" id="kpi-online">5</div><div class="kpi-sub" id="kpi-online-sub">VNNOX — projeto1</div></div>
+    <div class="kpi red"><div class="kpi-label">Offline</div><div class="kpi-value" id="kpi-offline">0</div><div class="kpi-sub">todos operando</div></div>
+    <div class="kpi accent"><div class="kpi-label">Solution Ativa</div><div class="kpi-value" style="font-size:18px;padding-top:6px;" id="kpi-solution">sabado</div><div class="kpi-sub">em todos os painéis</div></div>
+    <div class="kpi purple"><div class="kpi-label">Mídias no VNNOX</div><div class="kpi-value">4</div><div class="kpi-sub">Semana + Terça.mp4</div></div>
+    <div class="kpi blue"><div class="kpi-label">Inserções/Hora</div><div class="kpi-value">360</div><div class="kpi-sub">por painel (6 × 10s)</div></div>
+    <div class="kpi accent"><div class="kpi-label">Receita Mês</div><div class="kpi-value">R$0</div><div class="kpi-sub">publicidade — estruturar</div></div>
+  </div>
+
+  <div class="section-title">Painéis por Loja — Tempo Real</div>
+  <p class="section-sub">Clique em uma loja para gerenciar conteúdo. Status via VNNOX API · Atualizado <span id="last-update">agora</span></p>
+
+  <div class="store-grid" id="store-grid"></div>
+
+  <!-- LOG DE ATIVIDADE -->
+  <div class="card" style="margin-top:0;">
+    <div class="card-header">
+      <div class="card-title">Log de Atividade</div>
+      <button class="btn btn-ghost" onclick="clearLog()">Limpar</button>
+    </div>
+    <div id="activity-log" style="max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+  PAGE: PROGRAMAÇÃO
+============================================================ -->
+<div class="page" id="page-programacao">
+  <div class="section-title">Grade de Programação</div>
+  <p class="section-sub">Controle os slots de exibição por loja e por hora. Arraste ou clique para editar.</p>
+
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header">
+      <div class="card-title">Distribuição Atual de Slots</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span class="badge badge-accent">50% Promoções Índio</span>
+        <span class="badge badge-purple">25% Fornecedores</span>
+        <span class="badge badge-blue">15% Encarte</span>
+        <span class="badge badge-muted">10% Institucional</span>
+      </div>
+    </div>
+    <div class="sched-wrap">
+      <div class="sched-grid" id="sched-grid"></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Programação por Horário</div>
+        <button class="btn btn-accent" onclick="openModal('modal-add-slot')">+ Novo Slot</button>
+      </div>
+      <table>
+        <thead><tr><th>Horário</th><th>Tipo</th><th>Conteúdo</th><th>Lojas</th><th></th></tr></thead>
+        <tbody id="slots-tbody"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Regras de Rodízio</div></div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="background:var(--surface);border-radius:8px;padding:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-weight:700;font-size:13px;">Rotação automática</span>
+            <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+          </div>
+          <p style="font-size:12px;color:var(--muted);">Alterna conteúdos a cada 10s automaticamente</p>
+        </div>
+        <div style="background:var(--surface);border-radius:8px;padding:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-weight:700;font-size:13px;">Prioridade por horário</span>
+            <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+          </div>
+          <p style="font-size:12px;color:var(--muted);">Manhã: Açougue/Padaria · Tarde: Promoções · Noite: Institucional</p>
+        </div>
+        <div style="background:var(--surface);border-radius:8px;padding:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-weight:700;font-size:13px;">Limite de publicidade</span>
+            <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+          </div>
+          <p style="font-size:12px;color:var(--muted);">Máximo 25% do tempo para fornecedores</p>
+        </div>
+        <div style="background:var(--surface);border-radius:8px;padding:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-weight:700;font-size:13px;">Alerta de painel offline</span>
+            <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+          </div>
+          <p style="font-size:12px;color:var(--muted);">Notifica WhatsApp se painel cair por &gt;5 minutos</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  PAGE: CONTEÚDO
+============================================================ -->
+<div class="page" id="page-conteudo">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+    <div class="section-title">Biblioteca de Conteúdo</div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-ghost" onclick="openModal('modal-upload')">⬆ Upload</button>
+      <button class="btn btn-accent" onclick="openModal('modal-new-content')">+ Criar Conteúdo</button>
+    </div>
+  </div>
+  <p class="section-sub">Todos os arquivos para exibição nos painéis. Formato: 576×384px (3:2) · MP4 H.264 · JPG/PNG</p>
+
+  <div class="inner-tabs">
+    <button class="inner-tab active" onclick="filterContent('todos',this)">Todos (4)</button>
+    <button class="inner-tab" onclick="filterContent('promo',this)">Semanas/Promos (4)</button>
+    <button class="inner-tab" onclick="filterContent('vnnox',this)">📡 No VNNOX (4)</button>
+  </div>
+
+  <div class="content-grid" id="content-grid"></div>
+</div>
+
+<!-- ============================================================
+  PAGE: ANUNCIANTES
+============================================================ -->
+<div class="page" id="page-anunciantes">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+    <div class="section-title">Gestão de Anunciantes</div>
+    <button class="btn btn-accent" onclick="openModal('modal-new-contract')">+ Novo Contrato</button>
+  </div>
+  <p class="section-sub">Contratos ativos, marcas e gestão de verbas de marketing nos painéis LED</p>
+
+  <div class="kpi-strip" style="margin-bottom:20px;">
+    <div class="kpi purple"><div class="kpi-label">Contratos Ativos</div><div class="kpi-value">8</div><div class="kpi-sub">anunciantes pagando</div></div>
+    <div class="kpi green"><div class="kpi-label">Receita Mensal</div><div class="kpi-value">R$14k</div><div class="kpi-sub">publicidade no mês</div></div>
+    <div class="kpi accent"><div class="kpi-label">Slots Vendidos</div><div class="kpi-value">23%</div><div class="kpi-sub">do tempo disponível</div></div>
+    <div class="kpi blue"><div class="kpi-label">A Renovar</div><div class="kpi-value">3</div><div class="kpi-sub">nos próximos 15 dias</div></div>
+  </div>
+
+  <div class="grid-auto" id="contracts-grid"></div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-header">
+      <div class="card-title">Histórico de Contratos</div>
+      <button class="btn btn-ghost">Exportar</button>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Marca</th><th>Pacote</th><th>Lojas</th><th>Período</th><th>Valor</th><th>Status</th><th>Ação</th></tr></thead>
+        <tbody id="contracts-history"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  PAGE: RECEITA
+============================================================ -->
+<div class="page" id="page-receita">
+  <div class="section-title">Central de Receita — Mídia Índio</div>
+  <p class="section-sub">Controle de verba de marketing, receita de publicidade e projeções financeiras</p>
+
+  <div class="grid-3" style="margin-bottom:20px;">
+    <div class="rev-card">
+      <div class="rev-label">Receita Acumulada 2026</div>
+      <div class="rev-value">R$ 42.800</div>
+      <div class="rev-sub">Jan–Jun 2026</div>
+      <div class="rev-list">
+        <div class="rev-item"><span class="rev-item-label">Jan</span><span class="rev-item-value">R$ 3.500</span></div>
+        <div class="rev-item"><span class="rev-item-label">Fev</span><span class="rev-item-value">R$ 5.200</span></div>
+        <div class="rev-item"><span class="rev-item-label">Mar</span><span class="rev-item-value">R$ 7.100</span></div>
+        <div class="rev-item"><span class="rev-item-label">Abr</span><span class="rev-item-value">R$ 9.000</span></div>
+        <div class="rev-item"><span class="rev-item-label">Mai</span><span class="rev-item-value">R$ 11.000</span></div>
+        <div class="rev-item"><span class="rev-item-label">Jun</span><span class="rev-item-value">R$ 7.000</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Meta Anual</div></div>
+      <div style="text-align:center;padding:20px 0;">
+        <div style="font-size:42px;font-weight:900;font-family:var(--mono);color:var(--accent);">R$180k</div>
+        <div style="color:var(--muted);font-size:13px;margin-top:4px;">meta para 2026</div>
+        <div style="margin:20px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px;">
+            <span>Realizado: R$42.800</span><span>24% da meta</span>
+          </div>
+          <div class="progress"><div class="progress-fill" style="width:24%;background:var(--accent);"></div></div>
+        </div>
+        <div style="background:rgba(0,201,122,0.1);border-radius:8px;padding:12px;font-size:13px;color:var(--green);">
+          Projeção anual baseada na curva atual: <strong>R$168k</strong>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Tabela de Preços Vigente</div><button class="btn btn-ghost" style="font-size:11px;">Editar</button></div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="background:var(--surface);border-radius:8px;padding:12px;">
+          <div style="font-weight:700;color:var(--text);margin-bottom:2px;">🟡 Pacote Notável</div>
+          <div style="font-family:var(--mono);font-size:18px;color:var(--accent);font-weight:900;">R$ 350<span style="font-size:12px;color:var(--muted);font-weight:400;">/sem/loja</span></div>
+          <div style="font-size:11px;color:var(--muted);">1 arte · 10% do tempo pago</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid rgba(240,165,0,0.3);border-radius:8px;padding:12px;">
+          <div style="font-weight:700;color:var(--text);margin-bottom:2px;">🔴 Pacote Destaque ⭐</div>
+          <div style="font-family:var(--mono);font-size:18px;color:var(--accent);font-weight:900;">R$ 990<span style="font-size:12px;color:var(--muted);font-weight:400;">/mês/loja</span></div>
+          <div style="font-size:11px;color:var(--muted);">2 artes ou 1 vídeo · 15% do tempo</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid rgba(139,92,246,0.3);border-radius:8px;padding:12px;">
+          <div style="font-weight:700;color:var(--text);margin-bottom:2px;">💜 Pacote Premium Rede</div>
+          <div style="font-family:var(--mono);font-size:18px;color:var(--purple);font-weight:900;">R$ 4.500<span style="font-size:12px;color:var(--muted);font-weight:400;">/mês/rede</span></div>
+          <div style="font-size:11px;color:var(--muted);">Todas as lojas · exclusividade de categoria</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Receita por Anunciante — Junho 2026</div>
+      <button class="btn btn-ghost">Exportar Excel</button>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Anunciante</th><th>Categoria</th><th>Pacote</th><th>Lojas</th><th>Período</th><th>Valor</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>AmBev</strong></td><td class="td-muted">Bebidas</td><td><span class="badge badge-accent">Destaque</span></td><td class="td-mono">4 lojas</td><td class="td-muted">Jun/26</td><td class="td-mono" style="color:var(--green);">R$ 3.960</td><td><span class="badge badge-green">Pago</span></td></tr>
+          <tr><td><strong>BRF / Sadia</strong></td><td class="td-muted">Alimentos</td><td><span class="badge badge-purple">Premium</span></td><td class="td-mono">Rede</td><td class="td-muted">Jun/26</td><td class="td-mono" style="color:var(--green);">R$ 4.500</td><td><span class="badge badge-green">Pago</span></td></tr>
+          <tr><td><strong>Sicredi</strong></td><td class="td-muted">Financeiro</td><td><span class="badge badge-accent">Destaque</span></td><td class="td-mono">3 lojas</td><td class="td-muted">Jun/26</td><td class="td-mono" style="color:var(--green);">R$ 2.970</td><td><span class="badge badge-green">Pago</span></td></tr>
+          <tr><td><strong>Imobiliária Vitória</strong></td><td class="td-muted">Imóveis</td><td><span class="badge badge-muted">Notável</span></td><td class="td-mono">2 lojas</td><td class="td-muted">Jun/26</td><td class="td-mono" style="color:var(--accent);">R$ 700</td><td><span class="badge badge-accent">Pendente</span></td></tr>
+          <tr><td><strong>WD Construtora</strong></td><td class="td-muted">Loteamentos</td><td><span class="badge badge-blue">Interno</span></td><td class="td-mono">Rede</td><td class="td-muted">Jun/26</td><td class="td-mono" style="color:var(--blue);">R$ 0</td><td><span class="badge badge-blue">Uso Próprio</span></td></tr>
+          <tr><td><strong>Nestlé</strong></td><td class="td-muted">Alimentos</td><td><span class="badge badge-accent">Destaque</span></td><td class="td-mono">2 lojas</td><td class="td-muted">Jun/26</td><td class="td-mono" style="color:var(--accent);">R$ 1.980</td><td><span class="badge badge-accent">A vencer</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  PAGE: AGENTE IA
+============================================================ -->
+<div class="page" id="page-agente">
+  <div class="section-title">Agente IA — Criação e Publicação de Conteúdo</div>
+  <p class="section-sub">Descreva o conteúdo e o agente cria, aprova e publica automaticamente nos painéis selecionados</p>
+
+  <div class="grid-2">
+    <div>
+      <!-- INPUT -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-header"><div class="card-title">🎨 Criar Novo Conteúdo</div></div>
+        <div class="ai-input-area">
+          <textarea id="ai-prompt" placeholder="Descreva o conteúdo que quer criar... Ex: 'Oferta de picanha a R$49,90/kg com fundo vermelho e logo do açougue, para exibir só no final de semana'"></textarea>
+        </div>
+        <div style="margin-bottom:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Tipo de Conteúdo</div>
+          <div class="ai-options">
+            <button class="ai-opt sel" onclick="selectOpt(this)">🥩 Açougue</button>
+            <button class="ai-opt" onclick="selectOpt(this)">🏷 Oferta</button>
+            <button class="ai-opt" onclick="selectOpt(this)">📋 Encarte</button>
+            <button class="ai-opt" onclick="selectOpt(this)">🎪 Sazonal</button>
+            <button class="ai-opt" onclick="selectOpt(this)">🏪 Institucional</button>
+            <button class="ai-opt" onclick="selectOpt(this)">💜 Fornecedor</button>
+            <button class="ai-opt" onclick="selectOpt(this)">⚡ Flash Sale</button>
+          </div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Publicar em</div>
+          <div class="checkbox-group" id="ai-stores"></div>
+        </div>
+        <div style="margin-bottom:16px;">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Duração na tela</div>
+          <div class="ai-options">
+            <button class="ai-opt" onclick="selectOpt(this)">8s</button>
+            <button class="ai-opt sel" onclick="selectOpt(this)">10s</button>
+            <button class="ai-opt" onclick="selectOpt(this)">15s</button>
+            <button class="ai-opt" onclick="selectOpt(this)">20s</button>
+          </div>
+        </div>
+        <button class="btn btn-accent" style="width:100%;padding:12px;font-size:14px;" onclick="runAgent()">⚡ Gerar e Publicar</button>
+      </div>
+
+      <!-- AÇÕES RÁPIDAS -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">⚡ Ações Rápidas</div></div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <button class="btn btn-ghost" style="width:100%;text-align:left;padding:12px 14px;" onclick="quickAction('Criar conteúdo de Açougue do Dia com destaque do corte especial')">🥩 Açougue do Dia — gerar agora</button>
+          <button class="btn btn-ghost" style="width:100%;text-align:left;padding:12px 14px;" onclick="quickAction('Publicar página de encarte semanal atual')">📋 Publicar encarte semanal</button>
+          <button class="btn btn-ghost" style="width:100%;text-align:left;padding:12px 14px;" onclick="quickAction('Criar banner institucional Grupo Índio')">🏪 Banner institucional Índio</button>
+          <button class="btn btn-ghost" style="width:100%;text-align:left;padding:12px 14px;" onclick="quickAction('Criar promoção relâmpago com contagem regressiva')">⚡ Flash Sale com contador</button>
+          <button class="btn btn-ghost" style="width:100%;text-align:left;padding:12px 14px;" onclick="quickAction('Gerar conteúdo de Copa Cards do fim de semana')">🃏 Copa Cards — sábado</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <!-- RESULTADO IA -->
+      <div class="ai-result show card" id="ai-result-area">
+        <div class="card-header">
+          <div class="card-title">Pré-visualização Gerada</div>
+          <span class="badge badge-green">✅ Pronto para publicar</span>
+        </div>
+        <div class="ai-preview">
+          <div class="ai-preview-content" id="ai-preview-content">
+            <div style="font-size:48px;margin-bottom:12px;">🥩</div>
+            <div style="font-size:22px;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.8);">AÇOUGUE DO DIA</div>
+            <div style="font-size:36px;font-weight:900;color:var(--accent);margin:8px 0;">PICANHA</div>
+            <div style="font-size:28px;font-weight:900;color:#fff;">R$ 49,90<span style="font-size:14px;color:var(--muted);">/kg</span></div>
+            <div style="font-size:11px;color:var(--muted);margin-top:8px;">SUPERMERCADO ÍNDIO</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <div style="flex:1;background:var(--surface);border-radius:8px;padding:10px;text-align:center;">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">DIMENSÃO</div>
+            <div style="font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:700;">576×384px</div>
+          </div>
+          <div style="flex:1;background:var(--surface);border-radius:8px;padding:10px;text-align:center;">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">DURAÇÃO</div>
+            <div style="font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:700;">10s</div>
+          </div>
+          <div style="flex:1;background:var(--surface);border-radius:8px;padding:10px;text-align:center;">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">FORMATO</div>
+            <div style="font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:700;">MP4 H.264</div>
+          </div>
+          <div style="flex:1;background:var(--surface);border-radius:8px;padding:10px;text-align:center;">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">LOJAS</div>
+            <div style="font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:700;">10</div>
+          </div>
+        </div>
+        <div style="background:rgba(0,201,122,0.08);border:1px solid rgba(0,201,122,0.2);border-radius:8px;padding:10px;font-size:12px;color:var(--green);margin-bottom:12px;">
+          ✅ Conteúdo aprovado pela IA · Especificações OK · Sem violações editoriais
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-green" style="flex:1;" onclick="publishContent()">📡 Publicar em Todos os Painéis</button>
+          <button class="btn btn-ghost" onclick="openModal('modal-publish-select')">Escolher Lojas</button>
+          <button class="btn btn-ghost">⬇ Baixar</button>
+        </div>
+      </div>
+
+      <!-- HISTÓRICO IA -->
+      <div class="card" style="margin-top:16px;">
+        <div class="card-header"><div class="card-title">Histórico de Publicações IA</div></div>
+        <div style="display:flex;flex-direction:column;gap:8px;" id="ai-history"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  MODAIS
+============================================================ -->
+
+<!-- Modal: Publicar Agora -->
+<div class="modal-overlay" id="modal-publish">
+  <div class="modal">
+    <div class="modal-title">⚡ Publicar Conteúdo Agora</div>
+    <div class="modal-sub">Selecione o conteúdo e as lojas para publicação imediata via VNNOX</div>
+    <div class="form-group">
+      <label class="form-label">Conteúdo</label>
+      <select class="form-select">
+        <option>Açougue do Dia — Picanha R$49,90/kg</option>
+        <option>Encarte Semanal — Página 1</option>
+        <option>Promoção Cerveja — AmBev</option>
+        <option>Banner Institucional Índio</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Lojas</label>
+      <div class="checkbox-group" id="modal-stores-check"></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Duração de Exibição</label>
+      <select class="form-select">
+        <option>10 segundos</option>
+        <option>15 segundos</option>
+        <option>8 segundos</option>
+        <option>20 segundos</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Período</label>
+      <div class="form-row">
+        <input type="datetime-local" class="form-input">
+        <input type="datetime-local" class="form-input">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-publish')">Cancelar</button>
+      <button class="btn btn-accent" onclick="doPublish()">📡 Publicar Agora</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Novo Contrato -->
+<div class="modal-overlay" id="modal-new-contract">
+  <div class="modal">
+    <div class="modal-title">💼 Novo Contrato de Publicidade</div>
+    <div class="modal-sub">Cadastre um anunciante. O sistema inserirá automaticamente o conteúdo nos painéis.</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Nome da Empresa</label>
+        <input id="c-brand" class="form-input" placeholder="Ex: AmBev" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">CNPJ</label>
+        <input id="c-cnpj" class="form-input" placeholder="00.000.000/0000-00" type="text">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Categoria</label>
+        <select id="c-cat" class="form-select">
+          <option>Bebidas</option><option>Alimentos</option><option>Financeiro</option>
+          <option>Imóveis</option><option>Saúde</option><option>Serviços</option>
+          <option>Automotivo</option><option>Varejo</option><option>Uso Interno</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Pacote</label>
+        <select id="c-pkg" class="form-select">
+          <option>Notável — R$350/sem/loja</option>
+          <option>Destaque — R$990/mês/loja</option>
+          <option>Premium Rede — R$4.500/mês</option>
+          <option>Ativação Evento — R$2.500+</option>
+          <option>Uso Interno (gratuito)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Lojas</label>
+      <div class="checkbox-group" id="modal-contract-stores"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Início</label>
+        <input id="c-start" type="date" class="form-input">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Fim</label>
+        <input id="c-end" type="date" class="form-input">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Valor Total (R$)</label>
+      <input id="c-value" class="form-input" placeholder="0,00" type="number">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Observações</label>
+      <textarea id="c-obs" class="form-textarea" placeholder="Exclusividade de categoria, restrições de horário, contato comercial..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-new-contract')">Cancelar</button>
+      <button class="btn btn-accent" onclick="addContract()">✅ Salvar Contrato</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Adicionar Slot -->
+<div class="modal-overlay" id="modal-add-slot">
+  <div class="modal">
+    <div class="modal-title">📅 Novo Slot de Programação</div>
+    <div class="modal-sub">Defina um horário fixo para um tipo de conteúdo</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Hora Início</label>
+        <input type="time" class="form-input" value="08:00">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Hora Fim</label>
+        <input type="time" class="form-input" value="10:00">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tipo de Conteúdo</label>
+      <select class="form-select">
+        <option>🥩 Açougue do Dia</option>
+        <option>🏷 Promoções Gerais</option>
+        <option>📋 Encarte Digital</option>
+        <option>💜 Publicidade Fornecedor</option>
+        <option>🏪 Institucional</option>
+        <option>⚡ Flash Sale</option>
+        <option>🃏 Copa Cards</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Conteúdo Específico (opcional)</label>
+      <select class="form-select"><option>— Automático (rodízio) —</option></select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Aplicar em</label>
+      <div class="checkbox-group" id="modal-slot-stores"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-add-slot')">Cancelar</button>
+      <button class="btn btn-accent" onclick="addSlot()">✅ Salvar Slot</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Upload -->
+<div class="modal-overlay" id="modal-upload">
+  <div class="modal">
+    <div class="modal-title">⬆ Upload de Conteúdo</div>
+    <div class="modal-sub">Envie artes ou vídeos para a biblioteca. Formato obrigatório: 576×384px (3:2)</div>
+    <div style="border:2px dashed var(--border);border-radius:10px;padding:40px;text-align:center;margin-bottom:16px;cursor:pointer;" onclick="document.getElementById('file-input').click()">
+      <div style="font-size:36px;margin-bottom:10px;">📁</div>
+      <div style="font-weight:700;color:var(--text);">Arraste arquivos ou clique para selecionar</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;">JPG, PNG, MP4 (H.264) · máx 100MB</div>
+      <input type="file" id="file-input" style="display:none" multiple accept="image/*,video/*">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Nome do Conteúdo</label>
+        <input class="form-input" placeholder="Ex: Açougue Jun/2026" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Categoria</label>
+        <select class="form-select">
+          <option>Promoção</option><option>Açougue</option><option>Encarte</option>
+          <option>Fornecedor</option><option>Institucional</option><option>Sazonal</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-upload')">Cancelar</button>
+      <button class="btn btn-accent" onclick="doUpload()">⬆ Enviar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  PAGE: CONFIG / VNNOX
+============================================================ -->
+<div class="page" id="page-config">
+  <div class="section-title">⚙ Configuração — Conexão VNNOX</div>
+  <p class="section-sub">Configure as credenciais da API VNNOX para controle real dos painéis físicos nas lojas</p>
+
+  <div class="grid-2">
+    <!-- STATUS DA CONEXÃO -->
+    <div>
+      <div class="cfg-section">
+        <div class="cfg-title">Status da Conexão</div>
+        <div id="conn-detail" style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:var(--card2);border-radius:8px;padding:14px;">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">SERVIDOR LOCAL (Python)</div>
+            <div id="srv-status" style="font-weight:700;font-size:14px;">Verificando...</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px;">http://localhost:8765</div>
+          </div>
+          <div style="background:var(--card2);border-radius:8px;padding:14px;">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">API VNNOX (NovaStar)</div>
+            <div id="vnnox-status" style="font-weight:700;font-size:14px;">Verificando...</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px;">https://open-us.vnnox.com/v2/</div>
+          </div>
+          <div style="background:var(--card2);border-radius:8px;padding:14px;">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">LOGIN VNNOX</div>
+            <div style="font-weight:700;font-size:14px;color:var(--blue);">projetopainel7@gmail.com</div>
+            <a href="https://en.vnnox.com" target="_blank" style="font-size:12px;color:var(--accent);text-decoration:none;">🔗 Abrir VNNOX → en.vnnox.com</a>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <button class="btn btn-ghost" style="flex:1;" onclick="checkConnection()">🔄 Testar Conexão</button>
+          <button class="btn btn-blue" style="flex:1;" onclick="loadVnnoxPlayers()">📡 Carregar Painéis</button>
+        </div>
+      </div>
+
+      <div class="cfg-section">
+        <div class="cfg-title">Como Obter as Credenciais AK/AS</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--muted);">
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="background:var(--accent);color:#000;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;">1</span>
+            <span>Entre em <strong style="color:var(--text);">en.vnnox.com</strong> com <strong style="color:var(--blue);">projetopainel7@gmail.com</strong></span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="background:var(--accent);color:#000;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;">2</span>
+            <span>Clique em <strong style="color:var(--text);">"Open Platform"</strong> no menu superior</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="background:var(--accent);color:#000;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;">3</span>
+            <span>Copie o <strong style="color:var(--accent);">Access Key (AK)</strong> e o <strong style="color:var(--accent);">Access Secret (AS)</strong> gerados</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="background:var(--accent);color:#000;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;">4</span>
+            <span>Cole os valores nos campos ao lado e clique em <strong style="color:var(--green);">Salvar</strong></span>
+          </div>
+        </div>
+        <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:10px;margin-top:12px;font-size:12px;color:var(--blue);">
+          💡 O servidor Python (<code>servidor_led.py</code>) precisa estar rodando. Execute <strong>INICIAR_CENTRAL_LED.bat</strong> antes de usar.
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMULÁRIO CREDENCIAIS -->
+    <div>
+      <div class="cfg-section">
+        <div class="cfg-title">Credenciais API VNNOX</div>
+        <div class="form-group">
+          <label class="form-label">Access Key (AK)</label>
+          <input class="form-input" id="cfg-ak" placeholder="Cole aqui o AK gerado no Open Platform" type="text">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Access Secret (AS)</label>
+          <input class="form-input" id="cfg-as" placeholder="Cole aqui o AS Secret" type="password">
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">Armazenado localmente em config_vnnox.json — nunca enviado para internet</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nome da Organização</label>
+          <input class="form-input" id="cfg-org" placeholder="indio" type="text" value="indio">
+        </div>
+        <button class="btn btn-accent" style="width:100%;padding:12px;font-size:14px;" onclick="saveConfig()">💾 Salvar Credenciais</button>
+        <div id="cfg-msg" style="margin-top:10px;font-size:12px;text-align:center;"></div>
+      </div>
+
+      <div class="cfg-section">
+        <div class="cfg-title">Painéis Detectados via VNNOX</div>
+        <div id="vnnox-players" style="font-size:13px;color:var(--muted);">Clique em "Carregar Painéis" para buscar da API</div>
+      </div>
+
+      <div class="cfg-section">
+        <div class="cfg-title">Sobre o Sistema de Conexão</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);">
+          <div>📁 <strong style="color:var(--text);">servidor_led.py</strong> — Backend local Flask (porta 8765)</div>
+          <div>🔑 <strong style="color:var(--text);">config_vnnox.json</strong> — Credenciais AK/AS armazenadas localmente</div>
+          <div>📡 <strong style="color:var(--text);">VNNOX API</strong> — open-us.vnnox.com/v2/ (NovaStar)</div>
+          <div>📋 <strong style="color:var(--text);">log_publicacoes.json</strong> — Histórico de publicações</div>
+          <div>🚀 <strong style="color:var(--text);">INICIAR_CENTRAL_LED.bat</strong> — Inicia tudo com 1 clique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif" style="color:var(--green);"></div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+// TELAS REAIS — detectadas no VNNOX (conta: projeto1)
+// Total: 5 online | Solution ativa: "sabado"
+const STORES = [
+  {id:1,  vnnox:'Nestor-Painel1',      name:'Nestor-Painel1',      city:'Guaíba',          online:true,  content:'▶ sabado', solution:'sabado', anunciantes:1, views_h:360},
+  {id:2,  vnnox:'Nestor-Painel2',      name:'Nestor-Painel2',      city:'Guaíba',          online:true,  content:'▶ sabado', solution:'sabado', anunciantes:1, views_h:360},
+  {id:3,  vnnox:'arrios dos ratos',    name:'Arroio dos Ratos',    city:'Arroio dos Ratos',online:true,  content:'▶ sabado', solution:'sabado', anunciantes:1, views_h:360},
+  {id:4,  vnnox:'Taurus-Charqueadas',  name:'Taurus-Charqueadas',  city:'Charqueadas',     online:true,  content:'▶ sabado', solution:'sabado', anunciantes:2, views_h:360},
+  {id:5,  vnnox:'Adao foques matrix',  name:'Adao foques - Matriz',city:'Guaiba Centro',   online:true,  content:'▶ sabado', solution:'sabado', anunciantes:1, views_h:360},
+];
+
+const CONTRACTS_DEFAULT = [
+  {id:1, brand:'AmBev', category:'Bebidas', package:'Destaque', stores:[1,6,7,11], value:3960, status:'ativo', start:'01/06/2026', end:'30/06/2026', slots:15, cnpj:'', obs:''},
+  {id:2, brand:'BRF / Sadia', category:'Alimentos', package:'Premium Rede', stores:'Todas', value:4500, status:'ativo', start:'01/06/2026', end:'30/06/2026', slots:25, cnpj:'', obs:''},
+  {id:3, brand:'Sicredi', category:'Financeiro', package:'Destaque', stores:[1,2,13], value:2970, status:'ativo', start:'15/05/2026', end:'15/07/2026', slots:15, cnpj:'', obs:''},
+  {id:4, brand:'Nestlé', category:'Alimentos', package:'Destaque', stores:[3,6], value:1980, status:'a_vencer', start:'01/06/2026', end:'30/06/2026', slots:15, cnpj:'', obs:''},
+  {id:5, brand:'Imobiliária Vitória', category:'Imóveis', package:'Notável', stores:[11,12], value:700, status:'pendente', start:'20/06/2026', end:'20/07/2026', slots:10, cnpj:'', obs:''},
+  {id:6, brand:'WD Construtora', category:'Loteamentos', package:'Interno', stores:'Todas', value:0, status:'ativo', start:'01/01/2026', end:'31/12/2026', slots:8, cnpj:'', obs:''},
+  {id:7, brand:'Unilever', category:'Higiene', package:'Notável', stores:[1,7,10], value:1050, status:'ativo', start:'10/06/2026', end:'10/07/2026', slots:10, cnpj:'', obs:''},
+  {id:8, brand:'Banco do Brasil', category:'Financeiro', package:'Notável', stores:[2], value:350, status:'ativo', start:'01/06/2026', end:'07/07/2026', slots:10, cnpj:'', obs:''},
+];
+function loadContracts() {
+  try {
+    const saved = localStorage.getItem('indio_contracts');
+    return saved ? JSON.parse(saved) : CONTRACTS_DEFAULT;
+  } catch(e) { return CONTRACTS_DEFAULT; }
+}
+function saveContracts(arr) {
+  localStorage.setItem('indio_contracts', JSON.stringify(arr));
+}
+let CONTRACTS = loadContracts();
+
+// MÍDIAS REAIS — carregadas do VNNOX (projeto1) em 22/06/2026
+const CONTENT_ITEMS = [
+  {name:'Semana.mp4',   cat:'promo', type:'video', dur:'auto', dim:'VNNOX', icon:'📹', lojas:'Todas', vnnox:true, updated:'22/06 17:36'},
+  {name:'Semana 2.mp4', cat:'promo', type:'video', dur:'auto', dim:'VNNOX', icon:'📹', lojas:'Todas', vnnox:true, updated:'22/06 17:36'},
+  {name:'Semana 1.mp4', cat:'promo', type:'video', dur:'auto', dim:'VNNOX', icon:'📹', lojas:'Todas', vnnox:true, updated:'22/06 17:36'},
+  {name:'Terça.mp4',    cat:'promo', type:'video', dur:'auto', dim:'VNNOX', icon:'📹', lojas:'Todas', vnnox:true, updated:'22/06 17:35'},
+];
+
+// SOLUTIONS REAIS DO VNNOX
+const SOLUTIONS = [
+  {name:'sabado', screens:5, status:'publicado'},
+];
+
+const AI_HISTORY = [
+  {prompt:'Açougue do Dia — Fraldinha R$35', time:'14:23', lojas:10, status:'publicado'},
+  {prompt:'Flash Sale — Cerveja 12un R$39,90', time:'12:05', lojas:10, status:'publicado'},
+  {prompt:'Encarte semanal — página de frios', time:'08:30', lojas:10, status:'publicado'},
+  {prompt:'Sicredi — banner de financiamento', time:'08:00', lojas:3, status:'publicado'},
+];
+
+const SLOT_DATA = [
+  {horario:'07:00–09:00', tipo:'🥩 Açougue / Padaria', conteudo:'Rotação automática', lojas:'Todas', cor:'slot-acougue'},
+  {horario:'09:00–12:00', tipo:'🏷 Promoções', conteudo:'Encarte Semanal + Ofertas', lojas:'Todas', cor:'slot-promo'},
+  {horario:'12:00–14:00', tipo:'💜 Fornecedor', conteudo:'AmBev + BRF + Sicredi', lojas:'Todas', cor:'slot-supplier'},
+  {horario:'14:00–18:00', tipo:'🏷 Promoções', conteudo:'Principais ofertas + Flash Sale', lojas:'Todas', cor:'slot-promo'},
+  {horario:'18:00–20:00', tipo:'💜 Fornecedor', conteudo:'AmBev + WD Construtora', lojas:'Todas', cor:'slot-supplier'},
+  {horario:'20:00–22:00', tipo:'🏪 Institucional', conteudo:'Branding + Copa Cards', lojas:'Todas', cor:'slot-inst'},
+];
+
+// ============================================================
+// RENDER FUNCTIONS
+// ============================================================
+function renderStores() {
+  const grid = document.getElementById('store-grid');
+  grid.innerHTML = STORES.map(s => {
+    const cls = s.online ? 'online' : 'offline';
+    const badge = s.online
+      ? '<span class="badge badge-green"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;"></span> ONLINE</span>'
+      : '<span class="badge badge-red">⚠ OFFLINE</span>';
+    const pct = Math.round((s.anunciantes / 5) * 100);
+    return `
+    <div class="store-card ${cls}" onclick="storeClick(${s.id})">
+      <div class="store-top">
+        <div><div class="store-name">${s.name}</div><div class="store-city">${s.city}</div></div>
+        ${badge}
+      </div>
+      <div class="store-now-playing">
+        <div class="store-np-label">Exibindo agora</div>
+        <div class="store-np-title">${s.content}</div>
+      </div>
+      <div class="store-stats">
+        <div class="store-stat"><div class="n">${s.views_h}</div><div class="l">inserções/h</div></div>
+        <div class="store-stat"><div class="n">${s.anunciantes}</div><div class="l">anunciantes</div></div>
+        <div class="store-stat"><div class="n">${s.online ? '5,53m²' : '—'}</div><div class="l">área LED</div></div>
+      </div>
+      ${s.anunciantes > 0 ? `
+      <div style="margin-top:10px;">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:3px;">
+          <span>Slots vendidos</span><span>${pct}%</span>
+        </div>
+        <div class="progress"><div class="progress-fill" style="width:${pct}%;background:var(--purple);"></div></div>
+      </div>` : ''}
+      <div class="store-actions">
+        ${s.online
+          ? `<button class="btn btn-green" style="flex:1;font-size:11px;" onclick="event.stopPropagation();quickPublish(${s.id})">📡 Publicar</button>
+             <button class="btn btn-ghost" style="font-size:11px;" onclick="event.stopPropagation();showPage('programacao')">📅 Grade</button>`
+          : `<button class="btn btn-red" style="flex:1;font-size:11px;">⚠ Ver Erro</button>`
+        }
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderContent() {
+  const grid = document.getElementById('content-grid');
+  grid.innerHTML = CONTENT_ITEMS.map((c, i) => `
+    <div class="content-item" data-cat="${c.cat}" data-vnnox="${c.vnnox||false}">
+      <div class="content-thumb" style="font-size:40px;background:linear-gradient(135deg,#0d1a2a,#0a1220);">
+        ${c.icon}
+        <div class="dim">${c.dim}</div>
+        ${c.vnnox ? '<div style="position:absolute;top:6px;left:6px;background:rgba(59,130,246,0.9);border-radius:4px;padding:2px 7px;font-size:9px;font-weight:800;color:#fff;">📡 VNNOX</div>' : ''}
+      </div>
+      <div class="content-info">
+        <div class="content-name">${c.name}</div>
+        <div class="content-meta">🎬 Vídeo MP4 · ${c.lojas}${c.updated ? ' · ' + c.updated : ''}</div>
+        <div class="content-tags">
+          <span class="tag">${c.cat}</span>
+          ${c.vnnox ? '<span class="tag" style="color:var(--blue);">no ar</span>' : ''}
+        </div>
+        <div style="display:flex;gap:6px;margin-top:10px;">
+          <button class="btn btn-blue" style="flex:1;font-size:11px;" onclick="publishMedia('${c.name}')">📡 Publicar</button>
+          <button class="btn btn-ghost" style="font-size:11px;" onclick="notify('Abrindo VNNOX para ${c.name}')">🔗</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function publishMedia(name) {
+  const ids = STORES.filter(s => s.online).map(s => s.vnnox);
+  publishToVnnox(ids, name);
+}
+
+function renderContracts() {
+  // KPIs dinâmicos
+  const ativos    = CONTRACTS.filter(c => c.status === 'ativo');
+  const receitaMes = CONTRACTS.filter(c => c.status === 'ativo' || c.status === 'a_vencer').reduce((s,c) => s + (c.value||0), 0);
+  const totalSlots = CONTRACTS.reduce((s,c) => s + (c.slots||0), 0);
+  const aVencer   = CONTRACTS.filter(c => c.status === 'a_vencer' || c.status === 'pendente').length;
+  const pctSlots  = Math.min(100, Math.round(totalSlots / 100 * 100 / 100));
+  const strip = document.querySelector('#page-anunciantes .kpi-strip');
+  if (strip) strip.innerHTML = `
+    <div class="kpi purple"><div class="kpi-label">Contratos Ativos</div><div class="kpi-value">${ativos.length}</div><div class="kpi-sub">anunciantes pagando</div></div>
+    <div class="kpi green"><div class="kpi-label">Receita Mensal</div><div class="kpi-value">R$${(receitaMes/1000).toFixed(0)}k</div><div class="kpi-sub">publicidade no mês</div></div>
+    <div class="kpi accent"><div class="kpi-label">Slots Vendidos</div><div class="kpi-value">${totalSlots}%</div><div class="kpi-sub">do tempo disponível</div></div>
+    <div class="kpi blue"><div class="kpi-label">A Renovar</div><div class="kpi-value">${aVencer}</div><div class="kpi-sub">atenção necessária</div></div>`;
+
+  const grid = document.getElementById('contracts-grid');
+  grid.innerHTML = CONTRACTS.map(c => {
+    const statusBadge = {
+      ativo: '<span class="badge badge-green">Ativo</span>',
+      a_vencer: '<span class="badge badge-accent">A Vencer</span>',
+      pendente: '<span class="badge badge-red">Pendente</span>',
+    }[c.status] || '';
+    const storesStr = Array.isArray(c.stores) ? c.stores.map(id => {
+      const s = STORES.find(x => x.id === id);
+      return s ? `<span class="store-chip">${s.name}</span>` : '';
+    }).join('') : `<span class="store-chip">Todas as lojas</span>`;
+    const pct = Math.round((c.slots / 25) * 100);
+    return `
+    <div class="contract-card ${c.status === 'ativo' ? 'active-contract' : ''}">
+      <div class="contract-brand">${c.category}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div class="contract-name">${c.brand}</div>
+        ${statusBadge}
+      </div>
+      <div class="contract-value">${c.value > 0 ? 'R$ '+c.value.toLocaleString('pt-BR') : 'Interno'}</div>
+      <div class="contract-details">
+        📦 ${c.package} &nbsp;·&nbsp; 📅 ${c.start} → ${c.end}<br>
+        ⏱ ${c.slots}% do tempo de publicidade paga
+      </div>
+      <div class="contract-bar">
+        <div class="contract-bar-label"><span>Slots usados</span><span>${pct}%</span></div>
+        <div class="progress"><div class="progress-fill" style="width:${pct}%;background:var(--purple);"></div></div>
+      </div>
+      <div class="contract-stores">${storesStr}</div>
+      <div style="display:flex;gap:6px;margin-top:12px;">
+        <button class="btn btn-purple" style="flex:1;font-size:11px;" onclick="changeContractStatus(${c.id}, 'ativo')">✅ Ativar</button>
+        <button class="btn btn-ghost" style="font-size:11px;" onclick="changeContractStatus(${c.id}, 'a_vencer')">⚠</button>
+        <button class="btn btn-ghost" style="font-size:11px;color:var(--red);" onclick="deleteContract(${c.id})">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  // history table
+  const tbody = document.getElementById('contracts-history');
+  tbody.innerHTML = CONTRACTS.map(c => `
+    <tr>
+      <td><strong>${c.brand}</strong></td>
+      <td class="td-muted">${c.category}</td>
+      <td><span class="badge badge-purple">${c.package}</span></td>
+      <td class="td-mono">${Array.isArray(c.stores) ? c.stores.length + ' lojas' : 'Todas'}</td>
+      <td class="td-muted">${c.start} – ${c.end}</td>
+      <td class="td-mono" style="color:var(--green);">${c.value > 0 ? 'R$ '+c.value.toLocaleString('pt-BR') : '—'}</td>
+      <td>${{ativo:'<span class="badge badge-green">Ativo</span>',a_vencer:'<span class="badge badge-accent">A Vencer</span>',pendente:'<span class="badge badge-red">Pendente</span>'}[c.status]}</td>
+    </tr>
+  `).join('');
+}
+
+function renderSchedule() {
+  const tbody = document.getElementById('slots-tbody');
+  tbody.innerHTML = SLOT_DATA.map(s => `
+    <tr>
+      <td class="td-mono">${s.horario}</td>
+      <td>${s.tipo}</td>
+      <td class="td-muted">${s.conteudo}</td>
+      <td><span class="badge badge-muted">${s.lojas}</span></td>
+      <td><button class="btn btn-ghost" style="font-size:11px;" onclick="notify('Editando slot ${s.horario}')">Editar</button></td>
+    </tr>
+  `).join('');
+
+  // schedule grid
+  const hours = ['7h','8h','9h','10h','11h','12h','13h','14h','15h','16h','17h','18h','19h','20h','21h'];
+  const slotTypes = [
+    [0,1,'slot-acougue','🥩'],[2,3,4,'slot-promo','🏷'],[5,6,'slot-supplier','💜'],
+    [7,8,9,10,'slot-promo','🏷'],[11,12,'slot-supplier','💜'],[13,14,'slot-inst','🏪']
+  ];
+  const slotMap = {};
+  [[0,1,'slot-acougue'],[2,3,4,'slot-promo'],[5,6,'slot-supplier'],[7,8,9,10,'slot-promo'],[11,12,'slot-supplier'],[13,14,'slot-inst']].forEach(g => {
+    const cls = g[g.length-1];
+    for(let i=0;i<g.length-1;i++) slotMap[g[i]] = cls;
+  });
+
+  const grid = document.getElementById('sched-grid');
+  let html = '<div class="sched-header"><div class="sched-col-label" style="text-align:left;">Loja</div>';
+  hours.forEach(h => html += `<div class="sched-col-label">${h}</div>`);
+  html += '</div>';
+
+  STORES.forEach(s => {
+    html += `<div class="sched-row"><div class="sched-store-label">${s.name}</div>`;
+    hours.forEach((h, i) => {
+      const cls = s.online ? (slotMap[i] || 'slot-empty') : 'slot-empty';
+      const icon = cls === 'slot-acougue' ? '🥩' : cls === 'slot-promo' ? '🏷' : cls === 'slot-supplier' ? '💜' : cls === 'slot-inst' ? '🏪' : '';
+      html += `<div class="sched-slot ${cls}" title="${h} — ${s.name}" onclick="notify('Slot ${h}: ${s.name}')">${icon}</div>`;
+    });
+    html += '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+function renderAIHistory() {
+  const div = document.getElementById('ai-history');
+  div.innerHTML = AI_HISTORY.map(h => `
+    <div style="background:var(--surface);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-size:13px;font-weight:600;">${h.prompt}</div>
+        <div style="font-size:11px;color:var(--muted);">Hoje ${h.time} · ${h.lojas} lojas</div>
+      </div>
+      <span class="badge badge-green">✅ ${h.status}</span>
+    </div>
+  `).join('');
+}
+
+function renderLog() {
+  const log = document.getElementById('activity-log');
+  const entries = [
+    {time:'14:23', msg:'IA publicou "Açougue — Fraldinha" em 10 lojas', color:'var(--green)'},
+    {time:'12:05', msg:'Flash Sale ativado — 10 lojas', color:'var(--accent)'},
+    {time:'09:30', msg:'Sicredi: banner publicado em 3 lojas', color:'var(--purple)'},
+    {time:'08:30', msg:'Encarte semanal atualizado — Todas as lojas', color:'var(--blue)'},
+    {time:'08:00', msg:'⚠ Filial 10 (Charqueadas 2) — painel offline', color:'var(--red)'},
+    {time:'07:45', msg:'Sistema iniciado — 9/10 painéis online', color:'var(--green)'},
+  ];
+  log.innerHTML = entries.map(e => `
+    <div style="display:flex;gap:10px;align-items:center;padding:6px 8px;border-radius:6px;background:var(--surface);">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap;">${e.time}</span>
+      <span style="font-size:12px;color:${e.color};">${e.msg}</span>
+    </div>
+  `).join('');
+}
+
+function populateModalStores(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = STORES.map(s => `
+    <label class="checkbox-item checked" onclick="this.classList.toggle('checked')">
+      <input type="checkbox" checked style="display:none">
+      <span>${s.name}</span>
+    </label>
+  `).join('');
+}
+
+function renderAIStores() {
+  const el = document.getElementById('ai-stores');
+  if (!el) return;
+  el.innerHTML = STORES.map(s => `
+    <label class="checkbox-item ${s.online ? 'checked' : ''}" onclick="this.classList.toggle('checked')">
+      <input type="checkbox" ${s.online ? 'checked' : ''} style="display:none">
+      <span style="${!s.online ? 'opacity:0.4' : ''}">${s.name}</span>
+    </label>
+  `).join('');
+}
+
+// ============================================================
+// INTERACTIONS
+// ============================================================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  if (id === 'modal-publish') populateModalStores('modal-stores-check');
+  if (id === 'modal-new-contract') populateModalStores('modal-contract-stores');
+  if (id === 'modal-add-slot') populateModalStores('modal-slot-stores');
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+
+function notify(msg) {
+  const n = document.getElementById('notif');
+  n.textContent = msg;
+  n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 3000);
+}
+
+function storeClick(id) {
+  const s = STORES.find(x => x.id === id);
+  notify(`📡 ${s.name} — ${s.city}: ${s.content}`);
+}
+
+function quickPublish(id) {
+  const s = STORES.find(x => x.id === id);
+  notify(`✅ Publicando conteúdo em ${s.name}...`);
+  addActivityLog(`Publicação manual iniciada: ${s.name}`);
+}
+
+function filterContent(cat, btn) {
+  document.querySelectorAll('.inner-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.content-item').forEach(item => {
+    const match = cat === 'todos'
+      || item.dataset.cat === cat
+      || (cat === 'vnnox' && item.dataset.vnnox === 'true');
+    item.style.display = match ? '' : 'none';
+  });
+}
+
+function selectOpt(btn) {
+  const group = btn.parentElement;
+  group.querySelectorAll('.ai-opt').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+function runAgent() {
+  const prompt = document.getElementById('ai-prompt').value;
+  if (!prompt.trim()) { notify('Digite uma instrução para o agente IA'); return; }
+  notify('🤖 Agente IA gerando conteúdo...');
+  setTimeout(() => {
+    notify('✅ Conteúdo gerado e pronto para publicar!');
+    document.getElementById('ai-prompt').value = '';
+  }, 2000);
+}
+
+function quickAction(prompt) {
+  document.getElementById('ai-prompt').value = prompt;
+  notify('✅ Instrução carregada. Clique em Gerar e Publicar.');
+}
+
+function publishContent() {
+  notify('📡 Publicando em todos os painéis online...');
+  addActivityLog('IA publicou conteúdo em 9 lojas');
+  AI_HISTORY.unshift({prompt:'Publicação manual via agente', time: new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}), lojas:9, status:'publicado'});
+  renderAIHistory();
+}
+
+function doPublish() {
+  closeModal('modal-publish');
+  notify('📡 Publicação enviada via VNNOX!');
+  addActivityLog('Conteúdo publicado via painel central');
+}
+
+function addContract() {
+  const brand    = document.getElementById('c-brand').value.trim();
+  const cnpj     = document.getElementById('c-cnpj').value.trim();
+  const category = document.getElementById('c-cat').value;
+  const pkg      = document.getElementById('c-pkg').value;
+  const dateStart= document.getElementById('c-start').value;
+  const dateEnd  = document.getElementById('c-end').value;
+  const value    = parseFloat(document.getElementById('c-value').value) || 0;
+  const obs      = document.getElementById('c-obs').value.trim();
+
+  if (!brand) { notify('⚠ Informe o nome da empresa'); return; }
+
+  // lojas selecionadas
+  const storeChecks = modal.querySelectorAll('#modal-contract-stores .checkbox-item.checked');
+  const stores = storeChecks.length > 0
+    ? Array.from(storeChecks).map((_, i) => STORES[i]?.id).filter(Boolean)
+    : 'Todas';
+
+  // formata datas
+  const fmt = d => { if (!d) return ''; const [y,m,dd] = d.split('-'); return `${dd}/${m}/${y}`; };
+
+  // detecta slots pelo pacote
+  const slotsMap = {'Notável':10,'Destaque':15,'Premium Rede':25,'Ativação Evento':20,'Uso Interno':8};
+  const slots = Object.entries(slotsMap).find(([k]) => pkg.includes(k))?.[1] || 10;
+
+  // detecta status pela data de fim
+  let status = 'ativo';
+  if (dateEnd) {
+    const diff = (new Date(dateEnd) - new Date()) / 86400000;
+    if (diff < 0) status = 'encerrado';
+    else if (diff < 15) status = 'a_vencer';
+  }
+  if (value === 0 || pkg.includes('Interno')) status = 'ativo';
+
+  const novo = {
+    id: Date.now(),
+    brand, cnpj, category,
+    package: pkg.split(' —')[0],
+    stores, value, status, obs, slots,
+    start: fmt(dateStart),
+    end: fmt(dateEnd),
+  };
+
+  CONTRACTS.unshift(novo);
+  saveContracts(CONTRACTS);
+  renderContracts();
+  closeModal('modal-new-contract');
+  // limpa formulário
+  ['c-brand','c-cnpj','c-start','c-end','c-value','c-obs'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.querySelectorAll('#modal-contract-stores .checkbox-item').forEach(el => el.classList.remove('checked'));
+  notify(`✅ Contrato de ${brand} cadastrado!`);
+  addActivityLog(`Novo contrato: ${brand} — ${pkg.split(' —')[0]}`);
+}
+
+function deleteContract(id) {
+  if (!confirm('Excluir este contrato?')) return;
+  CONTRACTS = CONTRACTS.filter(c => c.id !== id);
+  saveContracts(CONTRACTS);
+  renderContracts();
+  notify('Contrato excluído.');
+}
+
+function changeContractStatus(id, status) {
+  const c = CONTRACTS.find(x => x.id === id);
+  if (c) { c.status = status; saveContracts(CONTRACTS); renderContracts(); notify('Status atualizado.'); }
+}
+
+function addSlot() {
+  closeModal('modal-add-slot');
+  notify('✅ Slot de programação salvo!');
+}
+
+function doUpload() {
+  closeModal('modal-upload');
+  notify('⬆ Upload enviado para a biblioteca!');
+}
+
+function addActivityLog(msg) {
+  const log = document.getElementById('activity-log');
+  const now = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;gap:10px;align-items:center;padding:6px 8px;border-radius:6px;background:var(--surface);';
+  div.innerHTML = `<span style="font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap;">${now}</span><span style="font-size:12px;color:var(--green);">${msg}</span>`;
+  log.prepend(div);
+}
+
+function clearLog() {
+  document.getElementById('activity-log').innerHTML = '';
+  notify('Log limpo');
+}
+
+// CLOCK
+function updateClock() {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString('pt-BR');
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ============================================================
+// API VNNOX — INTEGRAÇÃO REAL
+// ============================================================
+// Detecta automaticamente: local = localhost:8765, produção = Railway
+const RAILWAY_URL = ""; // preenchido após deploy: ex: https://led-indio.up.railway.app
+const API = RAILWAY_URL ? RAILWAY_URL + "/api" : "http://localhost:8765/api";
+let serverOnline = false;
+let vnnoxConfigured = false;
+
+async function apiFetch(path, opts = {}) {
+  try {
+    const r = await fetch(API + path, {
+      ...opts,
+      headers: { "Content-Type": "application/json", ...(opts.headers || {}) }
+    });
+    return await r.json();
+  } catch (e) {
+    return { error: "Servidor offline" };
+  }
+}
+
+async function checkConnection() {
+  const bar = document.getElementById("conn-bar");
+  const txt = document.getElementById("conn-text");
+  const srv = document.getElementById("srv-status");
+  const vnn = document.getElementById("vnnox-status");
+  txt.textContent = "Verificando...";
+
+  const data = await apiFetch("/status");
+
+  if (data.error) {
+    bar.className = "conn-bar";
+    txt.textContent = "Servidor offline — rode INICIAR_CENTRAL_LED.bat";
+    serverOnline = false;
+    vnnoxConfigured = false;
+    if (srv) srv.innerHTML = '<span style="color:var(--red);">❌ Offline — execute INICIAR_CENTRAL_LED.bat</span>';
+    if (vnn) vnn.innerHTML = '<span style="color:var(--muted);">— aguardando servidor —</span>';
+    return;
+  }
+
+  serverOnline = true;
+  vnnoxConfigured = data.vnnox_configurado;
+
+  if (vnnoxConfigured) {
+    bar.className = "conn-bar ok";
+    txt.textContent = `Open Platform Conectado ✅ — ${data.total_telas || 5} painéis`;
+    if (vnn) vnn.innerHTML = '<span style="color:var(--green);">✅ Open Platform API — dados reais</span>';
+  } else {
+    bar.className = "conn-bar warn";
+    txt.textContent = "Servidor OK — configure AppKey/AppSecret";
+    if (vnn) vnn.innerHTML = '<span style="color:var(--accent);">⚠ Insira AppKey e AppSecret abaixo</span>';
+  }
+  if (srv) srv.innerHTML = '<span style="color:var(--green);">✅ Online — localhost:8765</span>';
+
+  // carrega config salva nos inputs
+  const cfg = await apiFetch("/config");
+  if (cfg.ak && document.getElementById("cfg-ak")) {
+    document.getElementById("cfg-ak").value = cfg.ak;
+    document.getElementById("cfg-org").value = cfg.org_name || "indio";
+  }
+}
+
+async function saveConfig() {
+  const ak = document.getElementById("cfg-ak").value.trim();
+  const as_s = document.getElementById("cfg-as").value.trim();
+  const org = document.getElementById("cfg-org").value.trim();
+  const msg = document.getElementById("cfg-msg");
+  if (!ak || !as_s) { msg.style.color = "var(--red)"; msg.textContent = "Preencha AK e AS Secret"; return; }
+  msg.textContent = "Salvando...";
+  const r = await apiFetch("/config", { method: "POST", body: JSON.stringify({ ak, as_secret: as_s, org_name: org }) });
+  if (r.ok) {
+    msg.style.color = "var(--green)"; msg.textContent = "✅ " + r.msg;
+    await checkConnection();
+  } else {
+    msg.style.color = "var(--red)"; msg.textContent = r.error || "Erro ao salvar";
+  }
+}
+
+async function loadVnnoxPlayers() {
+  const div = document.getElementById("vnnox-players");
+  if (!div) return;
+  div.innerHTML = '<div class="spinner"></div> Buscando painéis na VNNOX...';
+  const data = await apiFetch("/players/status");
+  if (data.error) { div.innerHTML = '<span style="color:var(--red);">Erro: ' + data.error + '</span>'; return; }
+
+  const players = data.data || data.players || data.list || [];
+  if (players.length === 0) {
+    div.innerHTML = data.simulated
+      ? '<span style="color:var(--accent);">⚠ Modo demo — VNNOX não configurado. Configure AK/AS acima.</span>'
+      : '<span style="color:var(--muted);">Nenhum painel encontrado</span>';
+    return;
+  }
+
+  // atualiza store cards com dados reais
+  if (!data.simulated) updateStoreCardsFromAPI(players);
+
+  div.innerHTML = players.map(p => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--card2);border-radius:7px;margin-bottom:6px;">
+      <div>
+        <div style="font-weight:700;font-size:13px;">${p.name || p.playerName || 'Painel'}</div>
+        <div style="font-size:11px;color:var(--muted);">${p.city || p.playerIp || ''}</div>
+      </div>
+      <span class="badge ${p.online !== false ? 'badge-green' : 'badge-red'}">${p.online !== false ? '● Online' : '○ Offline'}</span>
+    </div>
+  `).join('') + (data.simulated ? '<div style="font-size:11px;color:var(--accent);margin-top:8px;">⚠ Dados simulados — configure AK/AS para dados reais</div>' : '');
+}
+
+function updateStoreCardsFromAPI(players) {
+  players.forEach(p => {
+    const store = STORES.find(s => s.name === p.name || s.id === p.id);
+    if (store) {
+      store.online = p.online !== false;
+      store.content = p.current_content || store.content;
+    }
+  });
+  renderStores();
+}
+
+async function publishToVnnox(playerIds, contentName) {
+  const btn = event.target;
+  const orig = btn.textContent;
+  btn.innerHTML = '<span class="spinner"></span> Publicando...';
+  btn.disabled = true;
+
+  const r = await apiFetch("/publish", {
+    method: "POST",
+    body: JSON.stringify({ player_ids: playerIds, content_name: contentName })
+  });
+
+  btn.textContent = orig;
+  btn.disabled = false;
+
+  if (r.ok) {
+    notify("✅ " + r.msg);
+    addActivityLog("VNNOX: " + contentName + " → " + playerIds.length + " painel(s)");
+  } else {
+    notify("⚠ " + (r.msg || r.error || "Erro na publicação"));
+  }
+}
+
+async function controlPlayer(playerId, action) {
+  const r = await apiFetch("/player/control", {
+    method: "POST",
+    body: JSON.stringify({ player_id: playerId, action })
+  });
+  notify(r.ok ? `✅ ${action} enviado ao painel` : `⚠ ${r.msg || r.error}`);
+}
+
+// Substitui publishContent por versão real
+function publishContent() {
+  const lojasSel = document.querySelectorAll("#ai-stores .checkbox-item.checked");
+  const ids = Array.from(lojasSel).map((_, i) => STORES.filter(s=>s.online)[i]?.id).filter(Boolean);
+  if (!serverOnline) {
+    notify("⚠ Servidor offline. Execute INICIAR_CENTRAL_LED.bat");
+    return;
+  }
+  publishToVnnox(ids.length ? ids : STORES.filter(s=>s.online).map(s=>s.id), "Conteúdo IA");
+}
+
+// Substitui doPublish
+function doPublish() {
+  closeModal("modal-publish");
+  if (!serverOnline) { notify("⚠ Servidor offline. Execute INICIAR_CENTRAL_LED.bat"); return; }
+  const checked = document.querySelectorAll("#modal-stores-check .checkbox-item.checked");
+  const ids = Array.from(checked).map((_,i) => STORES[i]?.id).filter(Boolean);
+  publishToVnnox(ids.length ? ids : STORES.filter(s=>s.online).map(s=>s.id), "Publicação manual");
+}
+
+function showConfigPage() {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById("page-config").classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+  checkConnection();
+}
+
+// Poll de status a cada 30s
+async function pollStatus() {
+  await checkConnection();
+  if (serverOnline) {
+    const data = await apiFetch("/players/status");
+    if (data.data && !data.simulated) updateStoreCardsFromAPI(data.data);
+    document.getElementById("last-update").textContent = new Date().toLocaleTimeString("pt-BR");
+  }
+}
+
+// INIT
+renderStores();
+renderContent();
+renderContracts();
+renderSchedule();
+renderAIHistory();
+renderLog();
+renderAIStores();
+checkConnection();
+setInterval(pollStatus, 30000);
+</script>
+</body>
+</html>
