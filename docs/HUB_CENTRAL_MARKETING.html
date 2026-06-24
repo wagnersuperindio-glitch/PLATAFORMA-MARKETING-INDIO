@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HUB CENTRAL — Marketing Supermercados Índio</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" crossorigin="anonymous"></script>
@@ -189,10 +188,9 @@ tr:hover td{background:var(--card2)44}
 
 <!-- ══════════ SIDEBAR ══════════ -->
 <nav class="sidebar">
-  <div class="sb-logo">
-    <div class="sb-logo-badge">Í</div>
-    <h2>Supermercados Índio</h2>
-    <p>Hub Central de Marketing</p>
+  <div class="sb-logo" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:14px 10px 12px;">
+    <img src="mascote-indio.png" alt="Mascote Índio" style="width:72px;height:72px;object-fit:contain;margin-bottom:6px;filter:drop-shadow(0 2px 8px rgba(0,102,204,0.4));">
+    <p style="font-size:11px;font-weight:800;color:#fff;margin:0;line-height:1.3;">Hub Central de Marketing</p>
   </div>
 
   <div class="sb-section">Principal</div>
@@ -2238,12 +2236,12 @@ tr:hover td{background:var(--card2)44}
       </div>
       <div style="display:flex;gap:8px;">
         <button onclick="document.getElementById('iframe-led').src=document.getElementById('iframe-led').src" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;">🔄 Recarregar</button>
-        <a href="painel-led/CENTRAL-PAINEL-LED-INDIO.html" target="_blank" style="background:var(--azul);color:#fff;padding:6px 14px;border-radius:8px;font-size:12px;text-decoration:none;font-weight:600;">↗ Tela cheia</a>
+        <a href="../SISTEMA PAINEL LED/CENTRAL-PAINEL-LED-INDIO.html" target="_blank" style="background:var(--azul);color:#fff;padding:6px 14px;border-radius:8px;font-size:12px;text-decoration:none;font-weight:600;">↗ Tela cheia</a>
       </div>
     </div>
     <iframe
       id="iframe-led"
-      src="https://wagnersuperindio-glitch.github.io/PLATAFORMA-MARKETING-INDIO/painel-led/CENTRAL-PAINEL-LED-INDIO.html"
+      src="../SISTEMA PAINEL LED/CENTRAL-PAINEL-LED-INDIO.html"
       style="width:100%;height:calc(100vh - 130px);border:none;border-radius:12px;background:#0a0f1e;"
       allow="scripts"
       title="Central Painel LED Índio"
