@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validação da Agenda — Supermercados Índio</title>
+<style>
+:root{--azul:#0066CC;--laranja:#FF6B00;--bg:#0A0F1E;--card:#131929;--card2:#1a2235;--border:#1e2d45;--text:#E8EDF5;--text2:#8899BB;--verde:#22C55E;--vermelho:#EF4444;--amarelo:#F59E0B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+.header{background:linear-gradient(135deg,#0A1628,#0d1f3c);border-bottom:2px solid var(--azul);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:10}
+.header-title{font-size:16px;font-weight:800;color:#fff}
+.header-sub{font-size:11px;color:var(--text2);margin-top:2px}
+.badge{font-size:10px;padding:3px 10px;border-radius:99px;font-weight:700;background:#22C55E22;color:#22C55E}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:0;height:calc(100vh - 58px)}
+@media(max-width:800px){.two-col{grid-template-columns:1fr;height:auto}}
+.panel{padding:16px;overflow-y:auto;height:100%}
+.panel-left{border-right:1px solid var(--border)}
+.panel-title{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.panel-title span{width:6px;height:6px;border-radius:50%;background:var(--azul);display:inline-block}
+
+/* AGENDA ITEMS */
+.agenda-day{margin-bottom:16px}
+.agenda-date{font-size:11px;color:var(--azul);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.agenda-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:var(--card);border:1px solid var(--border);margin-bottom:6px}
+.ag-hora{font-size:11px;color:var(--laranja);font-weight:700;min-width:42px}
+.ag-nome{font-size:13px;font-weight:600;color:var(--text);flex:1}
+.ag-canal{font-size:10px;padding:2px 7px;border-radius:5px;background:var(--azul)22;color:var(--azul);font-weight:700}
+
+/* VALIDAÇÃO ITEMS */
+.val-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);margin-bottom:8px;border-left:4px solid}
+.val-feito{border-left-color:var(--verde)}
+.val-nao{border-left-color:var(--vermelho)}
+.val-parcial{border-left-color:var(--amarelo)}
+.val-icon{font-size:18px;flex-shrink:0}
+.val-body{flex:1}
+.val-nome{font-size:13px;font-weight:700;margin-bottom:3px}
+.val-detail{font-size:12px;color:var(--text2)}
+.val-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-top:5px}
+.vb-feito{background:#22C55E22;color:#22C55E}
+.vb-nao{background:#EF444422;color:#EF4444}
+.vb-parcial{background:#F59E0B22;color:#F59E0B}
+
+/* SCORE */
+.score-bar{height:8px;border-radius:99px;background:var(--border);margin:10px 0 4px;overflow:hidden}
+.score-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--verde),#10B981);transition:width .5s}
+.score-pct{font-size:28px;font-weight:900;color:var(--verde)}
+
+/* IA */
+.ia-box{background:var(--card);border:1px solid var(--azul)44;border-radius:12px;padding:16px;margin-top:16px}
+.ia-title{font-size:12px;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.ia-content{font-size:13px;color:var(--text);line-height:1.7}
+
+/* PLACEHOLDER */
+.placeholder{text-align:center;padding:48px 24px;color:var(--text2)}
+.placeholder-icon{font-size:48px;margin-bottom:16px;opacity:.4}
+.placeholder-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px}
+.placeholder-sub{font-size:13px;line-height:1.6}
+.placeholder-time{font-size:11px;color:var(--azul);margin-top:12px;font-weight:700}
+</style>
+<script>window.VALIDACAO_DATA = {
+  "data": "2026-06-26",
+  "gerado_em": "27/06/2026 08:00",
+  "execucao_pct": 40,
+  "feitas": 2,
+  "total": 5,
+  "seguidores_ig": 49435,
+  "agenda": [
+    {
+      "nome": "Kit Carne",
+      "horario": "07:30",
+      "canal": "IG/FB"
+    },
+    {
+      "nome": "Stories Ofertas",
+      "horario": "09:00",
+      "canal": "IG/FB"
+    },
+    {
+      "nome": "Feira dos pasteis",
+      "horario": "10:00",
+      "canal": "IG/FB"
+    },
+    {
+      "nome": "Postagem Short",
+      "horario": "13:00",
+      "canal": "IG/FB"
+    },
+    {
+      "nome": "Encarte Fim de Semana",
+      "horario": "19:00",
+      "canal": "IG/FB"
+    }
+  ],
+  "validacoes": [
+    {
+      "nome": "Kit Carne",
+      "horario": "07:30",
+      "status": "nao",
+      "likes": 0,
+      "comentarios": 0
+    },
+    {
+      "nome": "Stories Ofertas",
+      "horario": "09:00",
+      "status": "feito",
+      "likes": 75,
+      "comentarios": 1
+    },
+    {
+      "nome": "Feira dos pasteis",
+      "horario": "10:00",
+      "status": "nao",
+      "likes": 0,
+      "comentarios": 0
+    },
+    {
+      "nome": "Postagem Short",
+      "horario": "13:00",
+      "status": "nao",
+      "likes": 0,
+      "comentarios": 0
+    },
+    {
+      "nome": "Encarte Fim de Semana",
+      "horario": "19:00",
+      "status": "feito",
+      "likes": 342,
+      "comentarios": 21
+    }
+  ],
+  "analise_ia": "# 📊 RELATÓRIO DE MARKETING — 26/06/2026 | SEXTA-FEIRA<br><br>---<br><br><b style=\"color:#FF6B00\">🔴 BLOCO 1 — COBRANÇA DIRETA</b><br><br><strong>3 tarefas não executadas. Sem justificativa aceitável.</strong><br><br><strong>❌ Kit Carne (07:30)</strong><br>Era a entrega do açougue para sexta-feira — dia em que o cliente já está planejando o churrasco do fim de semana. Perdeu-se a janela de maior intenção de compra da semana. O post de Kits do Açougue publicado teve apenas <strong>9 likes</strong> — provavelmente porque saiu fora do contexto e do horário certo.<br><br><strong>❌ Feira dos Pastéis (10:00)</strong><br>Campanha fixa do calendário. Cliente que busca pastel não vai lembrar se não for lembrado. Silêncio numa campanha recorrente quebra o hábito do seguidor.<br><br><strong>❌ Postagem Short (13:00)</strong><br>TikTok e Reels são prioridade declarada. Um vídeo curto no meio do dia (horário ideal: 12h) alimenta o algoritmo e atrai novos seguidores. Não foi feito. Simples assim.<br><br>---<br><br><b style=\"color:#FF6B00\">🟡 BLOCO 2 — AVALIAÇÃO DO QUE FOI FEITO</b><br><br><strong>Stories:</strong> ✅ Executado no horário correto.<br><strong>Encarte Fim de Semana (19h):</strong> ✅ No horário ideal — bom.<br><br><strong>Posts publicados:</strong><br>- O vídeo de Fecha Mês (<strong>75 likes</strong>) performou bem — formato certo, mensagem certa.<br>- O carousel de Fecha Mês (<strong>34 likes</strong>) — duplicidade de tema dilui o alcance.<br>- Kit Açougue (<strong>9 likes</strong>) — publicado sem contexto de Sexta das Carnes, sem chamada para o churrasco. Desperdiçou o tema mais forte da sexta.<br><br><strong>Problema central:</strong> 3 posts com 2 temas iguais e o tema mais estratégico do dia executado pela metade.<br><br>---<br><br><b style=\"color:#FF6B00\">🟢 BLOCO 3 — PLANO DE AÇÃO PARA HOJE</b><br><br><strong>1. Reels — Sexta das Carnes | Agora (até 14h)</strong><br>Formato: vídeo 15s mostrando cortes do açougue.<br>*\"Sexta é dia de churrasco no Índio! Carne boa, preço justo e kit prontinho pra você. Corre antes de acabar! 🔥🥩\"*<br><br><strong>2. Stories — Feira dos Pastéis | 15h</strong><br>Formato: enquete + foto do pastel.<br>*\"Você já garantiu seu pastel hoje? A Feira tá on! Qual é o seu favorito? 🥟\"*<br><br><strong>3. TikTok/Reels curto — Fim de Semana | 19h</strong><br>Formato: transição rápida de produtos do encarte.<br>*\"Fim de semana chegou e o Índio tá preparado pra você economizar muito! 💪🛒\"*<br>"
+};</script>
+</head>
+<body>
+<div class="header">
+  <div>
+    <div class="header-title">📊 Validação da Agenda</div>
+    <div class="header-sub" id="headerSub">Carregando...</div>
+  </div>
+  <div class="badge" id="scoreBadge">Aguardando relatório</div>
+</div>
+
+<div class="two-col">
+  <!-- PAINEL ESQUERDO: AGENDA -->
+  <div class="panel panel-left">
+    <div class="panel-title"><span></span> Agenda de Ontem</div>
+    <div id="agendaContent">
+      <div class="placeholder">
+        <div class="placeholder-icon">📅</div>
+        <div class="placeholder-title">Agenda não carregada</div>
+        <div class="placeholder-sub">O relatório de validação é gerado automaticamente às 07:30 todos os dias.</div>
+        <div class="placeholder-time">Próximo relatório: amanhã às 07:30</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAINEL DIREITO: VALIDAÇÃO -->
+  <div class="panel">
+    <div class="panel-title"><span style="background:var(--laranja)"></span> O que foi feito</div>
+    <div id="validacaoContent">
+      <div class="placeholder">
+        <div class="placeholder-icon">✅</div>
+        <div class="placeholder-title">Validação pendente</div>
+        <div class="placeholder-sub">Quando o validador rodar, aqui vai mostrar cada tarefa com ✅ feito ou ❌ não feito, com as métricas reais de Instagram e Facebook.</div>
+        <div class="placeholder-time">Script: validador_agenda_diario.py</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Dados injetados pelo validador Python
+const DADOS = window.VALIDACAO_DATA || null;
+
+function fmt(d){
+  const [y,m,day]=d.split('-');
+  const meses=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return `${day} ${meses[+m-1]} ${y}`;
+}
+
+if(DADOS){
+  // Header
+  document.getElementById('headerSub').textContent = `Referência: ${fmt(DADOS.data)} | Gerado: ${DADOS.gerado_em}`;
+  const pct = DADOS.execucao_pct || 0;
+  const badge = document.getElementById('scoreBadge');
+  badge.textContent = `${pct}% executado`;
+  badge.style.background = pct >= 80 ? '#22C55E22' : pct >= 60 ? '#F59E0B22' : '#EF444422';
+  badge.style.color      = pct >= 80 ? '#22C55E'   : pct >= 60 ? '#F59E0B'   : '#EF4444';
+
+  // Agenda
+  let agHtml = '';
+  if(DADOS.agenda && DADOS.agenda.length){
+    agHtml += '<div class="agenda-day"><div class="agenda-date">📅 ' + fmt(DADOS.data) + '</div>';
+    DADOS.agenda.forEach(ev=>{
+      agHtml += `<div class="agenda-item">
+        <span class="ag-hora">${ev.horario||''}</span>
+        <span class="ag-nome">${ev.nome}</span>
+        <span class="ag-canal">${ev.canal||'Post'}</span>
+      </div>`;
+    });
+    agHtml += '</div>';
+    // Score bar
+    agHtml += `<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:13px;font-weight:700">Taxa de Execução</span>
+        <span class="score-pct" style="font-size:22px;color:${pct>=80?'var(--verde)':pct>=60?'var(--amarelo)':'var(--vermelho)'}">${pct}%</span>
+      </div>
+      <div class="score-bar"><div class="score-fill" style="width:${pct}%;background:${pct>=80?'linear-gradient(90deg,#22C55E,#10B981)':pct>=60?'linear-gradient(90deg,#F59E0B,#FF6B00)':'linear-gradient(90deg,#EF4444,#DC2626)'}"></div></div>
+      <div style="font-size:11px;color:var(--text2)">${DADOS.feitas||0} de ${DADOS.total||0} tarefas realizadas</div>
+    </div>`;
+  }
+  document.getElementById('agendaContent').innerHTML = agHtml || '<div class="placeholder"><div class="placeholder-icon">📭</div><div class="placeholder-title">Sem agenda para ontem</div></div>';
+
+  // Validação
+  let valHtml = '';
+  if(DADOS.validacoes && DADOS.validacoes.length){
+    DADOS.validacoes.forEach(v=>{
+      const cls  = v.status==='feito'?'val-feito':v.status==='parcial'?'val-parcial':'val-nao';
+      const icon = v.status==='feito'?'✅':v.status==='parcial'?'⚠️':'❌';
+      const bcls = v.status==='feito'?'vb-feito':v.status==='parcial'?'vb-parcial':'vb-nao';
+      const blbl = v.status==='feito'?'FEITO':v.status==='parcial'?'PARCIAL':'NÃO FEITO';
+      valHtml += `<div class="val-item ${cls}">
+        <div class="val-icon">${icon}</div>
+        <div class="val-body">
+          <div class="val-nome">${v.horario||''} ${v.nome}</div>
+          ${v.detalhe ? `<div class="val-detail">${v.detalhe}</div>` : ''}
+          ${v.likes || v.comentarios ? `<div class="val-detail" style="margin-top:4px">❤️ ${v.likes||0} curtidas · 💬 ${v.comentarios||0} comentários</div>` : ''}
+          <span class="val-badge ${bcls}">${blbl}</span>
+        </div>
+      </div>`;
+    });
+  }
+  if(DADOS.analise_ia){
+    valHtml += `<div class="ia-box"><div class="ia-title">🤖 Análise Claude IA</div><div class="ia-content">${DADOS.analise_ia}</div></div>`;
+  }
+  document.getElementById('validacaoContent').innerHTML = valHtml || '<div class="placeholder"><div>Sem validações</div></div>';
+}
+</script>
+</body>
+</html>
