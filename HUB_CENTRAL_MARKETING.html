@@ -432,8 +432,8 @@ tr:hover td{background:var(--card2)44}
           <div class="int-item"><span class="dot dot-verde"></span><span class="int-name">Gemini / Veo</span><span class="int-status st-ok">✅ Conectado</span></div>
           <div class="int-item"><span class="dot dot-verde"></span><span class="int-name">Canva MCP</span><span class="int-status st-ok">✅ Conectado</span></div>
           <div class="int-item"><span class="dot dot-verde"></span><span class="int-name">Power BI</span><span class="int-status st-ok">✅ 13 relatórios</span></div>
-          <div class="int-item"><span class="dot dot-amar"></span><span class="int-name">Meta / Instagram</span><span class="int-status st-warn">⚠️ Token expirado</span></div>
-          <div class="int-item"><span class="dot dot-amar"></span><span class="int-name">Google Calendar API</span><span class="int-status st-warn">⚠️ Iframe ativo</span></div>
+          <div class="int-item"><span class="dot dot-verde"></span><span class="int-name">Meta / Instagram</span><span class="int-status st-ok">✅ Token ativo</span></div>
+          <div class="int-item"><span class="dot dot-verde"></span><span class="int-name">Google Calendar API</span><span class="int-status st-ok">✅ Conectado</span></div>
           <div class="int-item"><span class="dot dot-verm"></span><span class="int-name">Rendernet (FaceLock)</span><span class="int-status st-err">❌ Não configurado</span></div>
           <div class="int-item"><span class="dot dot-verm"></span><span class="int-name">WhatsApp Business</span><span class="int-status st-err">❌ Não configurado</span></div>
         </div>
@@ -445,11 +445,11 @@ tr:hover td{background:var(--card2)44}
       <div class="card">
         <div class="card-header"><span class="card-title">🚨 Alertas Ativos</span></div>
         <div style="display:flex;flex-direction:column;gap:8px">
-          <div class="alert alert-err"><span>🔴</span><div><b>Token Meta expirado</b> — Não é possível publicar no Instagram/Facebook. Renovar em developers.facebook.com</div></div>
-          <div class="alert alert-warn"><span>🟡</span><div><b>Rendernet não configurado</b> — Avatares Dona Lurdes e Beto não têm consistência visual (FaceLock). Criar conta em rendernet.ai</div></div>
-          <div class="alert alert-warn"><span>🟡</span><div><b>Veo 3 / Imagen 4</b> — Acesse AI Studio em aistudio.google.com</div></div>
-          <div class="alert alert-warn"><span>🟡</span><div><b>Google Calendar API</b> — Scope calendar.readonly não autorizado. Iframe funciona.</div></div>
+          <div class="alert alert-ok"><span>🟢</span><div><b>Token Meta ativo</b> — Instagram e Facebook conectados. Validação agenda rodando todo dia às 08h.</div></div>
+          <div class="alert alert-ok"><span>🟢</span><div><b>Google Calendar</b> — Agenda "Gestão de Marketing" conectada. Eventos carregando normalmente.</div></div>
           <div class="alert alert-ok"><span>🟢</span><div><b>HeyGen ✅ COMPLETO</b> — API Key ativa (195 créditos) + MCP Remote configurado (mcp.heygen.com). <a href="#" onclick="nav('videos')" style="color:var(--ciano)">Autenticar OAuth →</a></div></div>
+          <div class="alert alert-warn"><span>🟡</span><div><b>Rendernet não configurado</b> — Avatares Dona Lurdes e Beto sem FaceLock. Criar conta em rendernet.ai</div></div>
+          <div class="alert alert-warn"><span>🟡</span><div><b>TikTok API</b> — CLIENT_KEY e CLIENT_SECRET pendentes com Guilherme (pensepeople)</div></div>
         </div>
       </div>
       <div class="card">
@@ -1676,7 +1676,7 @@ tr:hover td{background:var(--card2)44}
   <!-- ══ 8. REDES SOCIAIS ══ -->
   <div id="mod-redes" class="module">
     <div class="alert alert-err" style="margin-bottom:16px">
-      <span>🔴</span><div><b>Token Meta expirado</b> — Para publicar e ver métricas ao vivo, gere novo token em <a href="https://developers.facebook.com/tools/explorer/?app_id=1681798956465657" target="_blank">Graph API Explorer</a> com permissões: instagram_basic, instagram_content_publish, pages_manage_posts</div>
+      <span>🟢</span><div><b>Token Meta ativo</b> — Instagram e Facebook conectados. Métricas ao vivo disponíveis. Token System User permanente configurado.</div>
     </div>
     <div class="grid4" style="margin-bottom:16px">
       <div class="kpi-mini"><div class="kpi-ico" style="background:#E1306C22;color:#E1306C">📸</div><div><div class="kpi-val">12.4k</div><div class="kpi-lbl">Seguidores Instagram</div></div></div>
@@ -1874,7 +1874,7 @@ tr:hover td{background:var(--card2)44}
         <div class="int-item"><span class="dot dot-verde"></span><span class="int-name">GEMINI_API_KEY</span><span style="color:var(--text2)">AIzaSyAA...✅</span></div>
         <div class="int-item"><span class="dot dot-verde"></span><span class="int-name">GOOGLE_API_KEY</span><span style="color:var(--text2)">AIzaSyCD...✅</span></div>
         <div class="int-item"><span class="dot dot-verde"></span><span class="int-name">GOOGLE_REFRESH_TOKEN</span><span style="color:var(--text2)">1//0hwL...✅</span></div>
-        <div class="int-item"><span class="dot dot-amar"></span><span class="int-name">META_ACCESS_TOKEN</span><span style="color:var(--amar)">Expirado ⚠️</span></div>
+        <div class="int-item"><span class="dot dot-verde"></span><span class="int-name">META_ACCESS_TOKEN</span><span style="color:var(--verde)">Ativo ✅</span></div>
         <div class="int-item"><span class="dot dot-verm"></span><span class="int-name">RENDERNET_API_KEY</span><span style="color:var(--verm)">Não configurado ❌</span></div>
         <div class="int-item"><span class="dot dot-verm"></span><span class="int-name">ELEVENLABS_API_KEY</span><span style="color:var(--verde)">✅ Configurado</span></div>
         <div class="int-item"><span class="dot dot-verm"></span><span class="int-name">WHATSAPP_API_KEY</span><span style="color:var(--verm)">Não configurado ❌</span></div>

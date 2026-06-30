@@ -5,175 +5,119 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Validação da Agenda — Supermercados Índio</title>
 <style>
-:root{--azul:#0066CC;--laranja:#FF6B00;--bg:#0A0F1E;--card:#131929;--card2:#1a2235;--border:#1e2d45;--text:#E8EDF5;--text2:#8899BB;--verde:#22C55E;--vermelho:#EF4444;--amarelo:#F59E0B}
+:root{--azul:#0066CC;--laranja:#FF6B00;--bg:#0A0F1E;--card:#131929;--card2:#1a2235;--border:#1e2d45;--text:#E8EDF5;--text2:#8899BB;--verde:#22C55E;--verm:#EF4444;--amar:#F59E0B}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
-.header{background:linear-gradient(135deg,#0A1628,#0d1f3c);border-bottom:2px solid var(--azul);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:10}
-.header-title{font-size:16px;font-weight:800;color:#fff}
-.header-sub{font-size:11px;color:var(--text2);margin-top:2px}
-.badge{font-size:10px;padding:3px 10px;border-radius:99px;font-weight:700;background:#22C55E22;color:#22C55E}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:0;height:calc(100vh - 58px)}
-@media(max-width:800px){.two-col{grid-template-columns:1fr;height:auto}}
-.panel{padding:16px;overflow-y:auto;height:100%}
-.panel-left{border-right:1px solid var(--border)}
-.panel-title{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.panel-title span{width:6px;height:6px;border-radius:50%;background:var(--azul);display:inline-block}
-
-/* AGENDA ITEMS */
-.agenda-day{margin-bottom:16px}
-.agenda-date{font-size:11px;color:var(--azul);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
-.agenda-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:var(--card);border:1px solid var(--border);margin-bottom:6px}
-.ag-hora{font-size:11px;color:var(--laranja);font-weight:700;min-width:42px}
-.ag-nome{font-size:13px;font-weight:600;color:var(--text);flex:1}
-.ag-canal{font-size:10px;padding:2px 7px;border-radius:5px;background:var(--azul)22;color:var(--azul);font-weight:700}
-
-/* VALIDAÇÃO ITEMS */
-.val-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);margin-bottom:8px;border-left:4px solid}
-.val-feito{border-left-color:var(--verde)}
-.val-nao{border-left-color:var(--vermelho)}
-.val-parcial{border-left-color:var(--amarelo)}
-.val-icon{font-size:18px;flex-shrink:0}
-.val-body{flex:1}
-.val-nome{font-size:13px;font-weight:700;margin-bottom:3px}
-.val-detail{font-size:12px;color:var(--text2)}
-.val-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-top:5px}
-.vb-feito{background:#22C55E22;color:#22C55E}
-.vb-nao{background:#EF444422;color:#EF4444}
-.vb-parcial{background:#F59E0B22;color:#F59E0B}
-
-/* SCORE */
-.score-bar{height:8px;border-radius:99px;background:var(--border);margin:10px 0 4px;overflow:hidden}
-.score-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--verde),#10B981);transition:width .5s}
-.score-pct{font-size:28px;font-weight:900;color:var(--verde)}
-
-/* IA */
-.ia-box{background:var(--card);border:1px solid var(--azul)44;border-radius:12px;padding:16px;margin-top:16px}
-.ia-title{font-size:12px;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
-.ia-content{font-size:13px;color:var(--text);line-height:1.7}
-
-/* PLACEHOLDER */
-.placeholder{text-align:center;padding:48px 24px;color:var(--text2)}
-.placeholder-icon{font-size:48px;margin-bottom:16px;opacity:.4}
-.placeholder-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px}
-.placeholder-sub{font-size:13px;line-height:1.6}
-.placeholder-time{font-size:11px;color:var(--azul);margin-top:12px;font-weight:700}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:13px;padding:16px}
+.header{background:linear-gradient(135deg,#0d1f3c,#0A1628);border-top:3px solid var(--laranja);border-radius:12px;padding:18px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.header h1{font-size:16px;font-weight:800;color:#fff}
+.header p{font-size:11px;color:var(--text2);margin-top:3px}
+.badge{font-size:10px;padding:3px 10px;border-radius:99px;font-weight:700}
+.badge-ok{background:#22C55E22;color:#22C55E;border:1px solid #22C55E44}
+.badge-warn{background:#F59E0B22;color:#F59E0B;border:1px solid #F59E0B44}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px}
+.card-title{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;text-align:center}
+.kpi-v{font-size:22px;font-weight:900}
+.kpi-l{font-size:10px;color:var(--text2);margin-top:2px}
+.item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;background:var(--card2);border:1px solid var(--border);margin-bottom:6px}
+.item-hora{font-size:11px;color:var(--laranja);font-weight:700;min-width:40px}
+.item-nome{font-size:12px;font-weight:600;flex:1}
+.item-resp{font-size:10px;color:var(--text2)}
+.tag{font-size:10px;padding:2px 7px;border-radius:5px;font-weight:700}
+.tag-ok{background:#22C55E22;color:#22C55E}
+.tag-pen{background:#F59E0B22;color:#F59E0B}
+.tag-err{background:#EF444422;color:#EF4444}
+.info-box{background:#0d1f3c;border:1px solid #1e3a5f;border-radius:8px;padding:12px;font-size:12px;color:#8899BB;line-height:1.7;margin-bottom:10px}
+.link-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:7px 12px;font-size:12px;color:var(--text);font-weight:600;cursor:pointer;text-decoration:none;transition:border-color .15s}
+.link-btn:hover{border-color:var(--azul);color:#fff}
+.cal-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.cal-header{padding:10px 14px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
+.status-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:7px;background:var(--card2);border:1px solid var(--border);margin-bottom:6px;font-size:12px}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-v{background:var(--verde)}
+.dot-a{background:var(--amar)}
+.dot-r{background:var(--verm)}
 </style>
-<script>window.VALIDACAO_DATA = {
-  "data": "2026-06-29",
-  "gerado_em": "30/06/2026 08:00",
-  "execucao_pct": 0,
-  "feitas": 0,
-  "total": 0,
-  "seguidores_ig": 49461,
-  "agenda": [],
-  "validacoes": [],
-  "analise_ia": "# 📊 RELATÓRIO DE MARKETING — 29/06/2026 (Segunda-feira)<br><br>---<br><br><b style=\"color:#FF6B00\">BLOCO 1 — COBRANÇA DIRETA</b><br><br><strong>TUDO EXECUTADO — Parabéns à equipe!</strong><br>Nenhuma tarefa estava pendente na agenda. Sem cobranças hoje.<br><br>---<br><br><b style=\"color:#FF6B00\">BLOCO 2 — AVALIAÇÃO DO QUE FOI FEITO</b><br><br><strong>Instagram:</strong> 1 post + 1 story publicados. O carrossel do \"Semanaço de Ofertas\" faz sentido para segunda-feira — abre a semana com ofertas e aquece o cliente para os dias seguintes. <strong>Porém, 49 curtidas em uma base de 49.461 seguidores é fraco: taxa de engajamento de 0,1%.</strong> Isso indica problema de horário, criativo ou alcance orgânico baixo. Não há informação de horário de publicação — se foi postado fora da janela ideal (18h–20h), isso explica parte do resultado. O formato carrossel é adequado para ofertas, mas precisaria de chamada mais agressiva no primeiro slide.<br><br><strong>Facebook:</strong> 2 posts publicados — bom volume para a plataforma. O \"Segundaço\" no segundo post está alinhado com a campanha fixa semanal. Correto.<br><br><strong>Gap crítico:</strong> Nenhum Reel ou vídeo curto publicado. Segunda-feira com conteúdo só estático é oportunidade perdida, especialmente com TikTok como prioridade estratégica.<br><br>---<br><br><b style=\"color:#FF6B00\">BLOCO 3 — PLANO DE AÇÃO PARA HOJE</b><br><br><strong>1. REELS — Aquecimento Semanaço | 18h00 | Instagram/TikTok</strong><br>Vídeo curto (15–20s) mostrando produtos em oferta da semana com trilha animada.<br>> *\"Segunda chegou e o Índio tá de OFERTAS pra você! De terça a sexta, temos promoções que não podem ficar de fora da sua lista. Bora conferir? 🛒🔥 #SupermercadoIndio #Semanaço\"*<br><br><strong>2. STORY INTERATIVO — Enquete do Segundaço | 19h00 | Instagram Stories</strong><br>Enquete: *\"Qual oferta você quer ver essa semana? 🥩 Carnes / 🥦 Horti\"* — gera engajamento e dados de preferência.<br><br><strong>3. FACEBOOK — Reforço Segundaço | 09h00 (amanhã antecipado) OU agora até 11h | Facebook</strong><br>Post estático reforçando o Clube Mais com benefício exclusivo do dia.<br>> *\"Sócio Clube Mais tem vantagem todo dia! Hoje no Índio você economiza mais com sua carteirinha. Já é nosso cliente especial? 💙\"*<br><br>---<br>*Foco amanhã: Kit Horti começa quarta — prepare o conteúdo hoje.*<br>"
-};</script>
 </head>
 <body>
+
 <div class="header">
   <div>
-    <div class="header-title">📊 Validação da Agenda</div>
-    <div class="header-sub" id="headerSub">Carregando...</div>
+    <h1>📊 Validação da Agenda de Marketing</h1>
+    <p>Alinhamento Operacional · Conteúdo · Produção · Campanhas — Supermercados Índio</p>
   </div>
-  <div class="badge" id="scoreBadge">Aguardando relatório</div>
+  <span class="badge badge-ok">Atualizado diariamente 08h</span>
 </div>
 
-<div class="two-col">
-  <!-- PAINEL ESQUERDO: AGENDA -->
-  <div class="panel panel-left">
-    <div class="panel-title"><span></span> Agenda de Ontem</div>
-    <div id="agendaContent">
-      <div class="placeholder">
-        <div class="placeholder-icon">📅</div>
-        <div class="placeholder-title">Agenda não carregada</div>
-        <div class="placeholder-sub">O relatório de validação é gerado automaticamente às 07:30 todos os dias.</div>
-        <div class="placeholder-time">Próximo relatório: amanhã às 07:30</div>
-      </div>
+<div class="kpi-row">
+  <div class="kpi"><div class="kpi-v" style="color:var(--azul)" id="kpi-prev">—</div><div class="kpi-l">Agenda ontem</div></div>
+  <div class="kpi"><div class="kpi-v" style="color:#E1306C" id="kpi-ig">—</div><div class="kpi-l">Posts Instagram</div></div>
+  <div class="kpi"><div class="kpi-v" style="color:#FCAF45" id="kpi-st">—</div><div class="kpi-l">Stories</div></div>
+  <div class="kpi"><div class="kpi-v" style="color:#1877F2" id="kpi-fb">—</div><div class="kpi-l">Posts Facebook</div></div>
+</div>
+
+<div class="grid">
+  <!-- Agenda de ontem -->
+  <div class="card">
+    <div class="card-title">📅 Agenda de ontem — <span id="data-ontem">carregando...</span></div>
+    <div id="lista-ontem">
+      <div class="item"><span class="item-hora">07:30</span><span class="item-nome">Kit Padaria</span><span class="tag tag-pen">VERIFICAR</span></div>
+      <div class="item"><span class="item-hora">09:00</span><span class="item-nome">Stories Ofertas</span><span class="tag tag-pen">VERIFICAR</span></div>
+      <div class="item"><span class="item-hora">13:00</span><span class="item-nome">Ofertas Youtube</span><span class="tag tag-pen">VERIFICAR</span></div>
+      <div class="item"><span class="item-hora">19:00</span><span class="item-nome">Quarta do Horti</span><span class="tag tag-pen">VERIFICAR</span></div>
+    </div>
+    <div class="info-box" style="margin-top:10px">
+      O relatório completo é gerado às 08h e enviado por email para Wagner + equipe marketing. Verificar execução no Instagram e Facebook.
     </div>
   </div>
 
-  <!-- PAINEL DIREITO: VALIDAÇÃO -->
-  <div class="panel">
-    <div class="panel-title"><span style="background:var(--laranja)"></span> O que foi feito</div>
-    <div id="validacaoContent">
-      <div class="placeholder">
-        <div class="placeholder-icon">✅</div>
-        <div class="placeholder-title">Validação pendente</div>
-        <div class="placeholder-sub">Quando o validador rodar, aqui vai mostrar cada tarefa com ✅ feito ou ❌ não feito, com as métricas reais de Instagram e Facebook.</div>
-        <div class="placeholder-time">Script: validador_agenda_diario.py</div>
-      </div>
+  <!-- Status das integrações -->
+  <div class="card">
+    <div class="card-title">🔌 Status das Integrações</div>
+    <div class="status-row"><span class="dot dot-v"></span><b>Instagram</b> — @supermercadosindio<span style="margin-left:auto;color:var(--verde);font-size:11px">✅ Token ativo</span></div>
+    <div class="status-row"><span class="dot dot-v"></span><b>Facebook</b> — Supermercados Índio<span style="margin-left:auto;color:var(--verde);font-size:11px">✅ Conectado</span></div>
+    <div class="status-row"><span class="dot dot-v"></span><b>Google Calendar</b> — Gestão de Marketing<span style="margin-left:auto;color:var(--verde);font-size:11px">✅ Ativo</span></div>
+    <div class="status-row"><span class="dot dot-v"></span><b>Email Relatório</b> — 5 destinatários<span style="margin-left:auto;color:var(--verde);font-size:11px">✅ 08h</span></div>
+    <div class="status-row"><span class="dot dot-a"></span><b>TikTok</b> — @supermercadosindio<span style="margin-left:auto;color:var(--amar);font-size:11px">⏳ API pendente</span></div>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <a href="https://www.instagram.com/supermercadosindio" target="_blank" class="link-btn">📷 Instagram</a>
+      <a href="https://www.facebook.com/supermercadosindio" target="_blank" class="link-btn">📘 Facebook</a>
+      <a href="https://www.tiktok.com/@supermercadosindio" target="_blank" class="link-btn">🎵 TikTok</a>
     </div>
+  </div>
+</div>
+
+<!-- Calendário Google embeddado -->
+<div class="cal-wrap">
+  <div class="cal-header">📅 Agenda Google — Gestão de Marketing (tempo real)</div>
+  <iframe src="https://calendar.google.com/calendar/embed?src=48358a6066edacbbe18537d3df470a2389f0d30811e8250f8df14a29ae1aa885%40group.calendar.google.com&ctz=America%2FSao_Paulo&bgcolor=%23131929&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&mode=WEEK" style="width:100%;height:420px;border:none;display:block"></iframe>
+</div>
+
+<!-- Destinatários -->
+<div class="card">
+  <div class="card-title">📧 Relatório diário enviado para</div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+    <span class="tag tag-ok" style="padding:4px 10px">Wagner — wagnersuperindio@gmail.com</span>
+    <span class="tag tag-ok" style="padding:4px 10px">Guilherme — guilherme@pensepeople.co</span>
+    <span class="tag tag-ok" style="padding:4px 10px">Jessika — gessica@pensepeople.co</span>
+    <span class="tag tag-ok" style="padding:4px 10px">CD Marketing — cdmarketing777@gmail.com</span>
+    <span class="tag tag-ok" style="padding:4px 10px">DP Marketing — dpmarketing@supermercadoindio.com.br</span>
   </div>
 </div>
 
 <script>
-// Dados injetados pelo validador Python
-const DADOS = window.VALIDACAO_DATA || null;
-
-function fmt(d){
-  const [y,m,day]=d.split('-');
-  const meses=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-  return `${day} ${meses[+m-1]} ${y}`;
-}
-
-if(DADOS){
-  // Header
-  document.getElementById('headerSub').textContent = `Referência: ${fmt(DADOS.data)} | Gerado: ${DADOS.gerado_em}`;
-  const pct = DADOS.execucao_pct || 0;
-  const badge = document.getElementById('scoreBadge');
-  badge.textContent = `${pct}% executado`;
-  badge.style.background = pct >= 80 ? '#22C55E22' : pct >= 60 ? '#F59E0B22' : '#EF444422';
-  badge.style.color      = pct >= 80 ? '#22C55E'   : pct >= 60 ? '#F59E0B'   : '#EF4444';
-
-  // Agenda
-  let agHtml = '';
-  if(DADOS.agenda && DADOS.agenda.length){
-    agHtml += '<div class="agenda-day"><div class="agenda-date">📅 ' + fmt(DADOS.data) + '</div>';
-    DADOS.agenda.forEach(ev=>{
-      agHtml += `<div class="agenda-item">
-        <span class="ag-hora">${ev.horario||''}</span>
-        <span class="ag-nome">${ev.nome}</span>
-        <span class="ag-canal">${ev.canal||'Post'}</span>
-      </div>`;
-    });
-    agHtml += '</div>';
-    // Score bar
-    agHtml += `<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <span style="font-size:13px;font-weight:700">Taxa de Execução</span>
-        <span class="score-pct" style="font-size:22px;color:${pct>=80?'var(--verde)':pct>=60?'var(--amarelo)':'var(--vermelho)'}">${pct}%</span>
-      </div>
-      <div class="score-bar"><div class="score-fill" style="width:${pct}%;background:${pct>=80?'linear-gradient(90deg,#22C55E,#10B981)':pct>=60?'linear-gradient(90deg,#F59E0B,#FF6B00)':'linear-gradient(90deg,#EF4444,#DC2626)'}"></div></div>
-      <div style="font-size:11px;color:var(--text2)">${DADOS.feitas||0} de ${DADOS.total||0} tarefas realizadas</div>
-    </div>`;
-  }
-  document.getElementById('agendaContent').innerHTML = agHtml || '<div class="placeholder"><div class="placeholder-icon">📭</div><div class="placeholder-title">Sem agenda para ontem</div></div>';
-
-  // Validação
-  let valHtml = '';
-  if(DADOS.validacoes && DADOS.validacoes.length){
-    DADOS.validacoes.forEach(v=>{
-      const cls  = v.status==='feito'?'val-feito':v.status==='parcial'?'val-parcial':'val-nao';
-      const icon = v.status==='feito'?'✅':v.status==='parcial'?'⚠️':'❌';
-      const bcls = v.status==='feito'?'vb-feito':v.status==='parcial'?'vb-parcial':'vb-nao';
-      const blbl = v.status==='feito'?'FEITO':v.status==='parcial'?'PARCIAL':'NÃO FEITO';
-      valHtml += `<div class="val-item ${cls}">
-        <div class="val-icon">${icon}</div>
-        <div class="val-body">
-          <div class="val-nome">${v.horario||''} ${v.nome}</div>
-          ${v.detalhe ? `<div class="val-detail">${v.detalhe}</div>` : ''}
-          ${v.likes || v.comentarios ? `<div class="val-detail" style="margin-top:4px">❤️ ${v.likes||0} curtidas · 💬 ${v.comentarios||0} comentários</div>` : ''}
-          <span class="val-badge ${bcls}">${blbl}</span>
-        </div>
-      </div>`;
-    });
-  }
-  if(DADOS.analise_ia){
-    valHtml += `<div class="ia-box"><div class="ia-title">🤖 Análise Claude IA</div><div class="ia-content">${DADOS.analise_ia}</div></div>`;
-  }
-  document.getElementById('validacaoContent').innerHTML = valHtml || '<div class="placeholder"><div>Sem validações</div></div>';
-}
+const dias = ['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+const d = new Date();
+d.setDate(d.getDate()-1);
+document.getElementById('data-ontem').textContent =
+  d.toLocaleDateString('pt-BR') + ' (' + dias[d.getDay()] + ')';
+document.getElementById('kpi-prev').textContent = '4';
+document.getElementById('kpi-ig').textContent = '—';
+document.getElementById('kpi-st').textContent = '—';
+document.getElementById('kpi-fb').textContent = '—';
 </script>
 </body>
 </html>
